@@ -28,3 +28,36 @@ Content-Type: application/json
     "firstName": "john",
     "birthday":  "31/11/2018"
 }
+
+//PRODUCTION
+###
+
+GET https://cse341-mj3e.onrender.com/getcontacts
+
+###
+GET https://cse341-mj3e.onrender.com/getcontacts/63bf72a171a288433c16b99b
+
+###
+
+POST https://cse341-mj3e.onrender.com/
+Content-Type: application/json
+
+{
+"firstname": "Nassel",
+"lastName": "Abduh",
+"email": "jose@cavalcanti.net",
+"favoriteColor": "purple",
+"birthday": "30/12/1989"
+}
+
+###
+
+PATCH https://cse341-mj3e.onrender.com/63bffb9064cd2b974c49551c
+Content-Type: application/json
+
+{
+    "firstName": "Diana",
+    "birthday":  "31/11/2032"
+}
+
+GET https://cse341-mj3e.onrender.com/getcontacts/63bffb9064cd2b974c49551c
