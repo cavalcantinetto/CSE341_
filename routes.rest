@@ -2,11 +2,11 @@ POST http://127.0.0.1:8080/
 Content-Type: application/json
 
 {
-"firstname": "Jose",
-"lastName": "Cavalcanti",
+"firstname": "abduh",
+"lastName": "kalaf",
 "email": "jose@cavalcanti.net",
-"favoriteColor": "white",
-"birthday": "30/12/2006"
+"favoriteColor": "brown",
+"birthday": "30/12/2009"
 }
 
 ###
@@ -14,18 +14,17 @@ Content-Type: application/json
 GET http://127.0.0.1:8080/getcontacts
 
 ###
-GET http://127.0.0.1:8080/getcontacts/63bf72181a9b468ea8e4e1f6
+GET http://127.0.0.1:8080/getcontacts/63bf729c71a288433c16b999
 
 
 ###
-DELETE http://127.0.0.1:8080/63bf72181a9b468ea8e4e1f6
-
+DELETE http://127.0.0.1:8080/63bf743c1db8f098c279c75a
 
 ###
 PATCH http://127.0.0.1:8080/63bf729c71a288433c16b999
 Content-Type: application/json
 
 {
-    "firstName": "joaozinho",
-    "birthday":  "31/11/2017"
+    "firstName": "john",
+    "birthday":  "31/11/2018"
 }
