@@ -7,8 +7,8 @@ const doc = {
         title: 'Contacts API',
         description: 'Description',
     },
-    host: 'localhost:8080',
-    schemes: ['http'],
+    host: 'cse341-mj3e.onrender.com/',
+    schemes: ['https'],
 };
 
 //run swagger while project
