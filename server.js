@@ -1,7 +1,20 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const port = 8080;
+
+//Allow us to use frontEnd React
+app.use(bodyParser.json())
+    .use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader(
+            'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Z-Key'
+        );
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, PATCH, OPTIONS');
+        next();
+    })
 
 //require mongoose
 const mongoose = require('./db/connect');
