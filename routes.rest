@@ -11,10 +11,10 @@ Content-Type: application/json
 
 ###
 
-GET http://127.0.0.1:8080/getcontacts
+GET http://127.0.0.1:8080/
 
 ###
-GET http://127.0.0.1:8080/getcontacts/63bf729c71a288433c16b999
+GET http://127.0.0.1:8080/63bf72a171a288433c16b99b
 
 
 ###

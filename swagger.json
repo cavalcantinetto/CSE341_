@@ -11,7 +11,7 @@
     "https"
   ],
   "paths": {
-    "/getcontacts": {
+    "/": {
       "get": {
         "description": "",
         "parameters": [],
@@ -23,33 +23,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/getcontacts/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/": {
+      },
       "post": {
         "description": "",
         "parameters": [
@@ -89,6 +63,28 @@
       }
     },
     "/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "patch": {
         "description": "",
         "parameters": [

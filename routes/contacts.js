@@ -7,7 +7,7 @@ routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 
 //get contacts
-routes.get('/getcontacts', async(req, res) => {
+routes.get('/', async(req, res) => {
     try {
         console.log("i'm gotta collect all contacts");
         const contacts = await Contactdb.find();
@@ -19,7 +19,7 @@ routes.get('/getcontacts', async(req, res) => {
 })
 
 //get one contact
-routes.get('/getcontacts/:id', getcontacts, (req, res) => {
+routes.get('/:id', getcontacts, (req, res) => {
     res.json(res.contact);
 })
 
