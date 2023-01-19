@@ -1,17 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Contacts API",
+    "title": "book Club API",
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "cse341-mj3e.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
-    "/": {
+    "/students": {
       "get": {
         "description": "",
         "parameters": [],
@@ -33,19 +34,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstname": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
+                "name": {
                   "example": "any"
                 }
               }
@@ -62,7 +51,7 @@
         }
       }
     },
-    "/{id}": {
+    "/students/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -85,7 +74,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -100,19 +89,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
+                "name": {
                   "example": "any"
                 }
               }

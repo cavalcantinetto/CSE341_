@@ -1,32 +1,27 @@
-POST http://127.0.0.1:8080/
+POST http://127.0.0.1:8080/students
 Content-Type: application/json
 
 {
-"firstname": "abduh",
-"lastName": "kalaf",
-"email": "jose@cavalcanti.net",
-"favoriteColor": "brown",
-"birthday": "30/12/2009"
+    "name": "abduh Kalaf 2"
 }
 
 ###
 
-GET http://127.0.0.1:8080/
+GET http://127.0.0.1:8080/students
 
 ###
-GET http://127.0.0.1:8080/63bf72a171a288433c16b99b
+GET http://127.0.0.1:8080/students/63c891d0f0df36dad3a30de4
 
 
 ###
-DELETE http://127.0.0.1:8080/63bf743c1db8f098c279c75a
+DELETE http://127.0.0.1:8080/students/63c891d0f0df36dad3a30de4
 
 ###
-PATCH http://127.0.0.1:8080/63bf729c71a288433c16b999
+PUT  http://127.0.0.1:8080/students/63c89c7acc8058e429b6750d
 Content-Type: application/json
 
 {
-    "firstName": "john",
-    "birthday":  "31/11/2018"
+    "name": "Abduh Kalaf"
 }
 
 //PRODUCTION

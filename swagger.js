@@ -1,14 +1,14 @@
 const swaggerAutogen = require('swagger-autogen')();
 const outputFile = "./swagger.json";
-const endpointsFiles = ["./routes/contacts.js"];
+const endpointsFiles = ["./routes/students.js"];
 
 const doc = {
     info: {
-        title: 'Contacts API',
+        title: 'book Club API',
         description: 'Description',
     },
-    host: 'cse341-mj3e.onrender.com',
-    schemes: ['https'],
+    host: 'localhost:8080',
+    schemes: ['https', 'http'],
 };
 
 //run swagger while project
