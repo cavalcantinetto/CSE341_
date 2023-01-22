@@ -2,15 +2,20 @@ const express = require('express');
 const routes = express.Router();
 const studentdb = require('../models/students')
 const bp = require('body-parser');
+const { body, validationResult } = require('express-validator');
+const { default: mongoose } = require('mongoose');
 routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 
 //get contacts
 routes.get('/students', async(req, res) => {
     try {
-        console.log("i'm gotta collect all students");
         const students = await studentdb.find();
-        res.json(students);
+        if (!students) {
+            return res.status(204).json({ message: "No data was found" })
+        } else {
+            return res.status(200).json(students);
+        }
 
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -19,43 +24,66 @@ routes.get('/students', async(req, res) => {
 
 //get one contact
 routes.get('/students/:id', getstudent, (req, res) => {
-    res.json(res.student);
+    //get student validates return.
+    return res.json(res.student);
 })
 
 //insert contact
-routes.post('/students', async(req, res) => {
-    const newstudent = new studentdb({
-        "studentName": req.body.name
-    })
-    try {
-        const newcontactresult = await newstudent.save();
-        res.status(201).json(newcontactresult);
+routes.post('/students',
+    //insert a middleWare to ensure email is correctly formatted
+    //After it checks if name is not null (empty)
+    body('email').isEmail().normalizeEmail(),
+    body('name').not().isEmpty().trim().escape(),
+    async(req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log("catch an error")
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-    } catch (err) {
-        console.log('falhou ao gravar dados do aluno')
-        res.status(400).json({ message: err.message });
-    }
-})
+        try {
+            const newstudent = new studentdb({
+                "studentName": req.body.name,
+                "studentEmail": req.body.email
+            })
+            const newcontactresult = await newstudent.save();
+            res.status(201).json(newcontactresult);
+
+        } catch (err) {
+            console.log('falhou ao gravar dados do aluno')
+            res.status(400).json({ message: err.message });
+        }
+    })
 
 //update contact
-routes.put('/students/:id', getstudent, async(req, res) => {
-    if (req.body.name != null) {
-        res.student.studentName = req.body.name
-        console.log(req.body.name)
-        console.log(res.student.studentName)
+routes.put('/students/:id', [getstudent,
+        //check if name is not null
+        body('name').not().isEmpty().trim().escape(),
+        body('email').isEmail().normalizeEmail()
+    ],
+    async(req, res) => {
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            //Saves name
+            res.student.studentName = req.body.name
+                //saves studentEmail
+            res.student.studentEmail = req.body.email;
+        } else {
+            return res.status(400).json({ errors: errors.array() })
+        }
 
-    }
+        try {
+            const updatedStudent = await res.student.save();
+            if (!updatedStudent) {
+                return res.status(404).json({ message: "Id not found or invalid" });
+            }
+            return res.status(202).json(updatedStudent);
 
-    try {
-        const updatedStudent = await res.student.save();
-        res.status(204).json(updatedStudent);
-        console.log(res.student);
+        } catch (err) {
+            res.status(400).json({ message: err.message })
 
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-
-    }
-})
+        }
+    })
 
 //delete contact
 routes.delete('/students/:id', getstudent, async(req, res) => {
@@ -73,10 +101,13 @@ async function getstudent(req, res, next) {
     try {
         student = await studentdb.findById(req.params.id);
         if (student == null) {
-            return res.status(404).json({ message: "could not find student" })
+            return res.status(404).json({ message: "Could not find student" })
         }
 
     } catch (err) {
+        if (err instanceof mongoose.CastError) {
+            return res.status(400).json({ message: "StudentId doesn't exist" })
+        }
         return res.status(500).json({ message: err.message })
     }
     res.student = student;

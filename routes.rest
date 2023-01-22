@@ -2,7 +2,8 @@ POST http://127.0.0.1:8080/students
 Content-Type: application/json
 
 {
-    "name": "abduh Kalaf 2"
+    "name": "",
+    "email": "kala@fabdul.com"
 }
 
 ###
@@ -21,42 +22,39 @@ PUT  http://127.0.0.1:8080/students/63c89c7acc8058e429b6750d
 Content-Type: application/json
 
 {
-    "name": "Abduh Kalaf"
+    "name": "Samira kalaf",
+    "email": "kalafabdul.com"
 }
 
 //PRODUCTION
 ###
 
-GET https://cse341-mj3e.onrender.com/getcontacts
+GET https://bookclubapi-pytl.onrender.com/students
 
 ###
-GET https://cse341-mj3e.onrender.com/getcontacts/63bf729c71a288433c16b999
+GET https://bookclubapi-pytl.onrender.com/students/63c89c7acc8058e429b6750d
 
 ###
 
-POST https://cse341-mj3e.onrender.com/
+POST https://bookclubapi-pytl.onrender.com/students
 Content-Type: application/json
 
 {
-"firstname": "Maria",
-"lastName": "Abduh",
-"email": "jose@cavalcanti.net",
-"favoriteColor": "pink",
-"birthday": "30/12/1989"
+    "name": "abduh Kalaf 3"
 }
+
 
 ###
 
-PATCH https://cse341-mj3e.onrender.com/63bfff9364cd2b974c495528
+PUT https://bookclubapi-pytl.onrender.com/students/63c8a914823cddffec8de893
 Content-Type: application/json
 
 {
-    "firstName": "Diana",
-    "birthday":  "30/11/1932"
+    "name": "Batman"
 }
 
 ###
-GET https://cse341-mj3e.onrender.com/getcontacts/63bfff9364cd2b974c495528
+GET https://bookclubapi-pytl.onrender.com/students/63c8a7a69d358718af191217
 
 ###
-DELETE https://cse341-mj3e.onrender.com/63bfff9364cd2b974c495528
+DELETE https://bookclubapi-pytl.onrender.com/students/63c8a914823cddffec8de893
