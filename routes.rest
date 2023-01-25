@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
     "name": "Samira kalaf",
-    "email": "kalafabdul.com"
+    "email": "kala@fabdul.com"
 }
 
 //PRODUCTION
@@ -32,29 +32,30 @@ Content-Type: application/json
 GET https://bookclubapi-pytl.onrender.com/students
 
 ###
-GET https://bookclubapi-pytl.onrender.com/students/63c89c7acc8058e429b6750d
-
+GET https://bookclubapi-pytl.onrender.com/students/63cc86a2f12425d2c758bbf2
 ###
 
 POST https://bookclubapi-pytl.onrender.com/students
 Content-Type: application/json
 
 {
-    "name": "abduh Kalaf 3"
+    "name": "Kamala",
+    "email": "kalaf@abdul.com"
 }
 
 
 ###
 
-PUT https://bookclubapi-pytl.onrender.com/students/63c8a914823cddffec8de893
+PUT https://bookclubapi-pytl.onrender.com/students/63cc86a2f12425d2c758bbf2
 Content-Type: application/json
 
 {
-    "name": "Batman"
+    "name": "Samira",
+    "email": "kalaf@abdul.com"
 }
 
 ###
 GET https://bookclubapi-pytl.onrender.com/students/63c8a7a69d358718af191217
 
 ###
-DELETE https://bookclubapi-pytl.onrender.com/students/63c8a914823cddffec8de893
+DELETE https://bookclubapi-pytl.onrender.com/students/63cc86a2f12425d2c758bbf2

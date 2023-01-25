@@ -1,12 +1,17 @@
 const mongoose = require('mongoose');
 //defines a schema for the database.
 const contactSchema = new mongoose.Schema({
-    "teacher": {
-        "teacherName": {
-            type: String,
-            required: true
-        }
-
+    "teacherName": {
+        type: String,
+        required: true
+    },
+    "emailTeacher": {
+        type: String,
+        required: true
+    },
+    "teacherPassword": {
+        type: String,
+        required: true
     }
 })
 
