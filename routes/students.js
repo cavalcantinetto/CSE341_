@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
 const studentdb = require('../models/students')
@@ -7,6 +8,8 @@ const { default: mongoose } = require('mongoose');
 routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 
 //get contacts
@@ -28,6 +31,11 @@ routes.get('/students', async(req, res) => {
 routes.get('/students/:id', getstudent, (req, res) => {
     //get student validates return.
     return res.json(res.student);
+})
+
+//testing purposes
+routes.get('/logged', authorization, (req, res) => {
+    console.log(req);
 })
 
 //insert contact
@@ -76,18 +84,30 @@ routes.post('/students/login', async(req, res) => {
     }
 
     try {
-        console.log("entrei aqui")
+        //get data using email as a parameter
         studentData = await studentdb.find({ studentEmail: studentEmail });
-        console.log(studentData[0].studentPass)
-        const result = await bcrypt.compare(studentPass, studentData[0].studentPass);
-        console.log(result)
+        if (studentData == null) {
+            return res.status(204).json({ message: "No user Data" });
+        } else {
+            studentData = studentData[0];
+        }
+        //compare password with hashed password
+        const result = await bcrypt.compare(studentPass, studentData.studentPass);
+        //if of moveon to the next stage
+        //JsonWebToken will be delivered
         if (result) {
+            console.log("entrei aqui")
+            const accessToken = jwt.sign(studentData.studentName,
+                process.env.ACCESS_TOKEN_SECRET)
+            res.json({ accessToken: accessToken })
             console.log("Success")
+
         } else {
             res.status(401).json({ message: "Password Incorrect" })
         }
 
     } catch (error) {
+        res.status(500).send(error);
 
     }
 
@@ -156,22 +176,17 @@ async function getstudent(req, res, next) {
 
 }
 
-async function getStudentByName(req, res, next) {
-    let student;
-    try {
-        student = await studentdb.find(req.params.id);
-        if (student == null) {
-            return res.status(404).json({ message: "Could not find student" })
-        }
-
-    } catch (err) {
-        if (err instanceof mongoose.CastError) {
-            return res.status(400).json({ message: "StudentId doesn't exist" })
-        }
-        return res.status(500).json({ message: err.message })
+async function authorization(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.status(401).json({ message: "Not Authorized" })
     }
-    res.student = student;
-    next();
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.status(403), json({ message: "invalid Token" });
+        req.user = user;
+        next();
+    })
 
 }
 module.exports = routes

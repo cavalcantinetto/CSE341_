@@ -13,28 +13,32 @@ POST http://127.0.0.1:8080/students/login
 Content-Type: application/json
 
 {
-    "name": "Samira",
+    "email": "kalaf@abdul.com",
     "password": "oiafjnsdoijfa"
 }
 
 ###
 
-GET http://127.0.0.1:8080/students
+GET http://127.0.0.1:8080/logged
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.U2FtaXJh.TAjE8hE5T4APSh4nuZQGrsEnIxB-JanN6qXioWS7Kqo
 
 ###
 GET http://127.0.0.1:8080/students/63c891d0f0df36dad3a30de4
 
 
 ###
-DELETE http://127.0.0.1:8080/students/63c891d0f0df36dad3a30de4
+DELETE http://127.0.0.1:8080/students/63cc3cf99a01381639b57618
 
 ###
-PUT  http://127.0.0.1:8080/students/63c89c7acc8058e429b6750d
+PUT  http://127.0.0.1:8080/students/63cc3cf99a01381639b57618
 Content-Type: application/json
 
 {
-    "name": "Samira kalaf",
-    "email": "kala@fabdul.com"
+    "name": "Sakalaf",
+    "email": "kaa@fabdul.com",
+    "studentBirth": "01/01/2009",
+
+
 }
 
 //PRODUCTION
