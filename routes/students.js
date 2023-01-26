@@ -64,7 +64,39 @@ routes.post('/students/register',
         }
     })
 
+
+//routing Login
+
+routes.post('/students/login', async(req, res) => {
+    const studentEmail = req.body.email;
+    const studentPass = req.body.password;
+    if (studentEmail === null) {
+        return res.status(400).json({ message: err.message });
+
+    }
+
+    try {
+        console.log("entrei aqui")
+        studentData = await studentdb.find({ studentEmail: studentEmail });
+        console.log(studentData[0].studentPass)
+        const result = await bcrypt.compare(studentPass, studentData[0].studentPass);
+        console.log(result)
+        if (result) {
+            console.log("Success")
+        } else {
+            res.status(401).json({ message: "Password Incorrect" })
+        }
+
+    } catch (error) {
+
+    }
+
+})
+
+
+
 //update contact
+
 routes.put('/students/:id', [getstudent,
         //check if name is not null
         body('name').not().isEmpty().trim().escape(),
@@ -109,6 +141,25 @@ async function getstudent(req, res, next) {
     let student;
     try {
         student = await studentdb.findById(req.params.id);
+        if (student == null) {
+            return res.status(404).json({ message: "Could not find student" })
+        }
+
+    } catch (err) {
+        if (err instanceof mongoose.CastError) {
+            return res.status(400).json({ message: "StudentId doesn't exist" })
+        }
+        return res.status(500).json({ message: err.message })
+    }
+    res.student = student;
+    next();
+
+}
+
+async function getStudentByName(req, res, next) {
+    let student;
+    try {
+        student = await studentdb.find(req.params.id);
         if (student == null) {
             return res.status(404).json({ message: "Could not find student" })
         }

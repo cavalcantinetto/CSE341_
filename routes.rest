@@ -1,9 +1,20 @@
-POST http://127.0.0.1:8080/students
+POST http://127.0.0.1:8080/students/register
 Content-Type: application/json
 
 {
-    "name": "",
-    "email": "kala@fabdul.com"
+    "name": "Samira",
+    "email": "kalaf@abdul.com",
+    "birth": "1/10/2000",
+    "password": "oiafjnsdoijfa"
+}
+
+###
+POST http://127.0.0.1:8080/students/login
+Content-Type: application/json
+
+{
+    "name": "Samira",
+    "password": "oiafjnsdoijfa"
 }
 
 ###
@@ -52,6 +63,8 @@ Content-Type: application/json
 {
     "name": "Samira",
     "email": "kalaf@abdul.com"
+    "birth": "1/10/2000"
+    "password": "oiafjnsdoijfa"
 }
 
 ###
