@@ -6,6 +6,8 @@ const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
 routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
+const bcrypt = require('bcrypt');
+
 
 //get contacts
 routes.get('/students', async(req, res) => {
@@ -29,7 +31,7 @@ routes.get('/students/:id', getstudent, (req, res) => {
 })
 
 //insert contact
-routes.post('/students',
+routes.post('/students/register',
     //insert a middleWare to ensure email is correctly formatted
     //After it checks if name is not null (empty)
     body('email').isEmail().normalizeEmail(),
@@ -41,12 +43,16 @@ routes.post('/students',
             return res.status(400).json({ errors: errors.array() });
         }
 
+
         try {
+            //encrypt password before put it in data base
+            const hashedPass = await bcrypt.hash(req.body.password, 10);
+            //connect and try to insert in Db
             const newstudent = new studentdb({
                 "studentName": req.body.name,
                 "studentEmail": req.body.email,
                 "studentBirth": req.body.birth,
-                "studentPass": req.body.password
+                "studentPass": hashedPass
 
             })
             const newcontactresult = await newstudent.save();
