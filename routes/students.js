@@ -44,7 +44,10 @@ routes.post('/students',
         try {
             const newstudent = new studentdb({
                 "studentName": req.body.name,
-                "studentEmail": req.body.email
+                "studentEmail": req.body.email,
+                "studentBirth": req.body.birth,
+                "studentPass": req.body.password
+
             })
             const newcontactresult = await newstudent.save();
             res.status(201).json(newcontactresult);

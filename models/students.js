@@ -8,6 +8,14 @@ const contactSchema = new mongoose.Schema({
     "studentEmail": {
         type: String,
         required: true
+    },
+    "studentBirth": {
+        type: String,
+        required: true
+    },
+    "studentPass": {
+        type: String,
+        required: true
     }
 })
 module.exports = mongoose.model("students", contactSchema)
