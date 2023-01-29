@@ -37,9 +37,14 @@ const url = process.env.DATABASE_URL;
 //make a connection
 mongoose.connectDb(url)
 
-//creates a middleware to clients
+//creates a middleware to students
 const studentsRoutes = require('./routes/students');
 app.use('/', studentsRoutes);
+
+
+//creates a middleware to teachers
+const teachersRoutes = require('./routes/teachers');
+app.use('/', teachersRoutes);
 
 //defines the port to listen to:
 app.listen(port, () => { console.log(`server listenning to ${port}`) });

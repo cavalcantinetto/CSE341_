@@ -16,6 +16,11 @@ const contactSchema = new mongoose.Schema({
     "studentPass": {
         type: String,
         required: true
+    },
+    "studentLevel": {
+        type: String,
+        required: true
     }
+
 })
 module.exports = mongoose.model("students", contactSchema)

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
-const studentdb = require('../models/students')
+const teacherdb = require('../models/teacher')
 const bp = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
@@ -13,13 +13,13 @@ const jwt = require('jsonwebtoken');
 
 
 //get contacts
-routes.get('/students', authorization, async(req, res) => {
+routes.get('/teachers', authorization, async(req, res) => {
     try {
-        const students = await studentdb.find();
-        if (!students) {
+        const teachers = await teacherdb.find();
+        if (!teachers) {
             return res.status(204).json({ message: "No data was found" })
         } else {
-            return res.status(200).json(students);
+            return res.status(200).json(teachers);
         }
 
     } catch (err) {
@@ -28,18 +28,13 @@ routes.get('/students', authorization, async(req, res) => {
 })
 
 //get one contact
-routes.get('/students/:id', getstudent, (req, res) => {
-    //get student validates return.
-    return res.json(res.student);
-})
-
-//testing purposes
-routes.get('/logged', authorization, (req, res) => {
-    console.log(req.user);
+routes.get('/teachers/:id', getteacher, (req, res) => {
+    //get teacher validates return.
+    return res.json(res.teacher);
 })
 
 //insert contact
-routes.post('/students/register',
+routes.post('/teachers/register',
     //insert a middleWare to ensure email is correctly formatted
     //After it checks if name is not null (empty)
     body('email').isEmail().normalizeEmail(),
@@ -56,14 +51,15 @@ routes.post('/students/register',
             //encrypt password before put it in data base
             const hashedPass = await bcrypt.hash(req.body.password, 10);
             //connect and try to insert in Db
-            const newstudent = new studentdb({
-                "studentName": req.body.name,
-                "studentEmail": req.body.email,
-                "studentBirth": req.body.birth,
-                "studentPass": hashedPass
+            const newteacher = new teacherdb({
+                "teacherName": req.body.name,
+                "teacherEmail": req.body.email,
+                "teacherBirth": req.body.birth,
+                "teacherPass": hashedPass,
+                "teacherLevel": req.body.teacherLevel
 
             })
-            const newcontactresult = await newstudent.save();
+            const newcontactresult = await newteacher.save();
             res.status(201).json(newcontactresult);
 
         } catch (err) {
@@ -75,31 +71,33 @@ routes.post('/students/register',
 
 //routing Login
 
-routes.post('/students/login', async(req, res) => {
-    const studentEmail = req.body.email;
-    const studentPass = req.body.password;
-    if (studentEmail === null) {
+routes.post('/teachers/login', async(req, res) => {
+    const teacherEmail = req.body.email;
+    const teacherPass = req.body.password;
+    console.log(teacherEmail, teacherPass);
+    if (teacherEmail === null) {
         return res.status(400).json({ message: err.message });
 
     }
 
     try {
+        console.log("entrei no try");
         //get data using email as a parameter
-        studentData = await studentdb.find({ studentEmail: studentEmail });
-        if (studentData == null) {
+        teacherData = await teacherdb.find({ teacherEmail: teacherEmail });
+        if (teacherData == null) {
             return res.status(404).json({ message: "Not found" });
         } else {
-            studentData = studentData[0];
+            teacherData = teacherData[0];
         }
         //compare password with hashed password
-        const result = await bcrypt.compare(studentPass, studentData.studentPass);
+        const result = await bcrypt.compare(teacherPass, teacherData.teacherPass);
         //if of moveon to the next stage
         //JsonWebToken will be delivered
         if (result) {
             // console.log("entrei aqui")
             const userData = {
-                studentName: studentData.studentName,
-                studentEmail: studentData.studentEmail
+                teacherName: teacherData.teacherName,
+                teacherEmail: teacherData.teacherEmail
             }
             const accessToken = jwt.sign(userData,
                 process.env.ACCESS_TOKEN_SECRET)
@@ -112,16 +110,21 @@ routes.post('/students/login', async(req, res) => {
 
     } catch (error) {
         res.status(500).send(error);
-
     }
 
 })
 
 
+//logout
+routes.post('/teachers/logout', async(req, res) => {
+    const accessToken = null
+    res.json({ accessToken: accessToken })
+})
+
 
 //update contact
 
-routes.put('/students/:id', [getstudent,
+routes.patch('/teachers/:id', [getteacher,
         //check if name is not null
         body('name').not().isEmpty().trim().escape(),
         body('email').isEmail().normalizeEmail()
@@ -130,19 +133,19 @@ routes.put('/students/:id', [getstudent,
         const errors = validationResult(req);
         if (errors.isEmpty()) {
             //Saves name
-            res.student.studentName = req.body.name
-                //saves studentEmail
-            res.student.studentEmail = req.body.email;
+            res.teacher.teacherName = req.body.name
+                //saves teacherEmail
+            res.teacher.teacherEmail = req.body.email;
         } else {
             return res.status(400).json({ errors: errors.array() })
         }
 
         try {
-            const updatedStudent = await res.student.save();
-            if (!updatedStudent) {
+            const updatedteacher = await res.teacher.save();
+            if (!updatedteacher) {
                 return res.status(404).json({ message: "Id not found or invalid" });
             }
-            return res.status(202).json(updatedStudent);
+            return res.status(202).json(updatedteacher);
 
         } catch (err) {
             res.status(400).json({ message: err.message })
@@ -151,31 +154,31 @@ routes.put('/students/:id', [getstudent,
     })
 
 //delete contact
-routes.delete('/students/:id', getstudent, async(req, res) => {
+routes.delete('/teachers/:id', getteacher, async(req, res) => {
     try {
-        await res.student.remove();
-        res.status(200).json({ message: "Student was deleted" })
+        await res.teacher.remove();
+        res.status(200).json({ message: "teacher was deleted" })
 
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-async function getstudent(req, res, next) {
-    let student;
+async function getteacher(req, res, next) {
+    let teacher;
     try {
-        student = await studentdb.findById(req.params.id);
-        if (student == null) {
-            return res.status(404).json({ message: "Could not find student" })
+        teacher = await teacherdb.findById(req.params.id);
+        if (teacher == null) {
+            return res.status(404).json({ message: "Could not find teacher" })
         }
 
     } catch (err) {
         if (err instanceof mongoose.CastError) {
-            return res.status(400).json({ message: "StudentId doesn't exist" })
+            return res.status(400).json({ message: "teacherId doesn't exist" })
         }
         return res.status(500).json({ message: err.message })
     }
-    res.student = student;
+    res.teacher = teacher;
     next();
 
 }

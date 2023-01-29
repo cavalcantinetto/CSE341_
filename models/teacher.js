@@ -5,14 +5,23 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    "emailTeacher": {
+    "teacherEmail": {
         type: String,
         required: true
     },
-    "teacherPassword": {
+    "teacherBirth": {
+        type: String,
+        required: true
+    },
+    "teacherPass": {
+        type: String,
+        required: true
+    },
+    "teacherLevel": {
         type: String,
         required: true
     }
+
 })
 
 module.exports = mongoose.model("teacher", contactSchema)
