@@ -2,11 +2,15 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
+
 const port = 8080;
 //sets cors and others 
 app.use(cors())
     .use(express.json())
     .use(express.urlencoded({ extended: true }));
+
+app.use(express.static('public'))
 
 //set swageger
 const swaggerRoutes = require('./routes/swagger');
@@ -37,10 +41,21 @@ const url = process.env.DATABASE_URL;
 //make a connection
 mongoose.connectDb(url)
 
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+app.get('/bookspage', function(req, res) {
+    res.sendFile(path.join(__dirname, 'bookspage.html'));
+});
+
 //creates a middleware to students
 const studentsRoutes = require('./routes/students');
 app.use('/', studentsRoutes);
 
+//creates a middleware to students
+const booksRoutes = require('./routes/books');
+app.use('/', booksRoutes);
 
 //creates a middleware to teachers
 const teachersRoutes = require('./routes/teachers');

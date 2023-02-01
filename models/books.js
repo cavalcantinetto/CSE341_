@@ -8,16 +8,25 @@ const contactSchema = new mongoose.Schema({
             required: true
         },
         "belongsTo": {
-            type: Schema.Types.ObjectId,
-            ref: 'students',
+            type: String,
             required: true
         },
         "class": {
-            type: Schema.Types.ObjectId,
-            ref: 'classes',
+            type: String,
+            required: true
+        },
+        "borrowedBy": {
+            type: String,
+            required: true
+        },
+        "TimesBorrowed": {
+            type: String,
+            required: true
+        },
+        "DateOfBorrow": {
+            type: String,
             required: true
         }
-
     }
 })
 
