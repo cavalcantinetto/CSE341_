@@ -61,6 +61,26 @@ routes.post('/books',
     })
 
 //update book
+routes.patch('/books/:id', getbook,
+    async(req, res) => {
+        try {
+            res.book.borrowedBy = req.body.studentName
+            res.book.timesBorrowed = parseInt(res.book.timesBorrowed) + 1
+            res.book.dateOfBorrow = new Date().toLocaleDateString()
+
+            const updatedbook = await res.book.save();
+            if (!updatedbook) {
+                return res.status(404).json({ message: "Id not found or invalid" });
+            }
+            return res.status(202).json(updatedbook);
+
+        } catch (err) {
+            res.status(400).json({ message: err.message })
+        }
+    }
+)
+
+//update book
 routes.put('/books/:id', [getbook,
         //check if name is not null
         body('name').not().isEmpty().trim().escape(),
@@ -108,16 +128,14 @@ async function getbook(req, res, next) {
         if (book == null) {
             return res.status(404).json({ message: "Could not find book" })
         }
-
+        res.book = book;
     } catch (err) {
         if (err instanceof mongoose.CastError) {
             return res.status(400).json({ message: "bookId doesn't exist" })
         }
         return res.status(500).json({ message: err.message })
     }
-    res.book = book;
     next();
-
 }
 
 module.exports = routes
