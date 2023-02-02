@@ -38,12 +38,9 @@
             <div class="col">
                 <h1 class="display-6">Books</p>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <button class="btn btn-primary" @click="insertNew">Insert New</button>
-            </div>
+            <div class="col text-end">
+              <button class="btn btn-primary" @click="insertNew" data-bs-toggle="modal" data-bs-target="#insertBookModal">Insert New</button>
+          </div>
         </div>
 
         <table class="table">
@@ -68,18 +65,18 @@
                 <td>{{ book.timesBorrowed }}</td>
                 <td>
                     <i class="bi bi-pencil-square" style="font-size: 1.5rem; color: blue; cursor: pointer;"></i>
-                    <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="bi bi-trash ms-2" style="cursor: pointer; font-size: 1.5rem; color: red" @click="deleteBook('_94487kdsdhjsd99')"></i>
+                    <i data-bs-toggle="modal" data-bs-target="#deleteBookModal" class="bi bi-trash ms-2" style="cursor: pointer; font-size: 1.5rem; color: red" @click="deleteBook('_94487kdsdhjsd99')"></i>
                 </td>
               </tr>
             </tbody>
         </table>
             
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <!-- Delete Boook Modal -->
+        <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
+                <h1 class="modal-title fs-5" id="deleteBookModalLabel">Delete Book</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -87,10 +84,40 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn btn-danger">Delete</button>
                 </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Insert Boook Modal -->
+        <div class="modal fade" id="insertBookModal" tabindex="-1" aria-labelledby="insertBookModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header px-4">
+                <h5 class="modal-title">Insert Book</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body px-4">
+                <div class="mb-3">
+                  <label for="nameFormControlInput" class="form-label">Name</label>
+                  <input type="text" v-model="newBook.name" class="form-control" id="nameFormControlInput">
+                </div>
+                <div class="mb-3">
+                  <label for="belongsToFormControlInput" class="form-label">Belongs To</label>
+                  <input type="text" v-model="newBook.belongsTo" class="form-control" id="belongsToFormControlInput">
+                </div>
+                <div class="mb-3">
+                  <label for="classFormControlInput" class="form-label">Class</label>
+                  <input type="text" v-model="newBook.class" class="form-control" id="classFormControlInput">
+                </div>
+              </div>
+              <div class="modal-footer px-4">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
             </div>
+          </div>
         </div>
 
     </div>
@@ -102,28 +129,33 @@
         createApp({
           data() {
             return {
-              books: []
+              books: [],
+              newBook: {
+                name: '',
+                belongsTo: '',
+                class: ''
+              }
             }
           },
 
           mounted() {
             fetch('/books')
-                .then((response) => response.json())
-                .then((data) => this.books = data);
+              .then((response) => response.json())
+              .then((data) => this.books = data);
           },
 
           methods: {
             insertNew() {
-                console.log('Clicaram em mim')
+              console.log('Clicaram em mim')
             },
 
             deleteBook(id) {
-                console.log('Delete book', id)
+              console.log('Delete book', id)
             },
 
             eraseCookie() {
-                document.cookie = 'pageToken=; Max-Age=-99999999;';
-                window.location.replace('/');
+              document.cookie = 'pageToken=; Max-Age=-99999999;';
+              window.location.replace('/');
             }
           }
         }).mount('#app')
