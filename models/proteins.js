@@ -13,4 +13,4 @@ const contactSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model("books", contactSchema)
+module.exports = mongoose.model("proteins", contactSchema)
