@@ -48,7 +48,8 @@ routes.post('/books',
             const newBook = new Book({
                 bookName: req.body.bookName,
                 belongsTo: req.body.belongsTo,
-                class: req.body.class
+                class: req.body.class,
+                timesBorrowed: 0
             })
             const newBookresult = await newBook.save();
             res.status(201).json(newBookresult);
@@ -103,7 +104,7 @@ routes.delete('/books/:id', getbook, async(req, res) => {
 async function getbook(req, res, next) {
     let book;
     try {
-        book = await bookdb.findById(req.params.id);
+        book = await Book.findById(req.params.id);
         if (book == null) {
             return res.status(404).json({ message: "Could not find book" })
         }
