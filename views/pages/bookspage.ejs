@@ -109,8 +109,20 @@
                   <input type="text" v-model="newBook.belongsTo" class="form-control" id="belongsToFormControlInput">
                 </div>
                 <div class="mb-3">
-                  <label for="classFormControlInput" class="form-label">Class</label>
-                  <input type="text" v-model="newBook.class" class="form-control" id="classFormControlInput">
+                  <label for="classFormControlSelect" class="form-label">Class</label>
+                  <select class="form-select" v-model="newBook.class" aria-label="Default select example" id="classFormControlSelect">
+                    <option value="Early Toddler">Early Toddler</option>
+                    <option value="Toddler">Toddler</option>
+                    <option value="Nursery">Nursery</option>
+                    <option value="JK">JK</option>
+                    <option value="Year 1">Year 1</option>
+                    <option value="Year 2">Year 2</option>
+                    <option value="Year 3">Year 3</option>
+                    <option value="Year 4">Year 4</option>
+                    <option value="Year 5">Year 5</option>
+                    <option value="Year 6">Year 6</option>
+                    <option value="Year 7">Year 7</option>
+                  </select>  
                 </div>
               </div>
               <div class="modal-footer px-4">
