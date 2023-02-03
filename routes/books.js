@@ -1,14 +1,8 @@
-require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
 const Book = require('../models/books')
-const bp = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
-routes.use(bp.json())
-routes.use(bp.urlencoded({ extended: true }))
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 //get books
 routes.get('/books', async(req, res) => {

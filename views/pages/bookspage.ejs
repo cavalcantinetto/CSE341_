@@ -11,16 +11,16 @@
   <body>
     <div id="app" class="container">
 
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg bg-body-secondary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Book Club</a>
+          <a class="navbar-brand">Book Club</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Books</a>
+                  <a class="nav-link active" aria-current="page" href="/bookspage">Books</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="#">Teachers</a>
@@ -41,7 +41,7 @@
               <h1 class="display-6">Books</p>
           </div>
           <div class="col text-end">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertBookModal">Insert New</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertBookModal" @click="clearNewBookForm">Insert New</button>
         </div>
       </div>
 
@@ -73,6 +73,14 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="row" v-if="books.length === 0">
+        <div class="col">
+          <div class="alert alert-secondary" role="alert">
+            There are no books at the database!
+          </div>
+        </div>
+      </div>
           
       <!-- delete boook modal -->
       <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
@@ -152,13 +160,15 @@
                     <option value="Marcelo">Marcelo</option>
                     <option value="Gabriel">Gabriel</option>
                     <option value="Felipe">Felipe</option>
+                    <option value="Matheus">Matheus</option>
+                    <option value="Thomaz">Thomaz</option>
                   </select>  
                 </div>
               </div>
             </div>
             <div class="modal-footer px-4">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" @click="borrowBook">Save changes</button>
+              <button type="button" class="btn btn-primary" :disabled="disableSaveBorrowBookButton" @click="borrowBook">Save changes</button>
             </div>
           </div>
         </div>
@@ -198,6 +208,14 @@
               .then((data) => this.books = data);
             },
 
+            clearNewBookForm() {
+              this.newBook = {
+                bookName: '',
+                belongsTo: '',
+                class: ''
+              }
+            },
+
             insertNew() {
               fetch('/books', {
                 method: 'POST',
@@ -228,6 +246,7 @@
             },
 
             setBookToBorrow(book) {
+              this.studentName = ''
               this.bookToBorrow = book;
             },
 
@@ -241,7 +260,6 @@
                 body: JSON.stringify({ studentName: this.studentName })
               })
                 .then(() => {
-                  this.studentName = ''
                   $("#borrowBookModal").modal('toggle');
                   this.getBooks()
                 });
@@ -256,6 +274,10 @@
           computed: {
             disableSaveNewBookButton() {
               return this.newBook.bookName === '' || this.newBook.belongsTo === '' || this.newBook.class === ''
+            },
+
+            disableSaveBorrowBookButton() {
+              return this.studentName === ''
             }
           }
         }).mount('#app')
