@@ -129,7 +129,7 @@
             </div>
             <div class="modal-footer px-4">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" @click="insertNew">Save changes</button>
+              <button type="button" class="btn btn-primary" :disabled="disableSaveNewBookButton" @click="insertNew">Save changes</button>
             </div>
           </div>
         </div>
@@ -250,6 +250,12 @@
             eraseCookie() {
               document.cookie = 'pageToken=; Max-Age=-99999999;';
               window.location.replace('/');
+            }
+          },
+
+          computed: {
+            disableSaveNewBookButton() {
+              return this.newBook.bookName === '' || this.newBook.belongsTo === '' || this.newBook.class === ''
             }
           }
         }).mount('#app')
