@@ -20,6 +20,10 @@ const contactSchema = new mongoose.Schema({
     "teacherLevel": {
         type: String,
         required: true
+    },
+    "teacherClass": {
+        type: String,
+        required: true
     }
 
 })
