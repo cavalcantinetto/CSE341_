@@ -5,17 +5,12 @@ const cookieParser = require('cookie-parser')
 const app = express();
 const port = 8080;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(cookieParser())
-
 //sets cors and others 
 app.use(cors())
     .use(express.json())
-    .use(express.urlencoded({ extended: true }));
-
-app.use(express.static('public'))
+    .use(express.urlencoded({ extended: true }))
+    .use(cookieParser())
+    .use(express.static('public'));
 
 app.set('view engine', 'ejs');
 
@@ -86,4 +81,4 @@ const teachersRoutes = require('./routes/teachers');
 app.use('/', teachersRoutes);
 
 //defines the port to listen to:
-app.listen(port, () => { console.log(`server listenning to ${port}`) });
+app.listen(port, () => console.log(`server listenning to ${port}`));
