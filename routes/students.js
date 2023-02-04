@@ -10,10 +10,8 @@ routes.use(bp.urlencoded({ extended: true }))
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
-
 //get contacts
-routes.get('/students', authorization, async(req, res) => {
+routes.get('/students', async(req, res) => {
     try {
         const students = await studentdb.find();
         if (!students) {

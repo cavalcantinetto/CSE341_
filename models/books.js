@@ -1,34 +1,32 @@
 const mongoose = require('mongoose');
 //defines a schema for the database.
-const Schema1 = mongoose;
 const contactSchema = new mongoose.Schema({
-
     "bookName": {
         type: String,
         required: true
     },
     "belongsTo": {
-
-        type: Schema1.Types.ObjectId,
-        refPath: 'students',
+        type: String,
         required: true
     },
     "class": {
         type: String,
-        // type: [Schema.Types.ObjectId],
-        // refPath: 'classes',
         required: true
     },
-    "timesLended": {
-        type: Int16Array,
+    "borrowedBy": {
+        type: String,
+        required: true
     },
-    "lendedTo": {
-        type: Schema1.Types.ObjectId,
-        refPath: 'students',
+    "TimesBorrowed": {
+        type: String,
+        required: true
+    },
+    "DateOfBorrow": {
+        type: String,
         required: true
     },
     "date": {
-        type: Date.now(),
+        type: String,
         required: true
     }
 
