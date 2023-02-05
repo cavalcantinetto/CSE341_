@@ -1,126 +1,131 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="icon" type="image/x-icon" href="book-library.svg">
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="app" class="container">
 
-      <nav class="navbar navbar-expand-lg bg-body-secondary">
-        <div class="container-fluid">
-          <a class="navbar-brand">Book Club</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg bg-body-secondary">
+            <div class="container-fluid">
+                <a class="navbar-brand">Book Club</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/bookspage">Books</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Teachers</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Students</a>
-              </li>
-            </ul>
-            <span class="navbar-text">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/bookspage">Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Teachers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Students</a>
+                        </li>
+                    </ul>
+                    <span class="navbar-text">
               <a class="nav-link" @click="eraseCookie" style="cursor: pointer;">Logout</a>
             </span>
-          </div>
-        </div>
-      </nav>
-
-      <div class="row mt-4">
-          <div class="col">
-              <h1 class="display-6">Books</p>
-          </div>
-          <div class="col text-end">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertBookModal" @click="clearNewBookForm">Insert New</button>
-        </div>
-      </div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Belongs To</th>
-            <th scope="col">Class</th>
-            <th scope="col">Borrowed By</th>
-            <th scope="col">Date Of Borrow</th>
-            <th scope="col">Times Borrowed</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="book in books">
-            <td style="padding-top: 12px">{{ book.bookName }}</td>
-            <td style="padding-top: 12px">{{ book.belongsTo }}</td>
-            <td style="padding-top: 12px">{{ book.class }}</td>
-            <td style="padding-top: 12px">{{ book.borrowedBy ? book.borrowedBy : '-' }}</td>
-            <td style="padding-top: 12px">{{ book.dateOfBorrow ? book.dateOfBorrow : '-'}}</td>
-            <td style="padding-top: 12px">{{ book.timesBorrowed }}</td>
-            <td>
-              <i data-bs-toggle="modal" data-bs-target="#deleteBookModal" class="bi bi-trash me-2" style="cursor: pointer; font-size: 1.4rem; color: red" @click="setBookToDelete(book)"></i>
-              <i class="bi bi-pencil-square me-2" style="font-size: 1.4rem; color: blue; cursor: pointer;"></i>
-              <i data-bs-toggle="modal" data-bs-target="#borrowBookModal" class="bi bi-house-check" style="font-size: 1.4rem; color: green; cursor: pointer;" @click="setBookToBorrow(book)"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="row" v-if="books.length === 0">
-        <div class="col">
-          <div class="alert alert-secondary" role="alert">
-            There are no books at the database!
-          </div>
-        </div>
-      </div>
-          
-      <!-- delete boook modal -->
-      <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-              <h1 class="modal-title fs-5" id="deleteBookModalLabel">Delete Book</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  Do you really want to remove the book <strong>{{ this.bookToDelete.bookName }}</strong>?
-              </div>
-              <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-danger" @click="deleteBook">Delete</button>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- insert boook modal -->
-      <div class="modal fade" id="insertBookModal" tabindex="-1" aria-labelledby="insertBookModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header px-4">
-              <h5 class="modal-title">Insert Book</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
-            <div class="modal-body px-4">
-              <div class="mb-3">
-                <label for="nameFormControlInput" class="form-label">Name</label>
-                <input type="text" v-model="newBook.bookName" class="form-control" id="nameFormControlInput">
-              </div>
-              <div class="mb-3">
-                <label for="belongsToFormControlInput" class="form-label">Belongs To</label>
-                <input type="text" v-model="newBook.belongsTo" class="form-control" id="belongsToFormControlInput">
-              </div>
-              <div class="mb-3">
-                <label for="classFormControlSelect" class="form-label">Class</label>
-                <select class="form-select" v-model="newBook.class" aria-label="Default select example" id="classFormControlSelect">
+        </nav>
+
+        <div class="row mt-4">
+            <div class="col">
+                <h1 class="display-6">Books</p>
+                    <h2>
+                        <%= token%>
+                    </h2>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertBookModal" @click="clearNewBookForm">Insert New</button>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Belongs To</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Borrowed By</th>
+                    <th scope="col">Date Of Borrow</th>
+                    <th scope="col">Times Borrowed</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="book in books">
+                    <td style="padding-top: 12px">{{ book.bookName }}</td>
+                    <td style="padding-top: 12px">{{ book.belongsTo }}</td>
+                    <td style="padding-top: 12px">{{ book.class }}</td>
+                    <td style="padding-top: 12px">{{ book.borrowedBy ? book.borrowedBy : '-' }}</td>
+                    <td style="padding-top: 12px">{{ book.dateOfBorrow ? book.dateOfBorrow : '-'}}</td>
+                    <td style="padding-top: 12px">{{ book.timesBorrowed }}</td>
+                    <td>
+                        <i data-bs-toggle="modal" data-bs-target="#deleteBookModal" class="bi bi-trash me-2" style="cursor: pointer; font-size: 1.4rem; color: red" @click="setBookToDelete(book)"></i>
+                        <i class="bi bi-pencil-square me-2" style="font-size: 1.4rem; color: blue; cursor: pointer;"></i>
+                        <i data-bs-toggle="modal" data-bs-target="#borrowBookModal" class="bi bi-house-check" style="font-size: 1.4rem; color: green; cursor: pointer;" @click="setBookToBorrow(book)"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row" v-if="books.length === 0">
+            <div class="col">
+                <div class="alert alert-secondary" role="alert">
+                    There are no books at the database!
+                </div>
+            </div>
+        </div>
+
+        <!-- delete boook modal -->
+        <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteBookModalLabel">Delete Book</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do you really want to remove the book <strong>{{ this.bookToDelete.bookName }}</strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" @click="deleteBook">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- insert boook modal -->
+        <div class="modal fade" id="insertBookModal" tabindex="-1" aria-labelledby="insertBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header px-4">
+                        <h5 class="modal-title">Insert Book</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body px-4">
+                        <div class="mb-3">
+                            <label for="nameFormControlInput" class="form-label">Name</label>
+                            <input type="text" v-model="newBook.bookName" class="form-control" id="nameFormControlInput">
+                        </div>
+                        <div class="mb-3">
+                            <label for="belongsToFormControlInput" class="form-label">Belongs To</label>
+                            <input type="text" v-model="newBook.belongsTo" class="form-control" id="belongsToFormControlInput">
+                        </div>
+                        <div class="mb-3">
+                            <label for="classFormControlSelect" class="form-label">Class</label>
+                            <select class="form-select" v-model="newBook.class" aria-label="Default select example" id="classFormControlSelect">
                   <option value="Early Toddler">Early Toddler</option>
                   <option value="Toddler">Toddler</option>
                   <option value="Nursery">Nursery</option>
@@ -132,47 +137,47 @@
                   <option value="Year 5">Year 5</option>
                   <option value="Year 6">Year 6</option>
                   <option value="Year 7">Year 7</option>
-                </select>  
-              </div>
+                </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer px-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" :disabled="disableSaveNewBookButton" @click="insertNew">Save changes</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer px-4">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" :disabled="disableSaveNewBookButton" @click="insertNew">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
 
-      <!-- borrow boook modal -->
-      <div class="modal fade" id="borrowBookModal" tabindex="-1" aria-labelledby="borrowBookModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header px-4">
-              <h5 class="modal-title">Borrow Book</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body px-4">
-              <div class="row">
-                <div class="col">
-                  <p>{{ bookToBorrow.bookName }} to:</p>
-                  <select class="form-select" v-model="studentName" aria-label="Default select example" id="classFormControlSelect">
+        <!-- borrow boook modal -->
+        <div class="modal fade" id="borrowBookModal" tabindex="-1" aria-labelledby="borrowBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header px-4">
+                        <h5 class="modal-title">Borrow Book</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body px-4">
+                        <div class="row">
+                            <div class="col">
+                                <p>{{ bookToBorrow.bookName }} to:</p>
+                                <select class="form-select" v-model="studentName" aria-label="Default select example" id="classFormControlSelect">
                     <option value="Eduardo">Eduardo</option>
                     <option value="Marcelo">Marcelo</option>
                     <option value="Gabriel">Gabriel</option>
                     <option value="Felipe">Felipe</option>
                     <option value="Matheus">Matheus</option>
                     <option value="Thomaz">Thomaz</option>
-                  </select>  
+                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer px-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" :disabled="disableSaveBorrowBookButton" @click="borrowBook">Save changes</button>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="modal-footer px-4">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" :disabled="disableSaveBorrowBookButton" @click="borrowBook">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
 
     </div>
 
@@ -180,107 +185,112 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script>
-      const { createApp } = Vue
-    
-      createApp({
-        data() {
-          return {
-            books: [],
-            newBook: {
-              bookName: '',
-              belongsTo: '',
-              class: ''
+        const {
+            createApp
+        } = Vue
+
+        createApp({
+            data() {
+                return {
+                    books: [],
+                    newBook: {
+                        bookName: '',
+                        belongsTo: '',
+                        class: ''
+                    },
+                    bookToDelete: {},
+                    bookToBorrow: {},
+                    studentName: ''
+                }
             },
-            bookToDelete: {},
-            bookToBorrow: {},
-            studentName: ''
-          }
-        },
 
-        mounted() {
-          this.getBooks();
-        },
+            mounted() {
+                this.getBooks();
+            },
 
-        methods: {
-          getBooks() {
-            fetch('/books')
-            .then((response) => response.json())
-            .then((data) => this.books = data);
-          },
+            methods: {
+                getBooks() {
+                    fetch('/books')
+                        .then((response) => response.json())
+                        .then((data) => this.books = data);
+                },
 
-          clearNewBookForm() {
-            this.newBook = {
-              bookName: '',
-              belongsTo: '',
-              class: ''
+                clearNewBookForm() {
+                    this.newBook = {
+                        bookName: '',
+                        belongsTo: '',
+                        class: ''
+                    }
+                },
+
+                insertNew() {
+                    fetch('/books', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.newBook)
+                        })
+                        .then(() => {
+                            $("#insertBookModal").modal('toggle');
+                            this.getBooks()
+                        });
+                },
+
+                setBookToDelete(book) {
+                    this.bookToDelete = book;
+                },
+
+                deleteBook() {
+                    fetch(`/books/${this.bookToDelete._id}`, {
+                            method: 'DELETE'
+                        })
+                        .then(() => {
+                            $("#deleteBookModal").modal('toggle');
+                            this.getBooks()
+                        });
+                },
+
+                setBookToBorrow(book) {
+                    this.studentName = ''
+                    this.bookToBorrow = book;
+                },
+
+                borrowBook() {
+                    fetch(`/books/${this.bookToBorrow._id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                studentName: this.studentName
+                            })
+                        })
+                        .then(() => {
+                            $("#borrowBookModal").modal('toggle');
+                            this.getBooks()
+                        });
+                },
+
+                eraseCookie() {
+                    document.cookie = 'accessToken=; Max-Age=-99999999;';
+                    window.location.replace('/');
+                }
+            },
+
+            computed: {
+                disableSaveNewBookButton() {
+                    return this.newBook.bookName === '' || this.newBook.belongsTo === '' || this.newBook.class === ''
+                },
+
+                disableSaveBorrowBookButton() {
+                    return this.studentName === ''
+                }
             }
-          },
-
-          insertNew() {
-            fetch('/books', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(this.newBook)
-            })
-              .then(() => {
-                $("#insertBookModal").modal('toggle');
-                this.getBooks()
-              });
-          },
-
-          setBookToDelete(book) {
-            this.bookToDelete = book;
-          },
-
-          deleteBook() {
-            fetch(`/books/${this.bookToDelete._id}`, {
-              method: 'DELETE'
-            })
-              .then(() => {
-                $("#deleteBookModal").modal('toggle');
-                this.getBooks()
-              });
-          },
-
-          setBookToBorrow(book) {
-            this.studentName = ''
-            this.bookToBorrow = book;
-          },
-
-          borrowBook() {
-            fetch(`/books/${this.bookToBorrow._id}`, {
-              method: 'PATCH',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ studentName: this.studentName })
-            })
-              .then(() => {
-                $("#borrowBookModal").modal('toggle');
-                this.getBooks()
-              });
-          },
-
-          eraseCookie() {
-            document.cookie = 'accessToken=; Max-Age=-99999999;';
-            window.location.replace('/');
-          }
-        },
-
-        computed: {
-          disableSaveNewBookButton() {
-            return this.newBook.bookName === '' || this.newBook.belongsTo === '' || this.newBook.class === ''
-          },
-
-          disableSaveBorrowBookButton() {
-            return this.studentName === ''
-          }
-        }
-      }).mount('#app')
+        }).mount('#app')
     </script>
-  </body>
+</body>
+
 </html>
