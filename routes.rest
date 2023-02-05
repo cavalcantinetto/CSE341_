@@ -18,13 +18,13 @@ Content-Type: application/json
 
 
 {
-    "email": "prof@jenny.com",
+    "email": "prof@jenny2.com",
     "password": "oiafjnsdoijfa"
 }
 
 ###
 
-GET http://127.0.0.1:8080/teachers
+GET http://127.0.0.1:8080/bookspage
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50TmFtZSI6IlNhbWlyYSIsInN0dWRlbnRFbWFpbCI6ImthbGFmQGFiZHVsLmNvbSIsImlhdCI6MTY3NDk1MjQ0NX0.HJdZyoznT5_7T8eZ94Jq44e0htCuJ8XLKk2BNevCJ9A
 
 ###

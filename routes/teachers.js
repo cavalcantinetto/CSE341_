@@ -9,11 +9,13 @@ routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authorization = require('../functions/auth');
+const cookieParser = require('cookie-parser');
 
 
-
-//get contacts
-routes.get('/teachers', authorization, async(req, res) => {
+routes.use(cookieParser())
+    //get contacts
+routes.get('/teachers', async(req, res) => {
     try {
         const teachers = await teacherdb.find();
         if (!teachers) {
@@ -71,17 +73,15 @@ routes.post('/teachers/register',
 
 //routing Login
 
-routes.post('/teachers/login', async(req, res) => {
+routes.post('/login', async(req, res) => {
     const teacherEmail = req.body.email;
     const teacherPass = req.body.password;
-    console.log(teacherEmail, teacherPass);
     if (teacherEmail === null) {
         return res.status(400).json({ message: err.message });
 
     }
 
     try {
-        console.log("entrei no try");
         //get data using email as a parameter
         teacherData = await teacherdb.find({ teacherEmail: teacherEmail });
         if (teacherData == null) {
@@ -94,16 +94,21 @@ routes.post('/teachers/login', async(req, res) => {
         //if of moveon to the next stage
         //JsonWebToken will be delivered
         if (result) {
-            // console.log("entrei aqui")
             const userData = {
                 teacherName: teacherData.teacherName,
                 teacherEmail: teacherData.teacherEmail
             }
-            const accessToken = jwt.sign(userData,
-                process.env.ACCESS_TOKEN_SECRET)
-            res.json({ accessToken: accessToken })
-            console.log("Success")
-
+            try {
+                const accessToken = jwt.sign(userData,
+                    process.env.ACCESS_TOKEN_SECRET);
+                //saves the token in a secure cookie. Remember to set httpOnly to true
+                res.cookie('accessToken', accessToken)
+                    //res.json({ accessToken: accessToken })
+                res.setHeader("Authorization", "Bearer " + accessToken);
+                res.redirect('../books');
+            } catch (error) {
+                res.status(500).send(error);
+            }
         } else {
             res.status(401).json({ message: "Password Incorrect" })
         }
@@ -180,20 +185,6 @@ async function getteacher(req, res, next) {
     }
     res.teacher = teacher;
     next();
-
-}
-
-async function authorization(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) {
-        return res.status(401).json({ message: "Not Authorized" })
-    }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.status(403), json({ message: "invalid Token" });
-        req.user = user;
-        next();
-    })
 
 }
 module.exports = routes

@@ -3,20 +3,25 @@ const routes = express.Router();
 const Book = require('../models/books')
 const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
+const authorization = require('../functions/auth');
+
+//routes.use(authorization)
 
 //get books
-routes.get('/books', async(req, res) => {
-    try {
-        const books = await Book.find();
-        if (!books) {
-            return res.status(204).json({ message: "No data was found" })
-        } else {
-            return res.status(200).json(books);
-        }
+routes.get('/', async(req, res) => {
+    res.render('pages/bookspage')
 
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+    // try {
+    //     const books = await Book.find();
+    //     if (!books) {
+    //         return res.status(204).json({ message: "No data was found" })
+    //     } else {
+    //         return res.status(200).json(books);
+    //     }
+
+    // } catch (err) {
+    //     res.status(500).json({ message: err.message });
+    // }
 })
 
 //get one book

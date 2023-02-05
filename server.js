@@ -1,9 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+//it will handle the cookies
 const cookieParser = require('cookie-parser')
-
 const app = express();
 const port = 8080;
+const passport = require('passport');
+const initialize = require('./functions/passport-config');
+// const bodyParser = require('body-parser');
+
+
 
 //sets cors and others 
 app.use(cors())
@@ -12,7 +17,9 @@ app.use(cors())
     .use(cookieParser())
     .use(express.static('public'));
 
+//nedded to use ejs for frontEnd
 app.set('view engine', 'ejs');
+
 
 app.get('/', function(req, res) {
     res.render('pages/login');
@@ -22,21 +29,21 @@ app.post('/login', function(req, res) {
     const username = req.body.username
     const password = req.body.password
 
+
     if (password === '1234') {
         res.cookie('pageToken', { username: 'ana', profile: 'teacher' })
         res.redirect('bookspage');
-    }
-    else {
-        res.redirect('/')
+    } else {
+        res.redirect('/teachers/login')
     }
 });
 
 app.get('/bookspage', function(req, res) {
-    const token = req.cookies['pageToken']
-    if (token)
-        res.render('pages/bookspage');
-    else
-        res.redirect('/');
+    const token = req.cookies['accessToken'];
+    // if (token)
+    //     res.render('pages/bookspage');
+    // else
+    //     res.redirect('/');
 });
 
 //set swagger
@@ -70,15 +77,15 @@ mongoose.connectDb(url)
 
 //creates a middleware to students
 const studentsRoutes = require('./routes/students');
-app.use('/', studentsRoutes);
+app.use('/students', studentsRoutes);
 
 //creates a middleware to students
 const booksRoutes = require('./routes/books');
-app.use('/', booksRoutes);
+app.use('/books', booksRoutes);
 
 //creates a middleware to teachers
 const teachersRoutes = require('./routes/teachers');
-app.use('/', teachersRoutes);
+app.use('/teachers', teachersRoutes);
 
 //defines the port to listen to:
 app.listen(port, () => console.log(`server listenning to ${port}`));
