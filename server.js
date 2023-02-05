@@ -23,29 +23,27 @@ app.use(cors())
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-    res.render('pages/login');
+    res.render('pages/login', { message: '' });
 });
 
 app.post('/login', async function(req, res) {
     const teacherEmail = req.body.email;
     const teacherPass = req.body.password;
 
-    if (teacherEmail === null) {
-        return res.status(400).json({ message: err.message });
+    if (teacherEmail === '' ) {
+        return res.render('pages/login', { message: 'Please fill the email field'});
     }
 
     //get data using email as a parameter
-    teacherData = await teacherdb.find({ teacherEmail: teacherEmail });
-    if (teacherData == null) {
-        return res.status(404).json({ message: "Not found" });
-    } else {
-        teacherData = teacherData[0];
+    teacherData = await teacherdb.findOne({ teacherEmail: teacherEmail }).exec();
+    if (teacherData === null) {
+        return res.render('pages/login', { message: 'There is no teacher with this e-mail'});
     }
 
     //compare password with hashed password
     const result = await bcrypt.compare(teacherPass, teacherData.teacherPass);
     if (result === false) {
-        res.status(401).json({ message: "Password Incorrect" })
+        return res.render('pages/login', { message: `Incorrect password for ${teacherEmail}`});
     }
 
     const accessToken = jwt.sign({ teacherName: teacherData.teacherName, teacherEmail: teacherData.teacherEmail },
