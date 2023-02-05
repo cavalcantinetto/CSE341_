@@ -1,9 +1,9 @@
 const express = require('express');
 const routes = express.Router();
-const Book = require('../models/books')
+const Book = require('../../models/books')
 const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
-const authorization = require('../functions/auth');
+const authorization = require('../../functions/auth');
 
 //routes.use(authorization)
 
