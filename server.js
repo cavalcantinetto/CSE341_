@@ -1,5 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const teacherdb = require('./models/teacher')
+
 //it will handle the cookies
 const cookieParser = require('cookie-parser')
 const app = express();
@@ -7,8 +11,6 @@ const port = 8080;
 const passport = require('passport');
 const initialize = require('./functions/passport-config');
 // const bodyParser = require('body-parser');
-
-
 
 //sets cors and others 
 app.use(cors())
@@ -20,30 +22,45 @@ app.use(cors())
 //nedded to use ejs for frontEnd
 app.set('view engine', 'ejs');
 
-
 app.get('/', function(req, res) {
     res.render('pages/login');
 });
 
-app.post('/login', function(req, res) {
-    const username = req.body.username
-    const password = req.body.password
+app.post('/login', async function(req, res) {
+    const teacherEmail = req.body.email;
+    const teacherPass = req.body.password;
 
-
-    if (password === '1234') {
-        res.cookie('pageToken', { username: 'ana', profile: 'teacher' })
-        res.redirect('bookspage');
-    } else {
-        res.redirect('/teachers/login')
+    if (teacherEmail === null) {
+        return res.status(400).json({ message: err.message });
     }
+
+    //get data using email as a parameter
+    teacherData = await teacherdb.find({ teacherEmail: teacherEmail });
+    if (teacherData == null) {
+        return res.status(404).json({ message: "Not found" });
+    } else {
+        teacherData = teacherData[0];
+    }
+
+    //compare password with hashed password
+    const result = await bcrypt.compare(teacherPass, teacherData.teacherPass);
+    if (result === false) {
+        res.status(401).json({ message: "Password Incorrect" })
+    }
+
+    const accessToken = jwt.sign({ teacherName: teacherData.teacherName, teacherEmail: teacherData.teacherEmail },
+        process.env.ACCESS_TOKEN_SECRET);
+    //saves the token in a secure cookie. Remember to set httpOnly to true
+    res.cookie('accessToken', accessToken)
+    res.redirect('bookspage');
 });
 
-app.get('/bookspage', function(req, res) {
+app.get('/bookspage', pagesAuthentication, function(req, res) {
     const token = req.cookies['accessToken'];
-    // if (token)
-    //     res.render('pages/bookspage');
-    // else
-    //     res.redirect('/');
+    if (token)
+        res.render('pages/bookspage');
+    else
+        res.redirect('/');
 });
 
 //set swagger
@@ -89,3 +106,14 @@ app.use('/teachers', teachersRoutes);
 
 //defines the port to listen to:
 app.listen(port, () => console.log(`server listenning to ${port}`));
+
+async function pagesAuthentication(req, res, next) {
+    const token = req.cookies['accessToken']
+
+    if (token == null) return res.redirect('/');
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.redirect('/');
+        next();
+    })
+}

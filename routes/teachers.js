@@ -78,12 +78,11 @@ routes.post('/login', async(req, res) => {
     const teacherPass = req.body.password;
     if (teacherEmail === null) {
         return res.status(400).json({ message: err.message });
-
     }
 
     try {
         //get data using email as a parameter
-        teacherData = await teacherdb.find({ teacherEmail: teacherEmail });
+        teacherData = await teacherdb.findOne({ teacherEmail: teacherEmail });
         if (teacherData == null) {
             return res.status(404).json({ message: "Not found" });
         } else {
@@ -105,7 +104,7 @@ routes.post('/login', async(req, res) => {
                 res.cookie('accessToken', accessToken)
                     //res.json({ accessToken: accessToken })
                 res.setHeader("Authorization", "Bearer " + accessToken);
-                res.render('pages/bookspage')
+                res.redirect('bookspage');
             } catch (error) {
                 res.status(500).send(error);
             }
@@ -116,7 +115,6 @@ routes.post('/login', async(req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-
 })
 
 
