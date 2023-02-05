@@ -9,19 +9,17 @@ const authorization = require('../functions/auth');
 
 //get books
 routes.get('/', async(req, res) => {
-    res.render('pages/bookspage')
+    try {
+        const books = await Book.find();
+        if (!books) {
+            return res.status(204).json({ message: "No data was found" })
+        } else {
+            return res.status(200).json(books);
+        }
 
-    // try {
-    //     const books = await Book.find();
-    //     if (!books) {
-    //         return res.status(204).json({ message: "No data was found" })
-    //     } else {
-    //         return res.status(200).json(books);
-    //     }
-
-    // } catch (err) {
-    //     res.status(500).json({ message: err.message });
-    // }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 })
 
 //get one book

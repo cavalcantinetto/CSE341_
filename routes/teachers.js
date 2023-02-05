@@ -105,7 +105,7 @@ routes.post('/login', async(req, res) => {
                 res.cookie('accessToken', accessToken)
                     //res.json({ accessToken: accessToken })
                 res.setHeader("Authorization", "Bearer " + accessToken);
-                res.redirect('../books');
+                res.render('pages/bookspage')
             } catch (error) {
                 res.status(500).send(error);
             }
