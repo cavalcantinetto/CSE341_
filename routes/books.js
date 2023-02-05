@@ -8,7 +8,7 @@ const authorization = require('../functions/auth');
 //routes.use(authorization)
 
 //get books
-routes.get('/', async(req, res) => {
+routes.get('/', authorization, async(req, res) => {
     try {
         const books = await Book.find();
         if (!books) {
