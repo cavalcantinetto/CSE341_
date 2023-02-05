@@ -31,7 +31,7 @@ app.post('/login', async function(req, res) {
     const teacherPass = req.body.password;
 
     if (teacherEmail === '' ) {
-        return res.render('pages/login', { message: 'Please fill the email field'});
+        return res.render('pages/login', { message: 'Please fill the e-mail field'});
     }
 
     //get data using email as a parameter
