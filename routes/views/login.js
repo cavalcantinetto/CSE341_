@@ -1,8 +1,8 @@
 const express = require('express');
 const routes = express.Router();
 
-routes.get('/', () => {
-    res.render('pages/login');
+routes.get('/', (req, res) => {
+    res.render('pages/login', { message: '' });
 })
 
 module.exports = routes;

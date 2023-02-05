@@ -34,7 +34,7 @@ mongoose.connectDb(url)
 
 //Set a middleware to login user
 const loginView = require('./routes/views/login');
-app.use('/login', loginView)
+app.use('/', loginView)
 
 //Set a middleware to login user
 const loginApi = require('./routes/apis/login');

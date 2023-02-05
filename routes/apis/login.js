@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
-const teacherdb = require('../models/teacher')
+const teacherdb = require('../../models/teacher')
 const bp = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
@@ -9,7 +9,7 @@ routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const authorization = require('../functions/auth');
+const authorization = require('../../functions/auth');
 const cookieParser = require('cookie-parser');
 
 routes.get('/', () => {
@@ -44,3 +44,5 @@ routes.post('/', async function(req, res) {
     res.cookie('accessToken', accessToken)
     res.redirect('bookspage');
 });
+
+module.exports = routes

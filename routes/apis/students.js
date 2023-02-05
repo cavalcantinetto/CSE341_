@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
-const studentdb = require('../models/students')
+const studentdb = require('../../models/students')
 const bp = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const { default: mongoose } = require('mongoose');
@@ -191,4 +191,5 @@ async function authorization(req, res, next) {
     })
 
 }
+
 module.exports = routes
