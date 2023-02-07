@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken');
 const authorization = require('../../functions/auth');
 const cookieParser = require('cookie-parser');
 
-routes.post('/', async function(req, res) {
+routes.post('/', async function(req, res, next) {
     const teacherEmail = req.body.email;
     const teacherPass = req.body.password;
 
@@ -38,7 +38,9 @@ routes.post('/', async function(req, res) {
         process.env.ACCESS_TOKEN_SECRET);
     //saves the token in a secure cookie. Remember to set httpOnly to true
     res.cookie('accessToken', accessToken)
-    res.render('pages/bookspage', { token: accessToken });
+    res.status(200).json({ token: accessToken });
+    next();
+
 });
 
 module.exports = routes

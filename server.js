@@ -5,7 +5,7 @@ const cors = require('cors');
 //it will handle the cookies
 const cookieParser = require('cookie-parser')
 const app = express();
-const port = 8080;
+const port = 3000;
 
 //sets cors and others 
 app.use(cors())
@@ -38,11 +38,13 @@ app.use('/', loginView)
 
 //Set a middleware to login user
 const loginApi = require('./routes/apis/login');
-app.use('/login', loginApi)
+app.use('/login', loginApi, (req, res) => {
+    console.log("estou aqui");
+})
 
 //set swagger
-// const swaggerRoutes = require('./routes/apis/swagger');
-// app.use('/api-docs', swaggerRoutes);
+const swaggerRoutes = require('./routes/apis/swagger');
+app.use('/api-docs', swaggerRoutes);
 
 //creates a middleware to students
 const studentsRoutes = require('./routes/apis/students');

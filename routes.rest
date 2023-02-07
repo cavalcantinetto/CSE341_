@@ -13,9 +13,8 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8080/teachers/login
+POST http://127.0.0.1:3000/login
 Content-Type: application/json
-
 
 {
     "email": "prof@jenny2.com",
@@ -24,10 +23,56 @@ Content-Type: application/json
 
 ###
 
-GET http://127.0.0.1:8080/bookspage
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50TmFtZSI6IlNhbWlyYSIsInN0dWRlbnRFbWFpbCI6ImthbGFmQGFiZHVsLmNvbSIsImlhdCI6MTY3NDk1MjQ0NX0.HJdZyoznT5_7T8eZ94Jq44e0htCuJ8XLKk2BNevCJ9A
+GET http://127.0.0.1:3000/books
 
 ###
+
+
+GET http://127.0.0.1:3000/books/63dd000be365363b4ed145dd
+
+###
+
+POST http://127.0.0.1:3000/books/insertbook
+Content-Type: application/json
+
+
+{ 
+    "bookName": "Invasion",
+    "belongsTo": "Alfredo Silva",
+    "class": "year 4"
+}
+
+
+###
+
+PATCH  http://127.0.0.1:3000/books/63e285c9a23888a3889337b4
+Content-Type: application/json
+
+
+{ 
+    "studentName": "Alfredo J. Silva"
+}
+
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 POST http://127.0.0.1:8080/teachers/logout
 
 

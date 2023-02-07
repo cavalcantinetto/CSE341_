@@ -8,7 +8,7 @@ router.use(cors())
     .use(express.json())
     .use(express.urlencoded({ extended: true }));
 
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(swaggerDocument));
 
 module.exports = router;
