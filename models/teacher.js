@@ -25,6 +25,10 @@ const contactSchema = new mongoose.Schema({
     "teacherClass": {
         type: String,
         required: true
+    },
+    "dateInserted": {
+        type: String,
+        required: true
     }
 
 })

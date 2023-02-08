@@ -1,8 +1,6 @@
 const express = require('express');
 const routes = express.Router();
 const Book = require('../../models/books')
-const { body, validationResult } = require('express-validator');
-const { default: mongoose, now } = require('mongoose');
 const authorization = require('../../functions/auth');
 
 //get books
@@ -28,7 +26,6 @@ routes.get('/:id', authorization, getbook, (req, res) => {
 
 //insert book
 routes.post('/insertbook', authorization, async(req, res) => {
-    console.log('estou aqui')
     try {
         const date = new Date().toLocaleDateString()
         const newBook = new Book({
@@ -84,7 +81,7 @@ routes.delete('/:id', authorization, getbook, async(req, res) => {
 
 
 
-//thsi function will get an specific book at database.
+//this function will get an specific book at database.
 async function getbook(req, res, next) {
     let book;
     try {

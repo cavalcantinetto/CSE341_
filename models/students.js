@@ -6,18 +6,13 @@ const contactSchema = new mongoose.Schema({
         required: true
     },
     "studentEmail": {
-        type: String,
-        required: true
+        type: String
     },
     "studentBirth": {
         type: String,
         required: true
     },
-    "studentPass": {
-        type: String,
-        required: true
-    },
-    "studentLevel": {
+    "studentClass": {
         type: String,
         required: true
     }

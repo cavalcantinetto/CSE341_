@@ -15,7 +15,7 @@ const cookieParser = require('cookie-parser');
 
 routes.use(cookieParser())
     //get contacts
-routes.get('/teachers', async(req, res) => {
+routes.get('/', authorization, async(req, res) => {
     try {
         const teachers = await teacherdb.find();
         if (!teachers) {
@@ -30,45 +30,37 @@ routes.get('/teachers', async(req, res) => {
 })
 
 //get one contact
-routes.get('/teachers/:id', getteacher, (req, res) => {
+routes.get('/:id', authorization, getteacher, (req, res) => {
     //get teacher validates return.
     return res.json(res.teacher);
 })
 
 //insert contact
-routes.post('/teachers/register',
-    //insert a middleWare to ensure email is correctly formatted
-    //After it checks if name is not null (empty)
-    body('email').isEmail().normalizeEmail(),
-    body('name').not().isEmpty().trim().escape(),
-    async(req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            console.log("catch an error")
-            return res.status(400).json({ errors: errors.array() });
-        }
+routes.post('/register', async(req, res) => {
 
+    try {
+        //encrypt password before put it in data base
+        const hashedPass = await bcrypt.hash(req.body.password, 10);
+        date = now().toString;
+        //connect and try to insert in Db
+        const newteacher = new teacherdb({
+            "teacherName": req.body.name,
+            "teacherEmail": req.body.email,
+            "teacherBirth": req.body.birth,
+            "teacherPass": hashedPass,
+            "teacherLevel": req.body.teacherLevel,
+            "teacherClass": req.body.class,
+            "dateInserted": date
 
-        try {
-            //encrypt password before put it in data base
-            const hashedPass = await bcrypt.hash(req.body.password, 10);
-            //connect and try to insert in Db
-            const newteacher = new teacherdb({
-                "teacherName": req.body.name,
-                "teacherEmail": req.body.email,
-                "teacherBirth": req.body.birth,
-                "teacherPass": hashedPass,
-                "teacherLevel": req.body.teacherLevel
+        })
+        const newcontactresult = await newteacher.save();
+        res.status(201).json(newcontactresult);
 
-            })
-            const newcontactresult = await newteacher.save();
-            res.status(201).json(newcontactresult);
-
-        } catch (err) {
-            console.log('falhou ao gravar dados do aluno')
-            res.status(400).json({ message: err.message });
-        }
-    })
+    } catch (err) {
+        console.log('falhou ao gravar dados do aluno')
+        res.status(400).json({ message: err.message });
+    }
+})
 
 
 //routing Login

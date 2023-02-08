@@ -50,9 +50,52 @@ Content-Type: application/json
 
 
 { 
-    "studentName": "Alfredo J. Silva"
+    "studentName": " Alfredinho Silva"
 }
 
+###
+
+DELETE  http://127.0.0.1:3000/books/63e2853d5812fc4d482ff036
+
+###
+STUDENTS ROUTES
+###
+GET http://127.0.0.1:3000/students
+
+###
+
+
+GET http://127.0.0.1:3000/students/63c89c7acc8058e429b6750d
+
+###
+
+POST http://127.0.0.1:3000/students/insertstudent
+Content-Type: application/json
+
+
+{ 
+        "name": "Fernandinho da Silva",
+        "email": "",
+        "birth": "31/1/2011",
+        "class": "Year 5"
+}
+
+
+###
+
+PUT http://127.0.0.1:3000/students/63e2c2aaa645227e5cb40cb2
+Content-Type: application/json
+
+
+{ 
+        "name": "Samira Kalaf",
+        "email": "fernando@fernandin.com",
+        "birth": "31/1/2011",
+        "class": "Year 5"
+}
+###
+
+DELETE  http://127.0.0.1:3000/books/63e2853d5812fc4d482ff036
 
 ###
 

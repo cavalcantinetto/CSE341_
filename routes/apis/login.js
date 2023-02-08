@@ -3,14 +3,10 @@ const express = require('express');
 const routes = express.Router();
 const teacherdb = require('../../models/teacher')
 const bp = require('body-parser');
-const { body, validationResult } = require('express-validator');
-const { default: mongoose } = require('mongoose');
 routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const authorization = require('../../functions/auth');
-const cookieParser = require('cookie-parser');
 
 routes.post('/', async function(req, res, next) {
     const teacherEmail = req.body.email;
@@ -31,7 +27,8 @@ routes.post('/', async function(req, res, next) {
     //compare password with hashed password
     const result = await bcrypt.compare(teacherPass, teacherData.teacherPass);
     if (result === false) {
-        res.status(401).json({ message: "Password Incorrect" })
+        return res.status(401).json({ message: "Password Incorrect" })
+
     }
 
     const accessToken = jwt.sign({ teacherName: teacherData.teacherName, teacherEmail: teacherData.teacherEmail },
@@ -42,5 +39,13 @@ routes.post('/', async function(req, res, next) {
     next();
 
 });
+
+routes.get('/logout', (req, res) => {
+    console.log(req.cookies.accessToken)
+    req.cookies.accessToken = "";
+    res.cookie('accessToken', "");
+    res.status(200).json({ message: "Token removed" })
+})
+
 
 module.exports = routes
