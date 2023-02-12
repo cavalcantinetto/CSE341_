@@ -12,7 +12,7 @@ routes.use(bp.urlencoded({ extended: true }))
 
 
 //get all students
-routes.get('/', authorization, async(req, res) => {
+routes.get('/getall', authorization, async(req, res) => {
     try {
         const students = await Student.find();
         if (!students) {
@@ -27,13 +27,13 @@ routes.get('/', authorization, async(req, res) => {
 })
 
 //get one student
-routes.get('/:id', authorization, getstudent, (req, res) => {
+routes.get('/getone/:id', authorization, getstudent, (req, res) => {
     //get student validates return.
     return res.json(res.student);
 })
 
 //insert Student
-routes.post('/insertstudent', authorization, async(req, res) => {
+routes.post('/register', authorization, async(req, res) => {
     if (!req.body.name) {
         return res.status(400).json({ errors: "Name is null" })
     }
@@ -64,7 +64,7 @@ routes.post('/insertstudent', authorization, async(req, res) => {
 })
 
 //insert Student
-routes.patch('/:id', authorization, getstudent, async(req, res) => {
+routes.patch('/update/:id', authorization, getstudent, async(req, res) => {
 
     try {
         if (req.body.name) {
@@ -91,7 +91,7 @@ routes.patch('/:id', authorization, getstudent, async(req, res) => {
     }
 })
 
-routes.delete('/:id', authorization, getstudent, async(req, res) => {
+routes.delete('/remove/:id', authorization, getstudent, async(req, res) => {
     try {
         res.student.remove();
         res.status(200).json({ message: "Student was deleted" })

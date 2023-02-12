@@ -7,8 +7,10 @@ routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+require('../../functions/passport-config');
 
-routes.post('/', async function(req, res, next) {
+routes.post('/login', async function(req, res, next) {
     const teacherEmail = req.body.email;
     const teacherPass = req.body.password;
 

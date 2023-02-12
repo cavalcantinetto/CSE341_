@@ -4,7 +4,7 @@ const Book = require('../../models/books')
 const authorization = require('../../functions/auth');
 
 //get books
-routes.get('/', authorization, async(req, res) => {
+routes.get('/getall', authorization, async(req, res) => {
     try {
         const books = await Book.find();
         if (!books) {
@@ -19,13 +19,14 @@ routes.get('/', authorization, async(req, res) => {
 })
 
 //get one book
-routes.get('/:id', authorization, getbook, (req, res) => {
+routes.get('/getone/:id', authorization, getbook, (req, res) => {
     //get book validates return.
     return res.json(res.book);
 })
 
 //insert book
-routes.post('/insertbook', authorization, async(req, res) => {
+routes.post('/register', authorization, async(req, res) => {
+    //TO-DO if tests for variables
     try {
         const date = new Date().toLocaleDateString()
         const newBook = new Book({
@@ -36,8 +37,6 @@ routes.post('/insertbook', authorization, async(req, res) => {
             timesBorrowed: 0,
             dateOfBorrow: "0",
             date: date
-
-
         })
         const newBookresult = await newBook.save();
         res.status(201).json(newBookresult);
@@ -49,7 +48,7 @@ routes.post('/insertbook', authorization, async(req, res) => {
 })
 
 //update book
-routes.patch('/:id', authorization, getbook,
+routes.patch('/update/:id', authorization, getbook,
     async(req, res) => {
         try {
             res.book.borrowedBy = req.body.studentName
@@ -69,7 +68,7 @@ routes.patch('/:id', authorization, getbook,
 )
 
 //delete book
-routes.delete('/:id', authorization, getbook, async(req, res) => {
+routes.delete('/remove/:id', authorization, getbook, async(req, res) => {
     try {
         await res.book.remove();
         res.status(200).json({ message: "book was deleted" })

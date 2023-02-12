@@ -32,7 +32,7 @@ GET http://127.0.0.1:3000/books/63dd000be365363b4ed145dd
 
 ###
 
-POST http://127.0.0.1:3000/books/insertbook
+POST http://127.0.0.1:3000/books/register
 Content-Type: application/json
 
 
@@ -65,11 +65,11 @@ GET http://127.0.0.1:3000/students
 ###
 
 
-GET http://127.0.0.1:3000/students/63c89c7acc8058e429b6750d
+GET http://127.0.0.1:3000/students/63e2c2aaa645227e5cb40cb2
 
 ###
 
-POST http://127.0.0.1:3000/students/insertstudent
+POST http://127.0.0.1:3000/students/register
 Content-Type: application/json
 
 
@@ -83,14 +83,12 @@ Content-Type: application/json
 
 ###
 
-PUT http://127.0.0.1:3000/students/63e2c2aaa645227e5cb40cb2
+PATCH  http://127.0.0.1:3000/students/63c89c7acc8058e429b6750d
 Content-Type: application/json
 
 
 { 
-        "name": "Samira Kalaf",
-        "email": "fernando@fernandin.com",
-        "birth": "31/1/2011",
+        "email": "pedro@pedro.com",
         "class": "Year 5"
 }
 ###
@@ -99,11 +97,31 @@ DELETE  http://127.0.0.1:3000/books/63e2853d5812fc4d482ff036
 
 ###
 
+GET http://127.0.0.1:3000/login/logout
+
+###
 
 
+GET http://127.0.0.1:3000/teachers
 
 
+###
+GET http://127.0.0.1:3000/teachers/63d5c70e22e11f82b3f2af94
 
+###
+POST http://127.0.0.1:3000/teachers/register
+Content-Type: application/json
+
+{
+    "name": "Josezinho da Silva",
+    "email": "professor@maple.com",
+    "birth": "01/02/2000",
+    "class": "Year 3",
+    "password": "oiafjnsdoijfa",
+    "teacherLevel": "1"
+}
+
+###
 
 
 

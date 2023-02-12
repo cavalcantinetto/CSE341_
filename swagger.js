@@ -1,14 +1,15 @@
 const swaggerAutogen = require('swagger-autogen')();
 const outputFile = "./swagger.json";
-const endpointsFiles = ["./routes/apis/students.js", "./routes/apis/teachers.js", "./routes/apis/books.js"];
+const endpointsFiles = ["./server.js"];
 
 const doc = {
     info: {
         title: 'book Club API',
         description: 'Description',
     },
-    host: 'localhost:8080',
-    schemes: ['https', 'http'],
+    host: 'localhost:3000',
+    schemes: ['http'],
+
 };
 
 //run swagger while project
