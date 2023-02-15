@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:3000/login
+POST http://127.0.0.1:3000/login/login
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 
-GET http://127.0.0.1:3000/books
+GET http://127.0.0.1:3000/books/getall
 
 ###
 
@@ -60,7 +60,7 @@ DELETE  http://127.0.0.1:3000/books/63e2853d5812fc4d482ff036
 ###
 STUDENTS ROUTES
 ###
-GET http://127.0.0.1:3000/students
+GET http://127.0.0.1:3000/students/getall
 
 ###
 
@@ -102,7 +102,7 @@ GET http://127.0.0.1:3000/login/logout
 ###
 
 
-GET http://127.0.0.1:3000/teachers
+GET http://127.0.0.1:3000/teachers/getall
 
 
 ###
@@ -134,7 +134,7 @@ Content-Type: application/json
 
 
 
-POST http://127.0.0.1:8080/teachers/logout
+GET http://127.0.0.1:8080/students/getall
 
 
 ###

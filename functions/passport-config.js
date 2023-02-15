@@ -13,6 +13,9 @@ passport.use(new OAuth2Strategy({
         callbackURL: "http://localhost:3000/google/callback"
     },
     function(accessToken, refreshToken, profile, cb) {
+        // console.log(accessToken);
+        // console.log(refreshToken)
+        // console.log(profile)
         return cb(null, profile);
     }
 

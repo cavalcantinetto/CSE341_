@@ -34,7 +34,16 @@ const url = process.env.DATABASE_URL;
 //make a connection
 mongoose.connectDb(url)
 
-
+//passport will handle sessions to keep user data 
+const secret = process.env.SECRET_SESSION;
+app.use(session({
+    secret: secret,
+    resave: true,
+    saveUninitialized: false,
+    cookie: { secure: true }
+}));
+app.use(passport.initialize())
+app.use(passport.session())
 
 /* List of Routes to be handled by the server*/
 

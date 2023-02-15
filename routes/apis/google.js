@@ -6,20 +6,10 @@ routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
 const passport = require('passport');
 require('../../functions/passport-config');
-const session = require('express-session');
+const jwt = require('jsonwebtoken');
+const { authenticate } = require('passport');
 
 
-//passport will handle sessions to keep user data 
-const secret = process.env.SECRET_SESSION;
-routes.use(session({
-    secret: secret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true }
-}));
-routes.use(passport.initialize())
-routes.use(passport.session())
-routes.use(passport.authenticate('session'));
 
 routes.get('/googlelogin',
     passport.authenticate('google', { scope: ['email', 'profile'] }))
@@ -28,12 +18,16 @@ routes.get('/callback', passport.authenticate('google', { failureRedirect: '/log
     async function(req, res, next) {
         const teacherName = await req.user.displayName;
         const teacherEmail = await req.user.email;
-        res.status(200).json({
-            'teacherName': teacherName,
-            'teacherEmail': teacherEmail
-        })
+        const accessToken = jwt.sign({ teacherName: teacherName, teacherEmail: teacherEmail },
+            process.env.ACCESS_TOKEN_SECRET);
+        //saves the token in a secure cookie. Remember to set httpOnly to true
+        res.cookie('accessToken', accessToken)
+            // res.status(200).json({ token: accessToken })
+            // res.setHeader('Authorization', 'Bearer ' + accessToken)
+        res.redirect('/books/getall')
 
     });
+
 
 
 module.exports = routes
