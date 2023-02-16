@@ -10,7 +10,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 passport.use(new OAuth2Strategy({
         clientID: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
-        callbackURL: "https://bookclubapi-pytl.onrender.com/google/callback"
+        callbackURL: "http://localhost:3000/google/callback"
     },
     function(accessToken, refreshToken, profile, cb) {
         // console.log(accessToken);
