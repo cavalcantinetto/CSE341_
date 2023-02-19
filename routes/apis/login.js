@@ -20,13 +20,20 @@ routes.post('/login', async function(req, res, next) {
 
     //get data using email as a parameter
     teacherData = await teacherdb.find({ teacherEmail: teacherEmail });
-    if (teacherData == null) {
-        return res.status(404).json({ message: "Not found" });
+    if (!teacherData) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
     } else {
         teacherData = teacherData[0];
     }
 
+    if (teacherData == undefined) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+
+    }
     //compare password with hashed password
+    if (!teacherData.teacherPass) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+    }
     const result = await bcrypt.compare(teacherPass, teacherData.teacherPass);
     if (result === false) {
         return res.status(401).json({ message: "Password Incorrect" })
@@ -37,8 +44,10 @@ routes.post('/login', async function(req, res, next) {
         process.env.ACCESS_TOKEN_SECRET);
     //saves the token in a secure cookie. Remember to set httpOnly to true
     res.cookie('accessToken', accessToken)
-    res.status(200).json({ token: accessToken });
-    next();
+
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Authorization", "Bearer " + accessToken);
+    res.status(200).json({ token: accessToken, teacherData: teacherData });
 
 });
 
@@ -48,6 +57,8 @@ routes.get('/logout', (req, res) => {
     res.cookie('accessToken', "");
     res.status(200).json({ message: "Token removed" })
 })
+
+// routes.post('/logintest', (req, res) => { console.log(req) })
 
 
 

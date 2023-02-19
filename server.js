@@ -4,6 +4,7 @@ const cors = require('cors');
 require('./functions/passport-config');
 const passport = require('passport')
 const session = require('express-session');
+const path = require('path')
 
 
 //it will handle the cookies
@@ -19,6 +20,8 @@ app.use(cors())
     .use(express.static('public'));
 
 //nedded to use ejs for frontEnd
+
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //require mongoose
@@ -49,7 +52,7 @@ app.use(passport.session())
 
 
 //Set a middleware to login user
-const loginView = require('./routes/views/login');
+const loginView = require('./routes/views/index');
 app.use('/', loginView)
 
 //Set a middleware to login user
@@ -76,10 +79,13 @@ app.use('/books', booksRoutes);
 const teachersRoutes = require('./routes/apis/teachers');
 app.use('/teachers', teachersRoutes);
 
-app.get('/bookspage', function(req, res) {
-    res.render('pages/bookspage');
+app.use('/views', (req, res) => {
+    res.render('index', {
+        foo: ['bar', 'foo']
+    });
 });
 
+app.use('/public/images', express.static(__dirname + '/public/images'));
 
 //defines the port to listen to:
 app.listen(port, () => console.log(`server listenning to ${port}`));

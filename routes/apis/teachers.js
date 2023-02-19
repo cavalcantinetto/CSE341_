@@ -38,12 +38,15 @@ routes.post('/register', [
         body('name').not().isEmpty().trim().escape(),
         body('email').isEmail().normalizeEmail(),
         body('password').isLength({ min: 5 }),
-        body('birth').not().isEmpty().trim().escape(),
         body('class').not().isEmpty().trim().escape(),
-        body('teacherLevel').not().isEmpty().trim().escape()
     ],
-
     async(req, res) => {
+        const email = req.body.email;
+        const emailExist = await CheckEmail(email);
+        console.log(emailExist.length);
+        if (emailExist.length) {
+            return res.status(400).json({ message: "Email já cadastrado no sistema. Tente logar ou cadastre um novo e-mail." })
+        }
         var hashedPass;
         const date = new Date().toLocaleDateString();
         const errors = validationResult(req);
@@ -55,9 +58,8 @@ routes.post('/register', [
                 const newteacher = new teacherdb({
                     "teacherName": req.body.name,
                     "teacherEmail": req.body.email,
-                    "teacherBirth": req.body.birth,
                     "teacherPass": hashedPass,
-                    "teacherLevel": req.body.teacherLevel,
+                    "teacherLevel": "20",
                     "teacherClass": req.body.class,
                     "dateInserted": date
 
@@ -82,9 +84,7 @@ routes.patch('/update/:id', authorization, [getteacher,
         body('name').not().isEmpty().trim().escape(),
         body('email').isEmail().normalizeEmail(),
         body('password').isLength({ min: 5 }),
-        body('birth').not().isEmpty().trim().escape(),
         body('class').not().isEmpty().trim().escape(),
-        body('teacherLevel').not().isEmpty().trim().escape()
 
     ],
     async(req, res) => {
@@ -138,6 +138,24 @@ async function getteacher(req, res, next) {
     }
     res.teacher = teacher;
     next();
+
+}
+
+async function CheckEmail(email) {
+    let teacher;
+    try {
+        teacher = await teacherdb.find({ "teacherEmail": email });
+        if (teacher == null) {
+            return res.status(404).json({ message: "Could not find teacher" })
+        }
+
+    } catch (err) {
+        if (err instanceof mongoose.CastError) {
+            return res.status(400).json({ message: "teacherId doesn't exist" })
+        }
+        return res.status(500).json({ message: err.message })
+    }
+    return teacher;
 
 }
 module.exports = routes

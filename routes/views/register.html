@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Signin MBT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Favicons -->
+
+
+</head>
+
+<body class="m-1 ">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://localhost:3000/">
+                <img src="public/images/logoMaple.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"> BookClub MBT
+            </a>
+        </div>
+    </nav>
+    <div class="container-sm" style="width: 50%;display:none" id="returnBox">
+        <p></p>
+
+    </div>
+    <div class="container-sm" style="width: 50%;" id="loginBox">
+        <fieldset class="align-items-center m-5">
+            <legend class="text-center">Dados Para Registro</legend>
+            <div class="mb-3">
+                <label for="Inputname1" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="Inputname1" aria-describedby="Nome">
+            </div>
+            <div class="dropdown">
+                <label>Classe</label>
+
+                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" id="inputClass">
+                    <option selected></option>
+                    <option>Toddler</option>
+                    <option>Nursery</option>
+                    <option>JK</option>
+                    <option>SK</option>
+                    <option>Year 1</option>
+                    <option>Year 2</option>
+                    <option>Year 3</option>
+                    <option>Year 4</option>
+                    <option>Year 5</option>
+                    <option>Year 6</option>
+                    <option>Year 7</option>
+                  </select>
+            </div>
+            <div class="mb-3">
+                <label for="InputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="InputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="InputPassword1">
+            </div>
+            <div class="text-center">
+                <button type="button" id='postButton' class="btn btn-primary">Registrar</button>
+            </div>
+        </fieldset>
+    </div>
+
+</body>
+<script>
+    const postButton = document.getElementById('postButton');
+    const baseURL = new URL('http://localhost:3000/teachers/register');
+    let responseJson;
+    postButton.addEventListener('click', async() => {
+        const name = document.getElementById('Inputname1').value;
+        const email = document.getElementById('InputEmail1').value;
+        const classe = document.getElementById('inputClass').value;
+        const password = document.getElementById('InputPassword1').value;
+        if (!name) {
+            alert("Você precisa digitar um Nome válido")
+            return
+        }
+        if (!email) {
+            alert("Você precisa digitar um Email válido")
+            return
+        }
+        if (!classe) {
+            alert("Você precisa selecionar uma classe válida")
+            return
+        }
+        if (!password) {
+            alert("Você precisa digitar um Password")
+            return
+        }
+        const data = {
+            "name": name,
+            "email": email,
+            "class": classe,
+            "password": password
+
+        }
+        const response = await getAPIResponse(baseURL, data);
+        console.log(response.status)
+        const responseJson = await response.json();
+        const returnBox = document.getElementById('returnBox');
+        const loginBox = document.getElementById('loginBox');
+        if (response.status >= 400) {
+            console.log(responseJson)
+            alert(`Houve um erro ao cadastrar. Tente novamente!\nMensagem de erro: ${responseJson.message}`)
+            return
+        }
+        if (!responseJson.errors && responseJson) {
+            returnBox.style.display = 'block';
+            loginBox.style.display = 'none';
+            const name = responseJson.teacherName
+                // const element = document.createTextNode(`${responseJson.teacherName}, Seu cadastro foi realizado com Sucesso, Clique ` + "<a href='http://localhost:3000/'}>AQUI</a>retorne à tela de login para prosseguir");
+                // const newElement = document.createElement('h1');
+                // newElement.appendChild(element);
+            returnBox.innerHTML = `<h3>${responseJson.teacherName}, Seu cadastro foi realizado com Sucesso, Clique <a href='http://localhost:3000/'}>AQUI</a> e retorne à tela de login para prosseguir.</h3>`;
+
+
+        } else {
+            alert(`Houve um erro ao cadastrar. Tente novamente!\nMensagem de erro: ${responseJson.errors[0].param}: ${responseJson.errors[0].msg}`);
+            return
+
+        }
+    })
+
+
+    async function getAPIResponse(baseURL, data) {
+        const response = await fetch(baseURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return response;
+    }
+</script>
+
+
+</html>

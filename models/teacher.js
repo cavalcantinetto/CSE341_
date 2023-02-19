@@ -10,10 +10,6 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    "teacherBirth": {
-        type: String,
-        required: true
-    },
     "teacherPass": {
         type: String,
         required: true
