@@ -13,7 +13,9 @@ const app = express();
 const port = 3000;
 
 //sets cors and others 
-app.use(cors())
+app.use(cors({
+    origin: process.env.ALLOWED_CLIENT
+}))
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
     .use(cookieParser())
@@ -72,18 +74,30 @@ const studentsRoutes = require('./routes/apis/students');
 app.use('/students', studentsRoutes);
 
 //creates a middleware to students
-const booksRoutes = require('./routes/apis/books');
-app.use('/books', booksRoutes);
+const classesRoutes = require('./routes/apis/classe');
+app.use('/classes', classesRoutes);
 
 //creates a middleware to teachers
 const teachersRoutes = require('./routes/apis/teachers');
 app.use('/teachers', teachersRoutes);
 
-app.use('/views', (req, res) => {
-    res.render('index', {
-        foo: ['bar', 'foo']
-    });
-});
+//creates a middleware to schedule
+const scheduleRoutes = require('./routes/apis/schedule');
+app.use('/schedule', scheduleRoutes);
+
+//creates a middleware to services
+const servicesRoutes = require('./routes/apis/services');
+app.use('/services', servicesRoutes);
+
+
+//creates a middleware to services
+const cardapiosRoutes = require('./routes/apis/cardapios');
+app.use('/cardapios', cardapiosRoutes);
+
+//creates a middleware to services
+const pedidosRoutes = require('./routes/apis/pedidos');
+app.use('/pedidos', pedidosRoutes);
+
 
 app.use('/public/images', express.static(__dirname + '/public/images'));
 

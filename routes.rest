@@ -1,47 +1,56 @@
 
 //"password": "oiafjnsdoijfa",
 ###
-POST http://127.0.0.1:8080/teachers/register
+
+POST http://127.0.0.1:3000/schedule/register
 Content-Type: application/json
 
 {
-    "name": "Prof. Rafa",
-    "email": "prof@rafa.com",
-    "birth": "1/10/1612",
-    "password": "oiafjnsdoijfa",
-    "teacherLevel": "year7"
-    "teacherClass": "JK",
+    "nome": "Rafa",
+    "classe": "year 5",
+    "svc": "diária de almoço",
+    "qtd": "1",
+    "dateBegin": "01-02-2023",
+    "dateEnd": "01-02-2023"
+
 }
 
 ###
+POST http://127.0.0.1:3000/schedule/register
+Content-Type: application/json
+
+{
+    "student": "63c89c7acc8058e429b6750d",
+    "classe": "640b57779f2c33c472c5d21e",
+    "svc": "640a3dd087fc10318c8499dd",
+    "qtd": 1,
+    "dateBegin":"01-01-2023", 
+    "dateEnd":"01-31-2023",
+    "comeu": "false",
+    "cobrou": "false"
+}
+
+###
+
+DELETE http://127.0.0.1:3000/services/remove/640a3de987fc10318c8499df
+
+
+###
+
+
+GET http://127.0.0.1:3000/classes/getall
+###
+
 POST http://127.0.0.1:3000/login/login
-Content-Type: application/json
-
-{
-    "email": "prof@jenny2.com",
-    "password": "oiafjnsdoijfa"
-}
-
-###
-
-GET http://127.0.0.1:3000/books/getall
-
-
-###
-
-
-GET http://127.0.0.1:3000/books/63dd000be365363b4ed145dd
-
-###
-
-POST http://127.0.0.1:3000/books/register
 Content-Type: application/json
 
 
 { 
-    "bookName": "Invasion",
-    "belongsTo": "Alfredo Silva",
-    "class": "year 4"
+
+    "email": "prof@jenny2.com",
+    "password": "oiafjnsdoijfa"
+
+
 }
 
 
@@ -62,7 +71,7 @@ DELETE  http://127.0.0.1:3000/books/63e2853d5812fc4d482ff036
 ###
 STUDENTS ROUTES
 ###
-GET http://127.0.0.1:3000/students/getall
+GET http://127.0.0.1:3000/services/getall
 
 ###
 
@@ -175,9 +184,8 @@ PUT https://bookclubapi-pytl.onrender.com/students/63cc86a2f12425d2c758bbf2
 Content-Type: application/json
 
 {
-    "name": "Samira",
+
     "email": "kalaf@abdul.com"
-    "birth": "1/10/2000"
     "password": "oiafjnsdoijfa"
 }
 

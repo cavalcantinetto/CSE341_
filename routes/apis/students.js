@@ -14,7 +14,7 @@ routes.use(bp.urlencoded({ extended: true }))
 //get all students
 routes.get('/getall', authorization, async(req, res) => {
     try {
-        const students = await Student.find();
+        const students = await Student.find().sort({studentName: 'asc'});
         if (!students) {
             return res.status(204).json({ message: "No data was found" })
         } else {
@@ -46,8 +46,7 @@ routes.post('/register', authorization, async(req, res) => {
     //Saves all data
     const newStudent = new Student({
         studentName: req.body.name,
-        studentEmail: req.body.email,
-        studentBirth: req.body.birth,
+        studentParent: req.body.parent,
         studentClass: req.body.class
     })
 
@@ -70,11 +69,8 @@ routes.patch('/update/:id', authorization, getstudent, async(req, res) => {
         if (req.body.name) {
             res.student.studentName = req.body.name;
         }
-        if (req.body.email) {
-            res.student.studentEmail = req.body.email;
-        }
-        if (req.body.birth) {
-            res.student.studentBirth = req.body.birth;
+        if (req.body.Parent) {
+            res.student.studentParent = req.body.parent;
         }
         if (req.body.class) {
             res.student.studentClass = req.body.class;

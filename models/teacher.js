@@ -11,22 +11,13 @@ const contactSchema = new mongoose.Schema({
         required: true
     },
     "teacherPass": {
-        type: String,
-        required: true
+        type: String
     },
     "teacherLevel": {
-        type: String,
-        required: true
-    },
-    "teacherClass": {
-        type: String,
-        required: true
-    },
-    "dateInserted": {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        default: 1
     }
-
 })
 
 module.exports = mongoose.model("teacher", contactSchema)

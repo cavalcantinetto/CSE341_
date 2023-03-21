@@ -37,8 +37,6 @@ routes.post('/register', [
         //check if name is not null
         body('name').not().isEmpty().trim().escape(),
         body('email').isEmail().normalizeEmail(),
-        body('password').isLength({ min: 5 }),
-        body('class').not().isEmpty().trim().escape(),
     ],
     async(req, res) => {
         const email = req.body.email;
@@ -58,10 +56,7 @@ routes.post('/register', [
                 const newteacher = new teacherdb({
                     "teacherName": req.body.name,
                     "teacherEmail": req.body.email,
-                    "teacherPass": hashedPass,
-                    "teacherLevel": "20",
-                    "teacherClass": req.body.class,
-                    "dateInserted": date
+                    "teacherPass": hashedPass
 
                 })
                 const newcontactResult = await newteacher.save();
@@ -82,9 +77,7 @@ routes.post('/register', [
 routes.patch('/update/:id', authorization, [getteacher,
         //check if name is not null
         body('name').not().isEmpty().trim().escape(),
-        body('email').isEmail().normalizeEmail(),
-        body('password').isLength({ min: 5 }),
-        body('class').not().isEmpty().trim().escape(),
+        body('email').isEmail().normalizeEmail()
 
     ],
     async(req, res) => {
