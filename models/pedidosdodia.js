@@ -6,13 +6,17 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    "dataId": {
+        type: String,
+        required: true
+    }, 
     "estudante": {
         type: String,
         required: true
     },
     "pratos": {
-       "proteinas": {
-        type: Array,
+       "proteina": {
+        type: String,
         required: true
        },
        "acompanhamentos": {
@@ -22,10 +26,12 @@ const contactSchema = new mongoose.Schema({
     }, 
     "status": {
         "pratopronto": {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         "pratoservido": {
-            type: Boolean
+            type: Boolean,
+            default: false
         }
        }
 })

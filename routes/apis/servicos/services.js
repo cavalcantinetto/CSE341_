@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = express.Router();
-const Services = require('../../models/services')
-const authorization = require('../../functions/auth');
+const Services = require('../../../models/services')
+const authorization = require('../../../functions/auth');
 
 //get services
 routes.get('/getall', async(req, res) => {

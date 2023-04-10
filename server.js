@@ -70,34 +70,37 @@ const swaggerRoutes = require('./routes/apis/swagger');
 app.use('/api-docs', swaggerRoutes);
 
 //creates a middleware to students
-const studentsRoutes = require('./routes/apis/students');
+const studentsRoutes = require('./routes/apis/servicos/students');
 app.use('/students', studentsRoutes);
 
 //creates a middleware to students
-const classesRoutes = require('./routes/apis/classe');
+const classesRoutes = require('./routes/apis/servicos/classe');
 app.use('/classes', classesRoutes);
 
-//creates a middleware to teachers
-const teachersRoutes = require('./routes/apis/teachers');
-app.use('/teachers', teachersRoutes);
+//creates a middleware to users
+const usersRoutes = require('./routes/apis/servicos/user');
+app.use('/users', usersRoutes);
 
 //creates a middleware to schedule
-const scheduleRoutes = require('./routes/apis/schedule');
+const scheduleRoutes = require('./routes/apis/servicos/schedule');
 app.use('/schedule', scheduleRoutes);
 
 //creates a middleware to services
-const servicesRoutes = require('./routes/apis/services');
+const servicesRoutes = require('./routes/apis/servicos/services');
 app.use('/services', servicesRoutes);
 
 
 //creates a middleware to services
-const cardapiosRoutes = require('./routes/apis/cardapios');
+const cardapiosRoutes = require('./routes/apis/greatlakes/cardapios');
 app.use('/cardapios', cardapiosRoutes);
 
 //creates a middleware to services
-const pedidosRoutes = require('./routes/apis/pedidos');
+const pedidosRoutes = require('./routes/apis/greatlakes/pedidos');
 app.use('/pedidos', pedidosRoutes);
 
+//creates a middleware to acompanhamentos
+const acompanhamentosRoutes = require('./routes/apis/greatlakes/acompanhamentos');
+app.use('/acompanhamentos', acompanhamentosRoutes);
 
 app.use('/public/images', express.static(__dirname + '/public/images'));
 

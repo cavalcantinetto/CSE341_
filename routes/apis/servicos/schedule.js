@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
-const Schedule = require('../../models/schedule')
+const Schedule = require('../../../models/schedule')
 const bp = require('body-parser');
-const authorization = require('../../functions/auth');
+const authorization = require('../../../functions/auth');
 const mongoose = require('mongoose')
 
 routes.use(bp.json())

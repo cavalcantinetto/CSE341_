@@ -80,15 +80,15 @@ GET http://127.0.0.1:3000/students/63e2c2aaa645227e5cb40cb2
 
 ###
 
-POST http://127.0.0.1:3000/students/register
+POST http://127.0.0.1:3000/users/register
 Content-Type: application/json
 
 
 { 
-        "name": "Fernandinho da Silva",
-        "email": "",
-        "birth": "31/1/2011",
-        "class": "Year 5"
+        "userName": "Fernandinho da Silva",
+        "userEmail": "prof@jenny2.com",
+        "userPass": "oiafjnsdoijfa",
+        "userKids": "Josezinho da Silva"
 }
 
 

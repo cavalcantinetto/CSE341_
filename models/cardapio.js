@@ -6,7 +6,6 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    "pratos": {
        "proteinas": {
         type: Array,
         required: true
@@ -15,7 +14,6 @@ const contactSchema = new mongoose.Schema({
         type: Array,
         required: true
        }
-     }
 })
 
 module.exports = mongoose.model("cardapios", contactSchema)

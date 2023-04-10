@@ -2,22 +2,26 @@ const mongoose = require('mongoose');
 
 //defines a schema for the database.
 const contactSchema = new mongoose.Schema({
-    "teacherName": {
+    "userName": {
         type: String,
         required: true
     },
-    "teacherEmail": {
+    "userEmail": {
         type: String,
         required: true
     },
-    "teacherPass": {
+    "userPass": {
         type: String
     },
-    "teacherLevel": {
+    "userLevel": {
         type: Number,
         required: true,
         default: 1
+    },
+    "userKids": { 
+        type: Array,
+        required: true,
     }
 })
 
-module.exports = mongoose.model("teacher", contactSchema)
+module.exports = mongoose.model("user", contactSchema)

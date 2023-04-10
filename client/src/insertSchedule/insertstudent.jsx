@@ -1,7 +1,4 @@
 import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../functions/AuthProvider";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import {useCookies} from 'react-cookie';
 import { convertDate } from "../components/dataconverted";
 
