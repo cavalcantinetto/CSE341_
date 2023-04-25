@@ -55,10 +55,6 @@ app.use('/login', loginApi)
 // const googleApi = require('./routes/apis/google');
 // app.use('/google', googleApi)
 
-//set swagger
-const swaggerRoutes = require('./routes/apis/swagger');
-app.use('/api-docs', swaggerRoutes);
-
 //creates a middleware to services
 const cardapiosRoutes = require('./routes/apis/greatlakes/cardapios');
 app.use('/cardapios', cardapiosRoutes);
