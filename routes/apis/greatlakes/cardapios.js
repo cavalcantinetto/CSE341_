@@ -4,15 +4,15 @@ const Cardapios = require('../../../models/cardapio')
 const authorization = require('../../../functions/auth');
 
 //get cardapio
-routes.get('/getall', async(req, res) => {
+routes.get('/getall', authorization, async(req, res) => {
     try {
         const cardapio = await Cardapios.find().sort({data: 1});
         if (!cardapio) {
+            
             return res.status(204).json({ message: "No data was found" })
         } else {
             return res.status(200).json(cardapio);
         }
-
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

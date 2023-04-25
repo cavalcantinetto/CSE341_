@@ -38,7 +38,7 @@ DELETE http://127.0.0.1:3000/services/remove/640a3de987fc10318c8499df
 ###
 
 
-GET http://127.0.0.1:3000/classes/getall
+GET http://127.0.0.1:3000/getturma/eduardo
 ###
 
 POST http://127.0.0.1:3000/login/login

@@ -2,14 +2,9 @@ import React from "react";
 import { useCookies } from "react-cookie";
 import { useState, useEffect, useRef } from "react";
 import Loading from "../components/loading";
-import CardapioCard from "./cardscardapio";
 import ErrorFallback from "../components/handleerror";
 import { convertDate } from "../components/dataconverted";
-
-const BASE_URL = "http://127.0.0.1:3000";
-const CARDAPIO_URL = "/cardapios/getall";
-const INSEREALMOCO = "/pedidos/register";
-const ESCOLHAS_URL = "/pedidos/getkidschoice/";
+import { BASE_URL, CARDAPIO_URL, ESCOLHAS_URL, INSEREALMOCO } from "../functions/urlbase";
 
 
 const SolicitaAlmoco = () => {
@@ -38,20 +33,22 @@ const SolicitaAlmoco = () => {
   //variável que indica se exite escolha na base (Não consegui ler o conteudo da variável anterior - potenciais problemas aqui)
   const [temEscolhas, setTemEscolhas] = useState(false);
 
+
   //inicia o sistema lendo quais estudantes são dependentes do usuário principal - pai
   let estudantes;
   if (cookies.userData.userKids) {
     estudantes = cookies.userData.userKids;
   }
-
+ 
   //parece que essa variável repete o dateRef, avaliar
   const [date, setDate] = useState();
-  //não sei diferença entre data escolhida e dateRef e date. avaliar 
+  //não sei diferença entre data escolhida e dateRef e date. avaliar
   const [dataEscolhida, setDataEscolhida] = useState();
 
   //armazena o estudante escolhido num estado para reler o BD e trazer as escolhas anteriores
   const [estudante, setEstudante] = useState();
-
+  const [turma, setTurma] = useState();
+  
   //Aramzena os acompanhamentos escolhidos pelo pai
   const [acompanhamentos, setAcompanhamentos] = useState([]);
 
@@ -59,15 +56,10 @@ const SolicitaAlmoco = () => {
   const [proteinSelection, setProteinSelection] = useState();
 
   //define o dia de hoje - vai servir para filtrar as escolhas já realizadas. Só para frente.
-  const locale = "pt-br";
-  let today = new Date().toISOString(locale);
+  let today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  today = today.toISOString().toString();
 
-    //mostra variáveis para testagem
-  // console.log('data escolhida: '+ dataEscolhida)
-   //console.log('dateRef: '+dateRef.current)
-  // console.log('date: '+ date)
-  // console.log('today: '+ today)
-  // console.log(escolhasNaBase.filter(arr => arr.dataId = dataEscolhida))
 
   //Grupo que definirá todas as funções fetch
   //async function to fetch data from database
@@ -99,7 +91,6 @@ const SolicitaAlmoco = () => {
       setFailed(true);
       setErrorMessage(err.message);
       setIsLoading(true);
-      console.log(err);
     }
   }
 
@@ -113,14 +104,16 @@ const SolicitaAlmoco = () => {
           Authorization: `Bearer  ${cookies.accessToken}`,
         },
       });
+
       if (result.ok) {
+
         const res = await result.json();
         if (res) {
           //Em caso de escolhas existentes, set na variável escolhas na base que vai ser chamada para produzir os cards de escolhas.
           //Aqui eu poderia trabalhar o filtro de datas e fazer a chamada já com filtro de data, mas preferi filtrar ao renderizar.
-          setEscolhasNaBase(oldValue => oldValue = res)
-          
+          setEscolhasNaBase((oldValue) => (oldValue = res));
           return res;
+
         }
         return res;
       }
@@ -128,18 +121,18 @@ const SolicitaAlmoco = () => {
       setFailed(true);
       setErrorMessage(err.message);
       setIsLoading(true);
-      console.log(err);
     }
   }
 
-  async function submitAlmoco(dateId, date, proteina, acompanhamentos) {
+  async function submitAlmoco(dateId, date, turma, proteina, acompanhamentos) {
     setIsLoading(true);
     try {
-        //define o objeto que vai carregar o array de escolhas para registro na base de dados
+      //define o objeto que vai carregar o array de escolhas para registro na base de dados
       const data = {
         data: new Date(date),
         dataId: dateId,
         estudante: estudante,
+        turma: turma,
         proteina: proteina,
         acompanhamentos: acompanhamentos,
       };
@@ -152,14 +145,13 @@ const SolicitaAlmoco = () => {
         },
         body: JSON.stringify(data),
       });
-      console.log(`result is ${result}`)
       if (result.ok) {
         const res = await result.json();
         if (res) {
           let message = `Foram gravadas com sucesso as seguinte escolhas:\nData: ${date}\nProteína: ${proteinSelection}\nAcompanhamentos: ${[
             acompanhamentos,
           ]}\nPara: ${estudante}`;
-          setAcompanhamentos(oldValue => oldValue = [])
+          setAcompanhamentos((oldValue) => (oldValue = []));
           setIsLoading(false);
           //
           return message;
@@ -178,12 +170,12 @@ const SolicitaAlmoco = () => {
         const res = await result.json();
         setIsLoading(false);
         setErrorMessage(
-          `Estamos profundamente envergonhados, \Parece que algo deu errado no servidor.\nTente novamente mais tarde.\nCódigo de erro: ${res.message}`
+          `Estamos profundamente envergonhados, \nParece que algo deu errado no servidor.\nTente novamente mais tarde.\nCódigo de erro: ${res.message}`
         );
         setProteinSelection();
         setAcompanhamentos([]);
         setFailed(true);
-        return `Estamos profundamente envergonhados, \Parece que algo deu errado no servidor.\nTente novamente mais tarde.\nCódigo de erro: ${res.message}`;
+        return `Estamos profundamente envergonhados, \nParece que algo deu errado no servidor.\nTente novamente mais tarde.\nCódigo de erro: ${res.message}`;
       }
     } catch (err) {
       setErrorMessage(err.message);
@@ -216,23 +208,29 @@ const SolicitaAlmoco = () => {
   //falta checar se o dia já havia sido submetido usando o ID do dia
   async function handleSubmit(e) {
     setIsLoading(true);
-    setAbleToSubmit(false);
+
+    const turma =(estudantes.filter(item => item.nome == estudante)[0].turma)
+    if(!turma) {
+      return
+    } else {
+      setAbleToSubmit(false);
     const response = await submitAlmoco(
       dataEscolhida,
       convertDate(date),
+      turma,
       proteinSelection,
       acompanhamentos
     );
-    setTemEscolhas(false)
+    setTemEscolhas(false);
     return response;
+    }
+    
   }
-
 
   useEffect(() => {
     try {
       fetchCard();
       fetchEscolhas();
-      
     } catch (err) {
       setErrorMessage(err.message);
       setFailed(true);
@@ -240,11 +238,11 @@ const SolicitaAlmoco = () => {
   }, []);
 
   useEffect(() => {
-
-    if(estudanteRef.current) {
+    if (estudanteRef.current) {
       setEstudante(estudanteRef.current.value);
+      
     }
-    if(estudante) {
+    if (estudante) {
       fetchEscolhas();
     }
     setDataEscolhida(dataEscolhida);
@@ -255,8 +253,14 @@ const SolicitaAlmoco = () => {
       setAbleToSubmit(false);
     }
     setIsLoading(false);
-  }, [optionsForTheDay, proteinSelection, acompanhamentos, dataEscolhida, estudante, temEscolhas]);
-
+  }, [
+    optionsForTheDay,
+    proteinSelection,
+    acompanhamentos,
+    dataEscolhida,
+    estudante,
+    temEscolhas,
+  ]);
 
   return (
     <>
@@ -275,19 +279,22 @@ const SolicitaAlmoco = () => {
               </label>
               <select
                 name="estudanteRef"
-                id="estudanteRef"
+                id={estudanteRef}
                 ref={estudanteRef}
                 value={estudante}
                 onChange={(e) => {
                   setEstudante(e.target[e.target.selectedIndex].value);
+
                 }}
               >
                 {estudantes.map((item) => {
-                  return (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  );
+                  if(item.turma == 'Year 1' || item.turma == 'Year 2' || item.turma == 'Year 3' || item.turma == 'Year 4' || item.turma == 'Year 5' || item.turma == 'Year 6' || item.turma == 'Year 7' || item.turma == 'Staff') {
+                    return (
+                      <option id={item.turma} key={estudanteRef} value={item.nome}>
+                        {item.nome}
+                      </option>
+                    );
+                  } return null
                 })}
               </select>
             </div>
@@ -308,28 +315,39 @@ const SolicitaAlmoco = () => {
                   <option key={"selecioneUmaData0"} value={"none"}>
                     Selecione uma data
                   </option>
+                  
                   {cardapios.map((item) => {
-                    if(item.data > today) { 
-                    if (item._id === dataEscolhida) {
-                      //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
-                      return (
-                        <option key={`option+${item._id}`} name={item.data} value={"item._id"}>
-                          {convertDate(item.data)}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option key={`option+${item._id}`} value={item._id}>
-                          {convertDate(item.data)}
-                        </option>
-                      );
+           
+                    if (item.data >= today) {
+                      if (item._id === dataEscolhida) {
+                        //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
+                        return (
+                          <option
+                            key={`option+${item._id}`}
+                            name={item.data}
+                            value={"item._id"}
+                          >
+                            {convertDate(item.data)}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option key={`option+${item._id}`} value={item._id}>
+                            {convertDate(item.data)}
+                          </option>
+                        );
+                      }
                     }
-                  }
                   })}
-                </select><br />
-                <span><small>Instruções: O sistema sobrescreverá escolhas já realizadas, caso você escolha uma data já cadastrada.</small></span>
+                </select>
+                <br />
+                <span>
+                  <small>
+                    Instruções: O sistema sobrescreverá escolhas já realizadas,
+                    caso você escolha uma data já cadastrada.
+                  </small>
+                </span>
               </div>
-
 
               <div
                 className="container rounded-3 shadow p-2 mb-2"
@@ -471,41 +489,57 @@ const SolicitaAlmoco = () => {
             </div>
           </div>
         )}
-        {<div className="container text-center">
+        {
+          <div className="container text-center">
             <hr />
             <div className="container text-center">
               <h1>Relatório de escolhas já realizadas</h1>
+              <small>Para ver as escolhas já realizadas, clique em Atualizar relatório.</small><br/>
               <button
                 type="button"
                 className="btn btn-primary m-3"
                 onClick={() => {
-                  setTemEscolhas((oldValue => oldValue = true))
-                }
-                }
+                  setTemEscolhas((oldValue) => (oldValue = true));
+                }}
               >
                 Atualizar Relatório
               </button>
-              {temEscolhas &&
-              <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
-                {
-                  escolhasNaBase.map((item) => {if(item.data > today) {
-                                  return (
-                                    <>
-                                    <div key={item.id} className="card m-3 p-2">
-                                    <div className="card-body bg-light bg-gradient rounded-3 shadow">
-                                    <h5 className="card-title">{convertDate(item.data)}</h5>
-                                    <p key={item._id+item.pratos.proteina} className="card-text">{item.pratos.proteina}</p> 
-                                    <hr></hr>
-                                    {item.pratos.acompanhamentos.map((acomp) => {
-                                        return <p key={item._id+acomp} className="card-text">{acomp}</p>
-                                    })
-                                }   
-                                  </div>
-                                </div>
-                                </>
-                                  )
-}})}
-              </div>}
+              {temEscolhas && (
+                <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
+                  {escolhasNaBase.map((item) => {
+                    if (item.data >= today) {
+                      return (
+                        <>
+                          <div key={item.id} className="card m-3 p-2">
+                            <div className="card-body bg-light bg-gradient rounded-3 shadow">
+                              <h5 className="card-title">
+                                {convertDate(item.data)}
+                              </h5>
+                              <p
+                                key={item._id + item.pratos.proteina}
+                                className="card-text"
+                              >
+                                {item.pratos.proteina}
+                              </p>
+                              <hr></hr>
+                              {item.pratos.acompanhamentos.map((acomp) => {
+                                return (
+                                  <p
+                                    key={item._id + acomp}
+                                    className="card-text"
+                                  >
+                                    {acomp}
+                                  </p>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </>
+                      );
+                    }
+                  })}
+                </div>
+              )}
             </div>{" "}
           </div>
         }

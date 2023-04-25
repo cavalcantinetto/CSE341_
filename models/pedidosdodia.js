@@ -14,6 +14,10 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    "turma": {
+        type: String,
+        required: true
+    },
     "pratos": {
        "proteina": {
         type: String,

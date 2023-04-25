@@ -4,8 +4,24 @@ const Pedidos = require('../../../models/pedidosdodia')
 const authorization = require('../../../functions/auth');
 const { mongoose } = require('mongoose');
 
-
+//Buscar escolhas por data para gerar os cards do dia
 //get cardapio
+routes.get('/getfortheday/:dataId', async(req, res) => {
+    const filter = {
+        dataId: req.params.dataId
+    }
+    try {
+        const escolhas = await Pedidos.find(filter).sort({turma: 1});
+        if (!escolhas) {
+            return res.status(204).json({ message: "No data was found" })
+        } else {
+            return res.status(200).json(escolhas);
+        }
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
 
 //get one escolhas for the kid
 routes.get('/getkidschoice/:estudante', authorization, getKidsChoices, (req, res) => {
@@ -26,11 +42,11 @@ routes.post('/register', authorization, async(req, res) => {
             data: req.body.data,
             dataId: req.body.dataId,
             estudante: req.body.estudante,
+            turma: req.body.turma,
             pratos: {
                 proteina: req.body.proteina,
                 acompanhamentos: req.body.acompanhamentos
             }
-            
         }
 
         try {
@@ -49,9 +65,35 @@ routes.post('/register', authorization, async(req, res) => {
   
 
     } catch (err) {
-        console.log('falhou ao gravar dados do cardapio')
+
         res.status(400).json({ message: err.message });
      }
+})
+
+routes.patch('/alterastatus/:id', authorization, async(req, res) => {
+    try {
+        const filter = {
+            _id: req.body._id
+        }
+        const newstatus = {
+            status: {
+                pratopronto: req.body.status.pratopronto,
+                prontoservido: req.body.status.pratoservido
+            } 
+        }
+        result = await Pedidos.findOneAndUpdate(filter, newstatus, {new: true});
+            if (!result) {
+                return res.status(404).json({ message: "Não encontrou escolhas" })
+            }
+            res.result = result;
+            res.status(201).json(result);
+
+    } catch (err) {
+        if (err instanceof mongoose.CastError) {
+            return res.status(400).json({ message: "Escolhas não existem" })
+        }
+        return res.status(500).json({ message: err.message })
+    }
 })
 
 //delete cardapio
@@ -64,7 +106,6 @@ routes.delete('/remove/:id', authorization, getPedidos, async(req, res) => {
         res.status(500).json({ message: err.message })
     }
 })
-
 
 //this function will get an specific cardapio at database.
 async function getPedidos(req, res, next) {
@@ -87,7 +128,7 @@ async function getPedidos(req, res, next) {
 async function getKidsChoices(req, res, next) {
     let cardapio;
     try {
-        cardapio = await Pedidos.find({estudante: req.params.estudante});
+        cardapio = await Pedidos.find({estudante: req.params.estudante}).sort({data: 1});
         if (!cardapio) {
             return res.status(404).json({ message: "Não encontrou escolhas associados" })
         }

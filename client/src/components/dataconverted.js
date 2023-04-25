@@ -6,8 +6,12 @@ export function convertDate(data) {
     // if (dd < 10) dd = '0' + dd;
     // if (mm < 10) mm = '0' + mm;
     // const formattedDate = mm + '/' + dd + '/' + yyyy;
-
-    let formattedDate = data.slice(0,10)
-    return formattedDate;
+    try {
+      let formattedDate = data.slice(0,10)
+      return formattedDate;
+    } catch {
+      return null
+    }
+    
       
   }

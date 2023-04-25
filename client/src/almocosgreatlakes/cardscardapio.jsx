@@ -1,9 +1,6 @@
 import React from "react";
 import { convertDate } from "../components/dataconverted";
 
-const DELETE_URL = '/cardapios/remove/'
-
-
 const CardapioCard = (props) => {
 
     return (

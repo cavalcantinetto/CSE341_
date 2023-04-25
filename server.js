@@ -14,17 +14,12 @@ const port = 3000;
 
 //sets cors and others 
 app.use(cors({
-    origin: process.env.ALLOWED_CLIENT
+     origin: "*"//process.env.ALLOWED_CLIENT
 }))
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
     .use(cookieParser())
     .use(express.static('public'));
-
-//nedded to use ejs for frontEnd
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 //require mongoose
 const mongoose = require('./db/connect');
@@ -52,43 +47,17 @@ app.use(passport.session())
 
 /* List of Routes to be handled by the server*/
 
-
-//Set a middleware to login user
-const loginView = require('./routes/views/index');
-app.use('/', loginView)
-
 //Set a middleware to login user
 const loginApi = require('./routes/apis/login');
 app.use('/login', loginApi)
 
-//Set a middleware to callbackGoogle
-const googleApi = require('./routes/apis/google');
-app.use('/google', googleApi)
+// //Set a middleware to callbackGoogle
+// const googleApi = require('./routes/apis/google');
+// app.use('/google', googleApi)
 
 //set swagger
 const swaggerRoutes = require('./routes/apis/swagger');
 app.use('/api-docs', swaggerRoutes);
-
-//creates a middleware to students
-const studentsRoutes = require('./routes/apis/servicos/students');
-app.use('/students', studentsRoutes);
-
-//creates a middleware to students
-const classesRoutes = require('./routes/apis/servicos/classe');
-app.use('/classes', classesRoutes);
-
-//creates a middleware to users
-const usersRoutes = require('./routes/apis/servicos/user');
-app.use('/users', usersRoutes);
-
-//creates a middleware to schedule
-const scheduleRoutes = require('./routes/apis/servicos/schedule');
-app.use('/schedule', scheduleRoutes);
-
-//creates a middleware to services
-const servicesRoutes = require('./routes/apis/servicos/services');
-app.use('/services', servicesRoutes);
-
 
 //creates a middleware to services
 const cardapiosRoutes = require('./routes/apis/greatlakes/cardapios');
@@ -101,6 +70,16 @@ app.use('/pedidos', pedidosRoutes);
 //creates a middleware to acompanhamentos
 const acompanhamentosRoutes = require('./routes/apis/greatlakes/acompanhamentos');
 app.use('/acompanhamentos', acompanhamentosRoutes);
+
+// const insereUsers = require('./routes/apis/greatlakes/insertUsers');
+// app.use('/insereusers', insereUsers);
+
+// const insereTurmas = require('./routes/apis/greatlakes/insertUsers');
+// app.use('/insereturmas', insereTurmas);
+
+//rota para encaminhar emails via NodeJs
+const sendmailRoutes = require('./routes/apis/greatlakes/sendmail');
+app.use('/sendmail', sendmailRoutes);
 
 app.use('/public/images', express.static(__dirname + '/public/images'));
 

@@ -4,12 +4,10 @@ import Loading from "../components/loading";
 import { useCookies } from "react-cookie";
 import CardapioCard from "./cardscardapio";
 import { convertDate } from "../components/dataconverted";
+import { ACOMPANHAMENTOS_URL, BASE_URL, CARDAPIO_URL, DELETE_URL, REGISTER_URL, REGISTRAACOMPANHAMENTOS_URL } from "../functions/urlbase";
+import SolicitaAlmoco from "./solicitaalmoco";
+import PedidosDoDia from "./pedidosdodia";
 
-const BASE_URL = "http://127.0.0.1:3000";
-const REGISTER_URL = "/cardapios/register";
-const CARDAPIO_URL = "/cardapios/getall";
-const ACOMPANHAMENTOS_URL = "/acompanhamentos/getall";
-const REGISTRAACOMPANHAMENTOS_URL = "/acompanhamentos/register";
 
 const InsereCardapio = (props) => {
   const errRef = useRef();
@@ -31,6 +29,12 @@ const InsereCardapio = (props) => {
   const [cardapioNaBase, setCardapioNaBase] = useState([]);
   const proteinas = [proteina1, proteina2, proteina3];
   const dateConverted = convertDate(date);
+  let userLevel;
+
+  if(cookies.userData.userLevel) {
+    userLevel = (cookies.userData.userLevel)
+  }
+
 
   const data = {
     data: new Date(dateConverted),
@@ -63,19 +67,16 @@ const InsereCardapio = (props) => {
         );
         if (acompanhamentos.ok) {
           setLoading((oldValue) => !oldValue);
-          console.log(acompanhamentos);
           alert("Dados gravados om sucesso");
         } else {
           const res = await acompanhamentos.json();
           setLoading((oldValue) => !oldValue);
           setErrMsg(res.message);
-          console.log(res);
         }
       } catch {
         const res = await getData.json();
         setLoading((oldValue) => !oldValue);
         setErrMsg(res.message);
-        console.log(res);
       }
     }
   }
@@ -102,13 +103,11 @@ const InsereCardapio = (props) => {
         setLoading((oldValue) => !oldValue);
         return;
       } else {
-        console.log(result);
         setLoading((oldValue) => !oldValue);
         alert(result.message);
         return;
       }
     } catch (err) {
-      console.log(err);
       setLoading((oldValue) => !oldValue);
       return;
     }
@@ -129,12 +128,12 @@ const InsereCardapio = (props) => {
       } else {
         const res = await result.json();
         setErrMsg(res.message);
-        console.log(res);
+     
       }
     } catch {
       const res = await getData.json();
       setErrMsg(res.message);
-      console.log(res);
+
     }
 
     try {
@@ -151,12 +150,10 @@ const InsereCardapio = (props) => {
       } else {
         const res = await acompanhamentos.json();
         setErrMsg(res.message);
-        console.log(res);
       }
     } catch {
       const res = await getData.json();
       setErrMsg(res.message);
-      console.log(res);
     }
   };
 
@@ -179,16 +176,14 @@ const InsereCardapio = (props) => {
           alert("Dia removido com sucesso!");
           setLoading((oldValue) => !oldValue);
         } else {
-          console.log(result);
           alert(result.message);
           setLoading((oldValue) => !oldValue);
         }
       } catch (err) {
         setLoading((oldValue) => !oldValue);
-        console.log(err);
       }
     } else {
-      console.log("cancelou a deleçao");
+
       return;
     }
   };
@@ -199,12 +194,17 @@ const InsereCardapio = (props) => {
       getData();
     }
     return () => {
-      console.log("cancelado");
       isCancalled = true;
     };
   }, []);
 
-  const DELETE_URL = "/cardapios/remove/";
+  if (userLevel == 110) {
+    return <PedidosDoDia/>
+  }
+  if (userLevel < 110) {
+    return <SolicitaAlmoco/>
+  }
+  
 
   if (loading) {
     return <Loading />;
@@ -250,7 +250,6 @@ const InsereCardapio = (props) => {
                 ref={proteina1Ref}
                 onChange={(e) => {
                   setProteina1(e.target.value);
-                  console.log(proteina1);
                 }}
                 value={proteina1}
                 required
@@ -265,7 +264,6 @@ const InsereCardapio = (props) => {
                 ref={proteina2Ref}
                 onChange={(e) => {
                   setProteina2(e.target.value);
-                  console.log(proteina2);
                 }}
                 value={proteina2}
                 required
@@ -280,7 +278,6 @@ const InsereCardapio = (props) => {
                 ref={proteina3Ref}
                 onChange={(e) => {
                   setProteina3(e.target.value);
-                  console.log(proteina3);
                 }}
                 value={proteina3}
                 required

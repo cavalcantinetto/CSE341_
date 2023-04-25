@@ -3,6 +3,8 @@ import MBTLogo from '../assets/images/logoMaple.png';
 import AuthContext from "../functions/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 import {useCookies} from 'react-cookie';
+import { Link } from 'react-router-dom';
+import SolicitaAlmoco from '../almocosgreatlakes/solicitaalmoco';
 
 
 export function NavBar(props) {
@@ -36,25 +38,13 @@ export function NavBar(props) {
           <ul className="navbar-nav">
             {" "}
             <li key="navHome" className="nav-item">
-              {" "}
-              <a className="nav-link active" href="#">
-                {" "}
-                {menu[0]}{" "}
-              </a>
-            </li>{" "}
+            <Link to={'solicitaalmoco'} className="nav-link active">{menu[0]}</Link>
+            </li>
             <li key="navBooks" className="nav-item">
-              {" "}
-              <a className="nav-link active" href="#">
-                {" "}
-                {menu[1]}{" "}
-              </a>{" "}
+            <Link to={'inserecardapio'} className="nav-link active">{menu[1]}</Link>
             </li>{" "}
             <li key="navStudent" className="nav-item">
-              {" "}
-              <a className="nav-link active" href="#">
-                {" "}
-                {menu[2]}{" "}
-              </a>
+            <Link to={'pedidosdodia'} className="nav-link active">{menu[2]}</Link>
             </li>{" "}
           </ul>{" "}
           </div>

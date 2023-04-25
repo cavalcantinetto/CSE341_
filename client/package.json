@@ -27,6 +27,7 @@
             "react-app/jest"
         ]
     },
+    "homepage": "https://www.maplebeartaubate.com.br/glakes",
     "browserslist": {
         "production": [
             ">0.2%",
