@@ -94,29 +94,29 @@ const PedidosDoDia = () => {
         return;
       }
     } catch (err) {
-      setLoading((oldValue) => !oldValue);
+      console.log(err.message)
       return;
     }
   }
 
   useEffect(() => {
-    setLoading((oldValue) => !oldValue);
+    setLoading((oldValue) => oldValue = !oldValue);
     if (dataIdState) {
       const escolhas = getEscolhas(dataIdState);
       if (escolhas) {
         setEscolhasDoDia(escolhas);
-
-        setLoading((oldValue) => !oldValue);
       } else {
         alert("Algo deu errado no servidor.");
       }
+      setLoading((oldValue) => oldValue = !oldValue);
     }
   }, [dataIdState]);
 
   useEffect(() => {
+    setLoading((oldValue) => oldValue = !oldValue);
     const res = getData();
     if (res) {
-      setLoading((oldValue) => !oldValue);
+      setLoading((oldValue) => oldValue = !oldValue);
     }
   }, []);
 
