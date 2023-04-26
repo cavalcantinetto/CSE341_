@@ -67,6 +67,10 @@ app.use('/pedidos', pedidosRoutes);
 const acompanhamentosRoutes = require('./routes/apis/greatlakes/acompanhamentos');
 app.use('/acompanhamentos', acompanhamentosRoutes);
 
+const healthRoutes = require('./routes/apis/greatlakes/healthz');
+app.use('/healthz', healthRoutes);
+
+
 // const insereUsers = require('./routes/apis/greatlakes/insertUsers');
 // app.use('/insereusers', insereUsers);
 
