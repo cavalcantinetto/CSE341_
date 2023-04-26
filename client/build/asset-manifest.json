@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/glakes/static/js/main.afbf85ac.js",
+    "static/media/logoMaple.png": "/glakes/static/media/logoMaple.fe8476662d2ee1bb6952.png",
+    "index.html": "/glakes/index.html",
+    "main.afbf85ac.js.map": "/glakes/static/js/main.afbf85ac.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.afbf85ac.js"
+  ]
+}
