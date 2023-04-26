@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Loading from "../components/loading";
 import ErrorFallback from "../components/handleerror";
 import { convertDate } from "../components/dataconverted";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL, CARDAPIO_URL, ESCOLHAS_URL, INSEREALMOCO } from "../functions/urlbase";
 
 
@@ -32,14 +33,19 @@ const SolicitaAlmoco = () => {
   const [escolhasNaBase, setEscolhasNaBase] = useState([]);
   //variável que indica se exite escolha na base (Não consegui ler o conteudo da variável anterior - potenciais problemas aqui)
   const [temEscolhas, setTemEscolhas] = useState(false);
-
+  const navigate = useNavigate();
 
   //inicia o sistema lendo quais estudantes são dependentes do usuário principal - pai
   let estudantes;
-  if (cookies.userData.userKids) {
-    estudantes = cookies.userData.userKids;
+  
+  if(cookies.userData) {
+    if (cookies.userData.userKids) {
+      estudantes = cookies.userData.userKids;
+    }
+  } else {
+    navigate ("/")
   }
- 
+
   //parece que essa variável repete o dateRef, avaliar
   const [date, setDate] = useState();
   //não sei diferença entre data escolhida e dateRef e date. avaliar
@@ -262,6 +268,9 @@ const SolicitaAlmoco = () => {
     temEscolhas,
   ]);
 
+  if(!cookies.accessToken) {
+    return navigate('/')
+  }
   return (
     <>
       <div>
@@ -363,7 +372,7 @@ const SolicitaAlmoco = () => {
                   </select>
                 )}
                 {isOption && (
-                  <div className="d-flex justify-content-evenly flex-wrap">
+                  <div className="d-flex justify-content-center flex-column  ">
                     {optionsForTheDay[0].map((item) => {
                       return (
                         <>
@@ -383,7 +392,7 @@ const SolicitaAlmoco = () => {
                             }}
                           />
                           <label
-                            className="btn btn-outline-primary m-2"
+                            className="btn btn-outline-primary m-2 w-50 align-self-center"
                             htmlFor={item}
                           >
                             {item}
@@ -412,7 +421,7 @@ const SolicitaAlmoco = () => {
                   </select>
                 )}
                 {isOption && (
-                  <div className="d-flex justify-content-evenly flex-wrap">
+                  <div className="d-flex align-items-center justify-content-center flex-wrap">
                     {optionsForTheDay[1].map((item) => {
                       return (
                         <>
@@ -450,7 +459,7 @@ const SolicitaAlmoco = () => {
                             }}
                           />
                           <label
-                            className="btn btn-outline-primary m-2"
+                            className="btn btn-outline-primary m-2 w-50 align-self-cente"
                             htmlFor={item}
                           >
                             {item}

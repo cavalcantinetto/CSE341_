@@ -19,9 +19,9 @@ root.render(
         <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia" />
         <Routes>
           <Route exact path="/*" element={<Login />}/>
-          <Route exact path='/inserecardapio' element={ <InsereCardapio/> }/>
-          <Route exact path='/pedidosdodia' element={ <PedidosDoDia/>}/> 
-          <Route exact path='/solicitaalmoco' element={ <SolicitaAlmoco/>}/>
+          <Route exact path='glakes/inserecardapio' element={ <InsereCardapio/> }/>
+          <Route exact path='glakes/pedidosdodia' element={ <PedidosDoDia/>}/> 
+          <Route exact path='glakes/solicitaalmoco' element={ <SolicitaAlmoco/>}/>
         </Routes>
         <FooterElement year="2023" />
         </BrowserRouter>

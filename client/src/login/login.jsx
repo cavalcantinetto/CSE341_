@@ -13,13 +13,18 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [cookie, setCookie] = useCookies(['accessToken', 'userData'])
+  const [cookie, setCookie, removeCookie] = useCookies()
   const [loading, setLoading] = useState();
+
+
 
   //use Effect will react when something happens
   //set focus onLoad
   useEffect(() => {
     userRef.current.focus();
+    removeCookie('accessToken', { path: '/' })
+    removeCookie('userData', { path: '/' });
+
   }, []);
   //clean message when login or pass changes
   useEffect(() => {
@@ -29,6 +34,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(oldValue => oldValue = true);
     try {
         const data = {
             'email': user,
@@ -45,7 +51,9 @@ const Login = () => {
         if (!result.Headers) {
             const errMessage = result?.message
             setErrMsg(errMessage)
-            setAuth('');
+            setLoading(oldValue => oldValue = false);
+            removeCookie('accessToken', { path: '/' })
+            removeCookie('userData', { path: '/' });
             return
             
         }
@@ -53,7 +61,10 @@ const Login = () => {
         if(result?.body?.token && result?.body?.userData) {
           const accessToken = result?.body?.token;
           const userData = result?.body?.userData
-          
+
+          removeCookie('accessToken')
+          removeCookie('userData');
+
           setAuth( {accessToken, userData} )
           setCookie('accessToken', accessToken, { path: '/' });
           setCookie('userData', userData, { path: '/' });
@@ -61,16 +72,20 @@ const Login = () => {
           //if considerando o nível do usuário começando pelo 100 - usuário padrão
           
          if (userData.userLevel > 110) {
-          return navigate('/inserecardapio')
+          setLoading(oldValue => oldValue = false);
+          return navigate('glakes/inserecardapio')
          } 
          if (userData.userLevel == 110){
-          return navigate('/pedidosdodia')
+          setLoading(oldValue => oldValue = false);
+          return navigate('glakes/pedidosdodia')
          } 
          if (userData.userLevel < 110) {
-          return navigate('/solicitaalmoco')
+          setLoading(oldValue => oldValue = false);
+          return navigate('glakes/solicitaalmoco')
          }
         } else {
           setErrMsg('Login Falhou');
+          setLoading(oldValue => oldValue = false);
           errRef.current.focus();
         } 
 
@@ -84,6 +99,7 @@ const Login = () => {
         } else {
             setErrMsg('Login Falhou');
         }
+        setLoading(oldValue => oldValue = false);
         errRef.current.focus();
     }
   }

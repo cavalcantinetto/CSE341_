@@ -9,13 +9,18 @@ import SolicitaAlmoco from '../almocosgreatlakes/solicitaalmoco';
 
 export function NavBar(props) {
   const {auth, setAuth} = useContext(AuthContext);
-  let [cookies, setCookie] = useCookies();
+  let [cookies, setCookie, removeCookie] = useCookies();
   
   const navigate = useNavigate();
   const handleClick = ()=> {
-    setAuth('')
-    setCookie('accessToken', '')
-    setCookie('userData', '')
+   
+    console.log(cookies.accessToken)
+
+    // setAuth('')
+    removeCookie('accessToken', { path: '/' })
+    removeCookie('userData', { path: '/' })
+
+    // setCookie('userData', '')
     navigate('/');
    
   }
@@ -25,7 +30,7 @@ export function NavBar(props) {
     <div className="container-fluid">
       <nav className="navbar navbar-expand-lg navbar-light bg-alert shadow p-3 mb-5 bg-white rounded">
         {" "}
-        <a href="http://localhost:3001/">
+        <a href="#">
           <img
             src={MBTLogo}
             alt="Logo"
@@ -38,13 +43,13 @@ export function NavBar(props) {
           <ul className="navbar-nav">
             {" "}
             <li key="navHome" className="nav-item">
-            <Link to={'solicitaalmoco'} className="nav-link active">{menu[0]}</Link>
+            <Link to={'glakes/solicitaalmoco'} className="nav-link active">{menu[0]}</Link>
             </li>
             <li key="navBooks" className="nav-item">
-            <Link to={'inserecardapio'} className="nav-link active">{menu[1]}</Link>
+            <Link to={'glakes/inserecardapio'} className="nav-link active">{menu[1]}</Link>
             </li>{" "}
             <li key="navStudent" className="nav-item">
-            <Link to={'pedidosdodia'} className="nav-link active">{menu[2]}</Link>
+            <Link to={'glakes/pedidosdodia'} className="nav-link active">{menu[2]}</Link>
             </li>{" "}
           </ul>{" "}
           </div>

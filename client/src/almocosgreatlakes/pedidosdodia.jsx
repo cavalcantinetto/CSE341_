@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { convertDate } from "../components/dataconverted";
 import Loading from "../components/loading";
+import { useNavigate } from "react-router-dom";
 import BotoesStatus from "./botoesstatus";
 import {
   BASE_URL,
@@ -10,6 +11,7 @@ import {
   ESCOLHASDODIA_URL,
 } from "../functions/urlbase";
 import SolicitaAlmoco from "./solicitaalmoco";
+import Login from "../login/login";
 
 const PedidosDoDia = () => {
   const [loading, setLoading] = useState(true);
@@ -20,11 +22,13 @@ const PedidosDoDia = () => {
   const dataRef = useRef();
   const [dataIdState, setDataIdState] = useState();
   const [dataState, setDataState] = useState();
+  const navigate = useNavigate();
   let userLevel;
   const proteinsCounter = [];
-  // const [proteinasTotais, setProteinasTotais] = useState();
+
   let proteinas;
   let proteinasTotais;
+  
 
   if (escolhasDoDia.length) {
     escolhasDoDia.map((item) => {
@@ -38,9 +42,12 @@ const PedidosDoDia = () => {
     });
   }
 
-  if (cookies.userData.userLevel) {
-    userLevel = cookies.userData.userLevel;
+  if(cookies.userData) {
+    if (cookies.userData.userLevel) {
+      userLevel = cookies.userData.userLevel;
+    }
   }
+ 
   let today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString().toString();
@@ -113,6 +120,10 @@ const PedidosDoDia = () => {
     }
   }, []);
 
+  if(!cookies.accessToken) {
+    return navigate('/')
+  }
+
   if (userLevel < 110) {
     return <SolicitaAlmoco />;
   }
@@ -170,10 +181,11 @@ const PedidosDoDia = () => {
               )}
             </div>
             <br />
-            <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
+            <div className="container align-self-center p-3 mb-2 bg-light text-center w-50 ">
+              <h3><u>PROTEÍNAS DO DIA</u></h3>
               {proteinas.map((key) => {
                 return (
-                  <p className="card-body bg-dark text-white bg-gradient rounded-3 shadow">{`Prepare ${proteinasTotais[key]} ${key}`}</p>
+                  <h5 className="m-3"><strong>{`${key}: ${proteinasTotais[key]}`}</strong></h5>
                 );
               })}
             </div>

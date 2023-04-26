@@ -7,6 +7,7 @@ import { convertDate } from "../components/dataconverted";
 import { ACOMPANHAMENTOS_URL, BASE_URL, CARDAPIO_URL, DELETE_URL, REGISTER_URL, REGISTRAACOMPANHAMENTOS_URL } from "../functions/urlbase";
 import SolicitaAlmoco from "./solicitaalmoco";
 import PedidosDoDia from "./pedidosdodia";
+import { useNavigate } from "react-router-dom";
 
 
 const InsereCardapio = (props) => {
@@ -29,13 +30,21 @@ const InsereCardapio = (props) => {
   const [cardapioNaBase, setCardapioNaBase] = useState([]);
   const proteinas = [proteina1, proteina2, proteina3];
   const dateConverted = convertDate(date);
+  const navigate = useNavigate();
   let userLevel;
 
-  if(cookies.userData.userLevel) {
-    userLevel = (cookies.userData.userLevel)
+
+  if(cookies.userData) {
+    if(cookies.userData.userLevel) {
+      userLevel = (cookies.userData.userLevel)
+    }
   }
+  if(!cookies.userData) {
+    navigate('/');
+  }
+ 
 
-
+  
   const data = {
     data: new Date(dateConverted),
     proteinas: proteinas,
@@ -68,6 +77,7 @@ const InsereCardapio = (props) => {
         if (acompanhamentos.ok) {
           setLoading((oldValue) => !oldValue);
           alert("Dados gravados om sucesso");
+          window.location.reload()
         } else {
           const res = await acompanhamentos.json();
           setLoading((oldValue) => !oldValue);
@@ -83,8 +93,31 @@ const InsereCardapio = (props) => {
 
   async function sendData() {
     setLoading((oldValue) => !oldValue);
+    // if(data.data == null || data.proteinas == ['', '', ''] || data.acompanhamentos.length < 3 || data.data == "" || data.proteinas[1] == "" || data.acompanhamentos == "" || data.data == undefined || data.proteinas == undefined || data.acompanhamentos == undefined || data.data == " " || data.proteinas[0] == '' || data.acompanhamentos == " ") {
+    //   setLoading((oldValue) => !oldValue);
+    //   console.log('entrou aqui', data.data.getTime(), data.proteinas[0], data.proteinas[1], data.acompanhamentos.length)
+    //   alert("Não foi possível submeter. A provável causa é a ausência de data, ausência de pelo menos 2 proteínas (1 e 2) ou você cadastrou menos de 3 acompanhamentos para o dia definido.");
+    //   return;
+    // }
+
+    if(!data.data || data.data ==null || data.data == undefined || isNaN(data.data.getTime())) {
+      setLoading((oldValue) => !oldValue);
+      console.log(data.data);
+      return alert("Não foi possível submeter. A data é inválida");
+    }
+    if(data.proteinas == ['', '', ''] || data.proteinas[0] == ""  || data.proteinas[1] == ""  || data.proteinas[2] == "" || data.proteinas[0] == undefined  || data.proteinas[1] == undefined || data.proteinas[2] == undefined) {
+      setLoading((oldValue) => !oldValue);
+      console.log(data.proteinas);
+      return alert("Não foi possível submeter. A proteína 1, 2 ou 3 está em branco ou é invalida");
+    }
+    if(data.acompanhamentos.length < 3) {
+      setLoading((oldValue) => !oldValue);
+      console.log(data.acompanhamentos);
+      return alert("Não foi possível submeter. Você deve ter cadastrado menos de 3 acompanhamentos.");
+    }
 
     try {
+      setErrMsg();
       const result = await fetch(BASE_URL + REGISTER_URL, {
         method: "POST",
         headers: {
@@ -109,11 +142,16 @@ const InsereCardapio = (props) => {
       }
     } catch (err) {
       setLoading((oldValue) => !oldValue);
+      setErrMsg();
+      setProteina1(oldValue => oldValue = "")
+      setProteina2(oldValue => oldValue = "")
+      setProteina3(oldValue => oldValue = "")
       return;
     }
   }
 
   const getData = async () => {
+    setLoading((oldValue) => !oldValue);
     try {
       const result = await fetch(BASE_URL + CARDAPIO_URL, {
         method: "GET",
@@ -147,6 +185,7 @@ const InsereCardapio = (props) => {
       if (acompanhamentos.ok) {
         const res = await acompanhamentos.json();
         setAcompanhamentosNaBase(res);
+
       } else {
         const res = await acompanhamentos.json();
         setErrMsg(res.message);
@@ -155,6 +194,7 @@ const InsereCardapio = (props) => {
       const res = await getData.json();
       setErrMsg(res.message);
     }
+    setLoading((oldValue) => !oldValue);
   };
 
   const confirmaDelete = async (data) => {
@@ -192,11 +232,16 @@ const InsereCardapio = (props) => {
     let isCancalled = false;
     if (!isCancalled) {
       getData();
+
     }
     return () => {
       isCancalled = true;
     };
   }, []);
+
+  if(!cookies.accessToken) {
+    return navigate('/');
+  }
 
   if (userLevel == 110) {
     return <PedidosDoDia/>
