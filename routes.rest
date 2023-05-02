@@ -47,8 +47,8 @@ Content-Type: application/json
 
 { 
 
-    "email": "fabiohp.pereira@gmail.com",
-    "password": "Montana22"
+    "email": "prof@jenny2.com",
+    "password": "oiafjnsdoijfa"
 
 
 }
