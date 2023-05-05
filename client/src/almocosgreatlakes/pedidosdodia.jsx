@@ -221,6 +221,7 @@ const PedidosDoDia = () => {
               <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
               {escolhasDoDia.map((item) => {
                 return <ReturnPedidos item={item} />
+
               })}
               </div>
             </div>

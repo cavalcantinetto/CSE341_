@@ -9,6 +9,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom"
 import InsereCardapio from "./almocosgreatlakes/inserecardapio";
 import SolicitaAlmoco from "./almocosgreatlakes/solicitaalmoco";
 import PedidosDoDia from "./almocosgreatlakes/pedidosdodia";
+import MyDocument from "./almocosgreatlakes/printcreator";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -22,6 +23,7 @@ root.render(
           <Route exact path='glakes/inserecardapio' element={ <InsereCardapio/> }/>
           <Route exact path='glakes/pedidosdodia' element={ <PedidosDoDia/>}/> 
           <Route exact path='glakes/solicitaalmoco' element={ <SolicitaAlmoco/>}/>
+          <Route exact path='glakes/printpedidos' element={ <MyDocument/>}/>
         </Routes>
         <FooterElement year="2023" />
         </BrowserRouter>
