@@ -12,6 +12,7 @@ import {
 } from "../functions/urlbase";
 import SolicitaAlmoco from "./solicitaalmoco";
 import Login from "../login/login";
+import ReturnPedidos from "./pedidosCards";
 
 const PedidosDoDia = () => {
   const [loading, setLoading] = useState(true);
@@ -25,9 +26,12 @@ const PedidosDoDia = () => {
   const navigate = useNavigate();
   let userLevel;
   const proteinsCounter = [];
+  const acompCounter = []
 
   let proteinas;
   let proteinasTotais;
+  let acompanhamentos;
+  let acompanhamentosTotais;
   
 
   if (escolhasDoDia.length) {
@@ -39,6 +43,21 @@ const PedidosDoDia = () => {
       });
       proteinasTotais = counts;
       proteinas = Object.keys(proteinasTotais);
+    });
+  }
+
+
+  if (escolhasDoDia.length) {
+    escolhasDoDia.map((item) => {
+      item.pratos.acompanhamentos.forEach(acomp => {
+        acompCounter.push(acomp)
+      })
+      const counts = {};
+      acompCounter.forEach(function (x) {
+        counts[x] = (counts[x] || 0) + 1;
+      });
+      acompanhamentosTotais = counts;
+      acompanhamentos = Object.keys(acompanhamentosTotais);
     });
   }
 
@@ -189,34 +208,20 @@ const PedidosDoDia = () => {
                 );
               })}
             </div>
+            <div className="container align-self-center p-3 mb-2 bg-light text-center w-50 ">
+              <h3><u>ACOMPANHAMENTOS DO DIA</u></h3>
+              {acompanhamentos.map((key) => {
+                return (
+                  <h5 className="m-3"><strong>{`${key}: ${acompanhamentosTotais[key]}`}</strong></h5>
+                );
+              })}
+            </div>
 
             <div>
               <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
-                {escolhasDoDia.map((item) => {
-                  return (
-                    <div key={item._id} className="card m-3 p-2">
-                      <div className="card-body bg-light bg-gradient rounded-3 shadow">
-                        <div>
-                          <h5 className="card-title m-3">{item.estudante}</h5>
-                          <h4 className="card-title m-3">
-                            {`Turma: ${item.turma}`}
-                          </h4>
-                          <p className="card-text">{item.pratos.proteina}</p>
-                          <hr></hr>
-                          {item.pratos.acompanhamentos.map((acomp) => {
-                            return (
-                              <p key={item._id + acomp} className="card-text">
-                                {acomp}
-                              </p>
-                            );
-                          })}
-                          <hr></hr>
-                          <BotoesStatus item={item} />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+              {escolhasDoDia.map((item) => {
+                return <ReturnPedidos item={item} />
+              })}
               </div>
             </div>
           </>

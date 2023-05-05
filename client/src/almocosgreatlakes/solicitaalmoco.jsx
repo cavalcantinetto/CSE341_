@@ -63,8 +63,10 @@ const SolicitaAlmoco = () => {
 
   //define o dia de hoje - vai servir para filtrar as escolhas já realizadas. Só para frente.
   let today = new Date();
+  let tomorrow = new Date(today.setDate(today.getDate()+1))
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString().toString();
+
 
 
   //Grupo que definirá todas as funções fetch
@@ -327,7 +329,7 @@ const SolicitaAlmoco = () => {
                   
                   {cardapios.map((item) => {
            
-                    if (item.data >= today) {
+                    if (item.data > today) {
                       if (item._id === dataEscolhida) {
                         //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
                         return (
