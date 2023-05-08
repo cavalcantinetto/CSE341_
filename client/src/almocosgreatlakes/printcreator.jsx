@@ -1,5 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import ReactPDF from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
     page: {
@@ -20,13 +21,20 @@ const MyDocument = (props) => {
      <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text>{props.card}</Text>
+          <Text>{props.cards.estudante}</Text>
+          <Text>{props.cards.dataId}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>{props.cards.estudante}</Text>
+          <Text>{props.cards.dataId}</Text>
         </View>
       </Page>
     </Document>
+  
 
 
     )
+    ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
 
 }
 

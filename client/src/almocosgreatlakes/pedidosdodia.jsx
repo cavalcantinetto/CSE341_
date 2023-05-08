@@ -13,6 +13,7 @@ import {
 import SolicitaAlmoco from "./solicitaalmoco";
 import Login from "../login/login";
 import ReturnPedidos from "./pedidosCards";
+import MyDocument from "./printcreator";
 
 const PedidosDoDia = () => {
   const [loading, setLoading] = useState(true);
@@ -221,6 +222,7 @@ const PedidosDoDia = () => {
               <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
               {escolhasDoDia.map((item) => {
                 return <ReturnPedidos item={item} />
+                //return <MyDocument cards={item} />
 
               })}
               </div>

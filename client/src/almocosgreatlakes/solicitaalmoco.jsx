@@ -63,7 +63,9 @@ const SolicitaAlmoco = () => {
 
   //define o dia de hoje - vai servir para filtrar as escolhas já realizadas. Só para frente.
   let today = new Date();
-  let tomorrow = new Date(today.setDate(today.getDate()+1))
+  let tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate()+1)
+  tomorrow = tomorrow.toISOString().toString();
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString().toString();
 
@@ -158,7 +160,7 @@ const SolicitaAlmoco = () => {
         if (res) {
           let message = `Foram gravadas com sucesso as seguinte escolhas:\nData: ${date}\nProteína: ${proteinSelection}\nAcompanhamentos: ${[
             acompanhamentos,
-          ]}\nPara: ${estudante}`;
+          ]}\nPara: ${estudante}\nClique em "Atualizar Relatório" abaixo para visualizar as escolhas já realizadas.`;
           setAcompanhamentos((oldValue) => (oldValue = []));
           setIsLoading(false);
           //
@@ -328,27 +330,51 @@ const SolicitaAlmoco = () => {
                   </option>
                   
                   {cardapios.map((item) => {
-           
-                    if (item.data > today) {
-                      if (item._id === dataEscolhida) {
-                        //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
-                        return (
-                          <option
-                            key={`option+${item._id}`}
-                            name={item.data}
-                            value={"item._id"}
-                          >
-                            {convertDate(item.data)}
-                          </option>
-                        );
+                    if((cookies?.userData?.userLevel) && (cookies?.userData?.userLevel)>100) {
+                        if (item.data >= today) {
+                          if (item._id === dataEscolhida) {
+                            //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
+                            return (
+                              <option
+                                key={`option+${item._id}`}
+                                name={item.data}
+                                value={"item._id"}
+                              >
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          } else {
+                            return (
+                              <option key={`option+${item._id}`} value={item._id}>
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          }
+                        }
+
                       } else {
-                        return (
-                          <option key={`option+${item._id}`} value={item._id}>
-                            {convertDate(item.data)}
-                          </option>
-                        );
+                        if (item.data > today) {
+                          if (item._id === dataEscolhida) {
+                            //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
+                            return (
+                              <option
+                                key={`option+${item._id}`}
+                                name={item.data}
+                                value={"item._id"}
+                              >
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          } else {
+                            return (
+                              <option key={`option+${item._id}`} value={item._id}>
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          }
+                        }
+
                       }
-                    }
                   })}
                 </select>
                 <br />
