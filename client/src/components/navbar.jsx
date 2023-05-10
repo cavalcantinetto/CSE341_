@@ -13,8 +13,6 @@ export function NavBar(props) {
   
   const navigate = useNavigate();
   const handleClick = ()=> {
-   
-    console.log(cookies.accessToken)
 
     // setAuth('')
     removeCookie('accessToken', { path: '/' })

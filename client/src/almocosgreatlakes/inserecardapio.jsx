@@ -102,17 +102,14 @@ const InsereCardapio = (props) => {
 
     if(!data.data || data.data ==null || data.data == undefined || isNaN(data.data.getTime())) {
       setLoading((oldValue) => !oldValue);
-      console.log(data.data);
       return alert("Não foi possível submeter. A data é inválida");
     }
     if(data.proteinas == ['', '', ''] || data.proteinas[0] == ""  || data.proteinas[1] == ""  || data.proteinas[2] == "" || data.proteinas[0] == undefined  || data.proteinas[1] == undefined || data.proteinas[2] == undefined) {
       setLoading((oldValue) => !oldValue);
-      console.log(data.proteinas);
       return alert("Não foi possível submeter. A proteína 1, 2 ou 3 está em branco ou é invalida");
     }
     if(data.acompanhamentos.length < 3) {
       setLoading((oldValue) => !oldValue);
-      console.log(data.acompanhamentos);
       return alert("Não foi possível submeter. Você deve ter cadastrado menos de 3 acompanhamentos.");
     }
 

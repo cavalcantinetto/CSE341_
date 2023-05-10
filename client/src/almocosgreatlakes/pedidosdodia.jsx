@@ -144,7 +144,7 @@ const PedidosDoDia = () => {
     return navigate('/')
   }
 
-  if (userLevel < 110) {
+  if (userLevel < 101) {
     return <SolicitaAlmoco />;
   }
 

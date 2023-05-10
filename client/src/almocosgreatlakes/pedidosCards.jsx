@@ -2,7 +2,6 @@ import React from "react";
 import BotoesStatus from "./botoesstatus";
 
 const ReturnPedidos = (props) => {
- console.log(props.item)
  if(props.item.turma === 'Year 1') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
@@ -12,7 +11,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -39,7 +37,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -67,7 +64,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -94,7 +90,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -121,7 +116,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -148,7 +142,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -175,7 +168,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
@@ -201,7 +193,6 @@ const ReturnPedidos = (props) => {
               <h5 className="card-title m-3">{props.item.estudante}</h5>
               <h4 className="card-title m-3">
                 {`Turma: ${props.item.turma}`}
-                {console.log(props.item.turma)}
               </h4>
               </div>
               <p className="card-text">{props.item.pratos.proteina}</p>
