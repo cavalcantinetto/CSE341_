@@ -79,7 +79,14 @@ const Login = () => {
           setLoading(oldValue => oldValue = false);
           return navigate('glakes/pedidosdodia')
          } 
-         if (userData.userLevel < 110) {
+
+         if (userData.userLevel == 101) {
+          console.log("entrei aqui com secretaria")
+          setLoading(oldValue => oldValue = false);
+          return navigate('glakes/solicitaalmoco')
+         }
+
+         if (userData.userLevel < 101) {
           setLoading(oldValue => oldValue = false);
           return navigate('glakes/solicitaalmoco')
          }
