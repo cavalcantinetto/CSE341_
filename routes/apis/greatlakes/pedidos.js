@@ -11,7 +11,11 @@ routes.get('/getfortheday/:dataId', async(req, res) => {
         dataId: req.params.dataId
     }
     try {
+<<<<<<< HEAD
         const escolhas = await Pedidos.find(filter).sort({turma: 1} );
+=======
+        const escolhas = await Pedidos.find(filter).sort({turma: 1, estudante: 1});
+>>>>>>> greatLakesTotalCleaned
         if (!escolhas) {
             return res.status(204).json({ message: "No data was found" })
         } else {

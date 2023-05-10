@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { convertDate } from "../components/dataconverted";
 import Loading from "../components/loading";
+import { useNavigate } from "react-router-dom";
 import BotoesStatus from "./botoesstatus";
 import {
   BASE_URL,
@@ -10,6 +11,9 @@ import {
   ESCOLHASDODIA_URL,
 } from "../functions/urlbase";
 import SolicitaAlmoco from "./solicitaalmoco";
+import Login from "../login/login";
+import ReturnPedidos from "./pedidosCards";
+import MyDocument from "./printcreator";
 
 const PedidosDoDia = () => {
   const [loading, setLoading] = useState(true);
@@ -20,11 +24,16 @@ const PedidosDoDia = () => {
   const dataRef = useRef();
   const [dataIdState, setDataIdState] = useState();
   const [dataState, setDataState] = useState();
+  const navigate = useNavigate();
   let userLevel;
   const proteinsCounter = [];
-  // const [proteinasTotais, setProteinasTotais] = useState();
+  const acompCounter = []
+
   let proteinas;
   let proteinasTotais;
+  let acompanhamentos;
+  let acompanhamentosTotais;
+  
 
   if (escolhasDoDia.length) {
     escolhasDoDia.map((item) => {
@@ -38,9 +47,27 @@ const PedidosDoDia = () => {
     });
   }
 
-  if (cookies.userData.userLevel) {
-    userLevel = cookies.userData.userLevel;
+
+  if (escolhasDoDia.length) {
+    escolhasDoDia.map((item) => {
+      item.pratos.acompanhamentos.forEach(acomp => {
+        acompCounter.push(acomp)
+      })
+      const counts = {};
+      acompCounter.forEach(function (x) {
+        counts[x] = (counts[x] || 0) + 1;
+      });
+      acompanhamentosTotais = counts;
+      acompanhamentos = Object.keys(acompanhamentosTotais);
+    });
   }
+
+  if(cookies.userData) {
+    if (cookies.userData.userLevel) {
+      userLevel = cookies.userData.userLevel;
+    }
+  }
+ 
   let today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString().toString();
@@ -87,31 +114,35 @@ const PedidosDoDia = () => {
         return;
       }
     } catch (err) {
-      setLoading((oldValue) => !oldValue);
+      console.log(err.message)
       return;
     }
   }
 
   useEffect(() => {
-    setLoading((oldValue) => !oldValue);
+    setLoading((oldValue) => oldValue = !oldValue);
     if (dataIdState) {
       const escolhas = getEscolhas(dataIdState);
       if (escolhas) {
         setEscolhasDoDia(escolhas);
-
-        setLoading((oldValue) => !oldValue);
       } else {
         alert("Algo deu errado no servidor.");
       }
+      setLoading((oldValue) => oldValue = !oldValue);
     }
   }, [dataIdState]);
 
   useEffect(() => {
+    setLoading((oldValue) => oldValue = !oldValue);
     const res = getData();
     if (res) {
-      setLoading((oldValue) => !oldValue);
+      setLoading((oldValue) => oldValue = !oldValue);
     }
   }, []);
+
+  if(!cookies.accessToken) {
+    return navigate('/')
+  }
 
   if (userLevel < 110) {
     return <SolicitaAlmoco />;
@@ -170,41 +201,30 @@ const PedidosDoDia = () => {
               )}
             </div>
             <br />
-            <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
+            <div className="container align-self-center p-3 mb-2 bg-light text-center w-50 ">
+              <h3><u>PROTEÍNAS DO DIA</u></h3>
               {proteinas.map((key) => {
                 return (
-                  <p className="card-body bg-dark text-white bg-gradient rounded-3 shadow">{`Prepare ${proteinasTotais[key]} ${key}`}</p>
+                  <h5 className="m-3"><strong>{`${key}: ${proteinasTotais[key]}`}</strong></h5>
+                );
+              })}
+            </div>
+            <div className="container align-self-center p-3 mb-2 bg-light text-center w-50 ">
+              <h3><u>ACOMPANHAMENTOS DO DIA</u></h3>
+              {acompanhamentos.map((key) => {
+                return (
+                  <h5 className="m-3"><strong>{`${key}: ${acompanhamentosTotais[key]}`}</strong></h5>
                 );
               })}
             </div>
 
             <div>
               <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
-                {escolhasDoDia.map((item) => {
-                  return (
-                    <div key={item._id} className="card m-3 p-2">
-                      <div className="card-body bg-light bg-gradient rounded-3 shadow">
-                        <div>
-                          <h5 className="card-title m-3">{item.estudante}</h5>
-                          <h4 className="card-title m-3">
-                            {`Turma: ${item.turma}`}
-                          </h4>
-                          <p className="card-text">{item.pratos.proteina}</p>
-                          <hr></hr>
-                          {item.pratos.acompanhamentos.map((acomp) => {
-                            return (
-                              <p key={item._id + acomp} className="card-text">
-                                {acomp}
-                              </p>
-                            );
-                          })}
-                          <hr></hr>
-                          <BotoesStatus item={item} />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+              {escolhasDoDia.map((item) => {
+                return <ReturnPedidos item={item} />
+                //return <MyDocument cards={item} />
+
+              })}
               </div>
             </div>
           </>

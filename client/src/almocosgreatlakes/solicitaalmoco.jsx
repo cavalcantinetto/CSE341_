@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Loading from "../components/loading";
 import ErrorFallback from "../components/handleerror";
 import { convertDate } from "../components/dataconverted";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL, CARDAPIO_URL, ESCOLHAS_URL, INSEREALMOCO } from "../functions/urlbase";
 
 
@@ -32,14 +33,19 @@ const SolicitaAlmoco = () => {
   const [escolhasNaBase, setEscolhasNaBase] = useState([]);
   //variável que indica se exite escolha na base (Não consegui ler o conteudo da variável anterior - potenciais problemas aqui)
   const [temEscolhas, setTemEscolhas] = useState(false);
-
+  const navigate = useNavigate();
 
   //inicia o sistema lendo quais estudantes são dependentes do usuário principal - pai
   let estudantes;
-  if (cookies.userData.userKids) {
-    estudantes = cookies.userData.userKids;
+  
+  if(cookies.userData) {
+    if (cookies.userData.userKids) {
+      estudantes = cookies.userData.userKids;
+    }
+  } else {
+    navigate ("/")
   }
- 
+
   //parece que essa variável repete o dateRef, avaliar
   const [date, setDate] = useState();
   //não sei diferença entre data escolhida e dateRef e date. avaliar
@@ -57,8 +63,12 @@ const SolicitaAlmoco = () => {
 
   //define o dia de hoje - vai servir para filtrar as escolhas já realizadas. Só para frente.
   let today = new Date();
+  let tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate()+1)
+  tomorrow = tomorrow.toISOString().toString();
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString().toString();
+
 
 
   //Grupo que definirá todas as funções fetch
@@ -150,7 +160,7 @@ const SolicitaAlmoco = () => {
         if (res) {
           let message = `Foram gravadas com sucesso as seguinte escolhas:\nData: ${date}\nProteína: ${proteinSelection}\nAcompanhamentos: ${[
             acompanhamentos,
-          ]}\nPara: ${estudante}`;
+          ]}\nPara: ${estudante}\nClique em "Atualizar Relatório" abaixo para visualizar as escolhas já realizadas.`;
           setAcompanhamentos((oldValue) => (oldValue = []));
           setIsLoading(false);
           //
@@ -262,6 +272,9 @@ const SolicitaAlmoco = () => {
     temEscolhas,
   ]);
 
+  if(!cookies.accessToken) {
+    return navigate('/')
+  }
   return (
     <>
       <div>
@@ -317,6 +330,7 @@ const SolicitaAlmoco = () => {
                   </option>
                   
                   {cardapios.map((item) => {
+<<<<<<< HEAD
            
                     if (item.data > today) {
                       if (item._id === dataEscolhida) {
@@ -330,14 +344,53 @@ const SolicitaAlmoco = () => {
                             {convertDate(item.data)}
                           </option>
                         );
+=======
+                    if((cookies?.userData?.userLevel) && (cookies?.userData?.userLevel)>100) {
+                        if (item.data >= today) {
+                          if (item._id === dataEscolhida) {
+                            //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
+                            return (
+                              <option
+                                key={`option+${item._id}`}
+                                name={item.data}
+                                value={"item._id"}
+                              >
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          } else {
+                            return (
+                              <option key={`option+${item._id}`} value={item._id}>
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          }
+                        }
+
+>>>>>>> greatLakesTotalCleaned
                       } else {
-                        return (
-                          <option key={`option+${item._id}`} value={item._id}>
-                            {convertDate(item.data)}
-                          </option>
-                        );
+                        if (item.data > today) {
+                          if (item._id === dataEscolhida) {
+                            //esse if statment é para definir o defaultValue (o que garante que a tela mostre a data escolhida pelo usuário)
+                            return (
+                              <option
+                                key={`option+${item._id}`}
+                                name={item.data}
+                                value={"item._id"}
+                              >
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          } else {
+                            return (
+                              <option key={`option+${item._id}`} value={item._id}>
+                                {convertDate(item.data)}
+                              </option>
+                            );
+                          }
+                        }
+
                       }
-                    }
                   })}
                 </select>
                 <br />
@@ -363,7 +416,7 @@ const SolicitaAlmoco = () => {
                   </select>
                 )}
                 {isOption && (
-                  <div className="d-flex justify-content-evenly flex-wrap">
+                  <div className="d-flex justify-content-center flex-column  ">
                     {optionsForTheDay[0].map((item) => {
                       return (
                         <>
@@ -383,7 +436,7 @@ const SolicitaAlmoco = () => {
                             }}
                           />
                           <label
-                            className="btn btn-outline-primary m-2"
+                            className="btn btn-outline-primary m-2 w-50 align-self-center"
                             htmlFor={item}
                           >
                             {item}
@@ -412,7 +465,7 @@ const SolicitaAlmoco = () => {
                   </select>
                 )}
                 {isOption && (
-                  <div className="d-flex justify-content-evenly flex-wrap">
+                  <div className="d-flex align-items-center justify-content-center flex-wrap">
                     {optionsForTheDay[1].map((item) => {
                       return (
                         <>
@@ -450,7 +503,7 @@ const SolicitaAlmoco = () => {
                             }}
                           />
                           <label
-                            className="btn btn-outline-primary m-2"
+                            className="btn btn-outline-primary m-2 w-50 align-self-cente"
                             htmlFor={item}
                           >
                             {item}
