@@ -11,7 +11,7 @@ routes.get('/getfortheday/:dataId', async(req, res) => {
         dataId: req.params.dataId
     }
     try {
-        const escolhas = await Pedidos.find(filter).sort({turma: 1, nome: 1});
+        const escolhas = await Pedidos.find(filter).sort({turma: 1, estudante: 1});
         if (!escolhas) {
             return res.status(204).json({ message: "No data was found" })
         } else {
