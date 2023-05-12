@@ -139,7 +139,7 @@ const SolicitaAlmoco = () => {
     }
   }
 
-  async function submitAlmoco(dateId, date, turma, proteina, acompanhamentos) {
+  async function submitAlmoco(dateId, date, turma, turno, proteina, acompanhamentos) {
     setIsLoading(true);
     try {
       //define o objeto que vai carregar o array de escolhas para registro na base de dados
@@ -147,7 +147,7 @@ const SolicitaAlmoco = () => {
         data: new Date(date),
         dataId: dateId,
         estudante: estudante,
-        turma: turma,
+        turma: `${turno}-${turma}`,
         proteina: proteina,
         acompanhamentos: acompanhamentos,
       };
@@ -224,6 +224,10 @@ const SolicitaAlmoco = () => {
   async function handleSubmit(e) {
     setIsLoading(true);
 
+    const turno =(estudantes.filter(item => item.nome == estudante)[0].turno)
+    if(!turno) {
+      return
+    }
     const turma =(estudantes.filter(item => item.nome == estudante)[0].turma)
     if(!turma) {
       return
@@ -233,6 +237,7 @@ const SolicitaAlmoco = () => {
       dataEscolhida,
       convertDate(date),
       turma,
+      turno,
       proteinSelection,
       acompanhamentos
     );

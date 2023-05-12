@@ -77,6 +77,10 @@ app.use('/acompanhamentos', acompanhamentosRoutes);
 // const insereTurmas = require('./routes/apis/greatlakes/insertUsers');
 // app.use('/insereturmas', insereTurmas);
 
+//rota para inserir os dados de cobrança no Banco de dados
+// const insereCobranca = require('./routes/apis/greatlakes/insertBill');
+// app.use('/inserecobranca', insereCobranca);
+
 //rota para encaminhar emails via NodeJs
 const sendmailRoutes = require('./routes/apis/greatlakes/sendmail');
 app.use('/sendmail', sendmailRoutes);

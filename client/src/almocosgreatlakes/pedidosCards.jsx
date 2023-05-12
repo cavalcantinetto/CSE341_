@@ -2,7 +2,7 @@ import React from "react";
 import BotoesStatus from "./botoesstatus";
 
 const ReturnPedidos = (props) => {
- if(props.item.turma === 'Year 1') {
+ if(props.item.turma === 'Year 1'|| props.item.turma === 'Manhã-Year 1'|| props.item.turma ==='Tarde-Year 1') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
@@ -28,7 +28,7 @@ const ReturnPedidos = (props) => {
           </div>
         </div>
    );
- }  if(props.item.turma === 'Year 2') {
+ }  if(props.item.turma === 'Year 2'|| props.item.turma === 'Manhã-Year 2'|| props.item.turma ==='Tarde-Year 2') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
@@ -55,7 +55,7 @@ const ReturnPedidos = (props) => {
         </div>
    );
  }
- if(props.item.turma === 'Year 3') {
+ if(props.item.turma === 'Year 3'|| props.item.turma === 'Manhã-Year 3'|| props.item.turma ==='Tarde-Year 3') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
@@ -81,7 +81,7 @@ const ReturnPedidos = (props) => {
           </div>
         </div>
    );
- }  if(props.item.turma === 'Year 4') {
+ }  if(props.item.turma === 'Year 4'|| props.item.turma === 'Manhã-Year 4'|| props.item.turma ==='Tarde-Year 4') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
@@ -107,7 +107,7 @@ const ReturnPedidos = (props) => {
           </div>
         </div>
    );
- }  if(props.item.turma === 'Year 5') {
+ }  if(props.item.turma === 'Year 5' || props.item.turma === 'Manhã-Year 5'|| props.item.turma ==='Tarde-Year 5') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
@@ -133,7 +133,8 @@ const ReturnPedidos = (props) => {
           </div>
         </div>
    );
- } if(props.item.turma === 'Year 6') {
+  }
+   if(props.item.turma === 'Year 6') {
     return (
         <div key={props.item._id} className="card m-3 p-2">
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
