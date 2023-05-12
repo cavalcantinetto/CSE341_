@@ -24,6 +24,7 @@ const PedidosDoDia = () => {
   const dataRef = useRef();
   const [dataIdState, setDataIdState] = useState();
   const [dataState, setDataState] = useState();
+  const [refreshPage, setRefreshPage] = useState(false)
   const navigate = useNavigate();
   let userLevel;
   const proteinsCounter = [];
@@ -130,7 +131,7 @@ const PedidosDoDia = () => {
       }
       setLoading((oldValue) => oldValue = !oldValue);
     }
-  }, [dataIdState]);
+  }, [dataIdState, refreshPage]);
 
   useEffect(() => {
     setLoading((oldValue) => oldValue = !oldValue);
@@ -139,6 +140,21 @@ const PedidosDoDia = () => {
       setLoading((oldValue) => oldValue = !oldValue);
     }
   }, []);
+
+  function reverState() {
+    console.log(refreshPage)
+    setRefreshPage(oldValue => oldValue = !oldValue)
+    
+  }
+  //ira renovar a pagina a cada 8 minutos
+  useEffect(() => {
+    setTimeout(()=> {
+      console.log("mudou o estado");
+      reverState();
+      
+    }, 480000)
+   
+    }, [refreshPage]);
 
   if(!cookies.accessToken) {
     return navigate('/')

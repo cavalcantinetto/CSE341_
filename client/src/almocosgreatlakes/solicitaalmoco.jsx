@@ -224,9 +224,10 @@ const SolicitaAlmoco = () => {
   async function handleSubmit(e) {
     setIsLoading(true);
 
-    const turno =(estudantes.filter(item => item.nome == estudante)[0].turno)
+    
+    let turno =(estudantes.filter(item => item.nome == estudante)[0].turno)
     if(!turno) {
-      return
+      turno = "Z - Avulsos"
     }
     const turma =(estudantes.filter(item => item.nome == estudante)[0].turma)
     if(!turma) {
