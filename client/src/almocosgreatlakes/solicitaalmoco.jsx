@@ -553,12 +553,12 @@ const SolicitaAlmoco = () => {
                 Atualizar Relatório
               </button>
               {temEscolhas && (
-                <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
+                <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
                   {escolhasNaBase.map((item) => {
                     if (item.data >= today) {
                       return (
                         <>
-                          <div key={item.id} className="card m-3 p-2">
+                          <div key={item.id} className="card m-3 p-2" style={{maxWidth:"250px"}}>
                             <div className="card-body bg-light bg-gradient rounded-3 shadow">
                               <h5 className="card-title">
                                 {convertDate(item.data)}
