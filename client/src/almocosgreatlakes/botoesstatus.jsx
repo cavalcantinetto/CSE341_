@@ -7,16 +7,17 @@ import { BASE_URL, ALTERASTATUS } from "../functions/urlbase";
 const BotoesStatus = (props) => {
 
     const [cookies, setCookies] = useCookies();
-    const [pratoPronto, setPratoPronto] = useState()
+    const [pratoPronto, setPratoPronto] = useState(props.item.status.pratopronto)
+    const [pratoServido, setPratoServido] = useState(props.item.status.pratoservido);
 
-    async function alteraStatus(id, statusPratoPronto, statusPratoServido) {
+    async function alteraStatusPratoPronto(id, statusPratoPronto, pratoServido) {
           
             try {
             let data = {
                 _id: id,
                 status: {
                     pratopronto: statusPratoPronto,
-                    pratoservido: statusPratoServido
+                    pratoservido: pratoServido
                 }
                 
             }
@@ -29,17 +30,51 @@ const BotoesStatus = (props) => {
                   body: JSON.stringify(data)
             })
             if(!status) {
-                alert("aconteceu algo errado, tente novamente mais tarde.");
+                alert("aconteceu algo errado, o status não foi registrado.\nTente novamente mais tarde.");
                 return;
             } if(status.ok) {
                 const res = await status.json();
+                console.log(res)
                 return;
             }
            
         } catch (err) {
+            console.log("o erro esta aqui")
             return;
         }
       }
+      async function alteraStatusPratoServido(id, statusPratoServido, pratoPronto) {
+          
+        try {
+        let data = {
+            _id: id,
+            status: {
+              pratopronto: pratoPronto,
+              pratoservido: statusPratoServido
+          }
+            
+        }
+        const status = await fetch(BASE_URL+ALTERASTATUS+id, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer  ${cookies.accessToken}`,
+              },
+              body: JSON.stringify(data)
+        })
+        if(!status) {
+            alert("aconteceu algo errado, o status não foi registrado.\nTente novamente mais tarde.");
+            return;
+        } if(status.ok) {
+            const res = await status.json();
+            console.log(res)
+            return;
+        }
+       
+    } catch (err) {
+        return;
+    }
+  }
     
   return (
     <>
@@ -53,16 +88,17 @@ const BotoesStatus = (props) => {
           className="btn-check"
           id={"pratopronto" + props.item._id}
           autoComplete="off"
-          defaultChecked={props.item.status.pratopronto}
+          defaultChecked={pratoPronto}
           onClick={(e) => {
             if (e.target.checked) {
-
-                alteraStatus(props.item._id, true, props.item.status.pratoservido);
-                setPratoPronto(oldValue => !oldValue)
+              console.log(e.target.checked);
+              console.log(pratoPronto);
+              setPratoPronto(true)
+              alteraStatusPratoPronto(props.item._id, true, pratoServido);
 
             } else {
-            
-              alteraStatus(props.item._id, false, props.item.status.pratoservido);
+              alteraStatusPratoPronto(props.item._id, false, pratoServido);
+              setPratoPronto(false)
             }
           }}
         />
@@ -83,13 +119,16 @@ const BotoesStatus = (props) => {
           className="btn-check"
           id={"pratoservido" + props.item._id}
           autoComplete="off"
-          defaultChecked={props.item.status.pratoservido}
+          defaultChecked={pratoServido}
           onClick={(e) => {
             if (e.target.checked) {
-                alteraStatus(props.item._id, props.item.status.pratopronto, true);
-                
+              console.log(e.target.checked)
+              console.log(e.target.checked)
+               alteraStatusPratoServido(props.item._id, true, pratoPronto);
+               setPratoServido(true)
             } else {
-                alteraStatus(props.item._id, props.item.status.pratopronto, false);
+               alteraStatusPratoServido(props.item._id, false, pratoPronto);
+               setPratoServido(false)
             }
           }}
         />

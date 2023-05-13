@@ -115,7 +115,7 @@ const PedidosDoDia = () => {
         return;
       }
     } catch (err) {
-      console.log(err.message)
+      alert(err.message);
       return;
     }
   }
@@ -142,14 +142,11 @@ const PedidosDoDia = () => {
   }, []);
 
   function reverState() {
-    console.log(refreshPage)
     setRefreshPage(oldValue => oldValue = !oldValue)
-    
   }
   //ira renovar a pagina a cada 8 minutos
   useEffect(() => {
     setTimeout(()=> {
-      console.log("mudou o estado");
       reverState();
       
     }, 480000)

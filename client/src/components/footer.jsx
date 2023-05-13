@@ -6,8 +6,8 @@ export function FooterElement(props) {
         {" "}
         <span> <hr /></span>
         <span className="mt-1"> Great Lakes Food Service </span>{" "}
-        <span className="mt-1"> All rights reserved™ </span>{" "}
-        <span className="mt-1"> Last Update feb, {props.year}. </span>{" "}
+        <span className="mt-1"> Pawered by Jay C - All rights reserved™ </span>{" "}
+        <span className="mt-1"> Last Update May, {props.year}. </span>{" "}
       </small>{" "}
     </div>
   );

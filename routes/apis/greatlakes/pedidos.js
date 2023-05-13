@@ -75,12 +75,18 @@ routes.patch('/alterastatus/:id', authorization, async(req, res) => {
         const filter = {
             _id: req.body._id
         }
-        const newstatus = {
-            status: {
-                pratopronto: req.body.status.pratopronto,
-                prontoservido: req.body.status.pratoservido
-            } 
+        console.log(req.body.status)
+        if(req.body.status.pratopronto != undefined && req.body.status.pratoservido != undefined) {
+            newstatus = {
+                status: {
+                    pratopronto: req.body.status.pratopronto,
+                    pratoservido: req.body.status.pratoservido
+                } 
+            }
+        } else {
+            return res.status(500).json({ message: "Falha no envio de dados" })
         }
+         
         result = await Pedidos.findOneAndUpdate(filter, newstatus, {new: true});
             if (!result) {
                 return res.status(404).json({ message: "Não encontrou escolhas" })
