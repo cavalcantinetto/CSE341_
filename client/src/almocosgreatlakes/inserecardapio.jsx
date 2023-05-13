@@ -407,7 +407,7 @@ const InsereCardapio = (props) => {
           >
             Atualizar Cardapio
           </button>
-          <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
+          <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
             {cardapioNaBase.map((item) => {
               return (
                 <CardapioCard

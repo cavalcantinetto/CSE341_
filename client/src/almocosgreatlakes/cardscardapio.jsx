@@ -5,7 +5,7 @@ const CardapioCard = (props) => {
 
     return (
      <>
-    <div key={props.id} className="card m-3 p-2">
+    <div key={props.id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
     <div className="card-body bg-light bg-gradient rounded-3 shadow">
     <div><h5 className="card-title m-3">
         {convertDate(props.data)}

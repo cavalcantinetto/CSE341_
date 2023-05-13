@@ -34,12 +34,11 @@ const BotoesStatus = (props) => {
                 return;
             } if(status.ok) {
                 const res = await status.json();
-                console.log(res)
+
                 return;
             }
            
         } catch (err) {
-            console.log("o erro esta aqui")
             return;
         }
       }
@@ -67,7 +66,6 @@ const BotoesStatus = (props) => {
             return;
         } if(status.ok) {
             const res = await status.json();
-            console.log(res)
             return;
         }
        
@@ -91,8 +89,7 @@ const BotoesStatus = (props) => {
           defaultChecked={pratoPronto}
           onClick={(e) => {
             if (e.target.checked) {
-              console.log(e.target.checked);
-              console.log(pratoPronto);
+
               setPratoPronto(true)
               alteraStatusPratoPronto(props.item._id, true, pratoServido);
 
@@ -122,8 +119,7 @@ const BotoesStatus = (props) => {
           defaultChecked={pratoServido}
           onClick={(e) => {
             if (e.target.checked) {
-              console.log(e.target.checked)
-              console.log(e.target.checked)
+
                alteraStatusPratoServido(props.item._id, true, pratoPronto);
                setPratoServido(true)
             } else {

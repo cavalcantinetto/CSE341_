@@ -4,7 +4,7 @@ import BotoesStatus from "./botoesstatus";
 const ReturnPedidos = (props) => {
  if(props.item.turma === 'Year 1'|| props.item.turma === 'Manhã-Year 1'|| props.item.turma ==='Tarde-Year 1') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-primary text-white'>
@@ -30,7 +30,7 @@ const ReturnPedidos = (props) => {
    );
  }  if(props.item.turma === 'Year 2'|| props.item.turma === 'Manhã-Year 2'|| props.item.turma ==='Tarde-Year 2') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-secondary text-white'>
@@ -57,7 +57,7 @@ const ReturnPedidos = (props) => {
  }
  if(props.item.turma === 'Year 3'|| props.item.turma === 'Manhã-Year 3'|| props.item.turma ==='Tarde-Year 3') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-success text-white'>
@@ -83,7 +83,7 @@ const ReturnPedidos = (props) => {
    );
  }  if(props.item.turma === 'Year 4'|| props.item.turma === 'Manhã-Year 4'|| props.item.turma ==='Tarde-Year 4') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-danger text-white'>
@@ -109,7 +109,7 @@ const ReturnPedidos = (props) => {
    );
  }  if(props.item.turma === 'Year 5' || props.item.turma === 'Manhã-Year 5'|| props.item.turma ==='Tarde-Year 5') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-warning text-dark'>
@@ -136,7 +136,7 @@ const ReturnPedidos = (props) => {
   }
    if(props.item.turma === 'Year 6') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-info text-white'>
@@ -162,7 +162,7 @@ const ReturnPedidos = (props) => {
    );
  } if(props.item.turma === 'Year 7') {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div>
                 <div className='p-3 mb-2 bg-light text-dark'>
@@ -188,7 +188,7 @@ const ReturnPedidos = (props) => {
    );
  } else {
     return (
-        <div key={props.item._id} className="card m-3 p-2">
+        <div key={props.item._id} className="card m-3 p-2" style={{maxWidth:"300px"}}>
           <div className="card-body bg-light bg-gradient rounded-3 shadow">
             <div><div className='p-3 mb-2 bg-dark text-white'>
               <h5 className="card-title m-3">{props.item.estudante}</h5>

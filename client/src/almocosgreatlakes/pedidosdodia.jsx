@@ -232,7 +232,7 @@ const PedidosDoDia = () => {
             </div>
 
             <div>
-              <div className="d-flex align-content-stretch flex-wrap m-3 text-center">
+              <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
               {escolhasDoDia.map((item) => {
                 return <ReturnPedidos item={item} />
                 //return <MyDocument cards={item} />
