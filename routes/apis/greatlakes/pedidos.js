@@ -56,7 +56,7 @@ routes.post('/register', authorization, async(req, res) => {
             }
             res.result = result;
             res.status(201).json(result);
-            console.log(res)
+            console.log(res.result)
         } catch (err) {
             if (err instanceof mongoose.CastError) {
                 return res.status(400).json({ message: "Escolhas não existem" })
