@@ -142,15 +142,28 @@ const SolicitaAlmoco = () => {
   async function submitAlmoco(dateId, date, turma, turno, proteina, acompanhamentos) {
     setIsLoading(true);
     try {
-      //define o objeto que vai carregar o array de escolhas para registro na base de dados
-      const data = {
-        data: new Date(date),
-        dataId: dateId,
-        estudante: estudante,
-        turma: `${turno}-${turma}`,
-        proteina: proteina,
-        acompanhamentos: acompanhamentos,
-      };
+    //define o objeto que vai carregar o array de escolhas para registro na base de dados
+      let data;
+      if(turma == "Year 6" || turma == "Year 7") {
+          data = {
+          data: new Date(date),
+          dataId: dateId,
+          estudante: estudante,
+          turma: turma,
+          proteina: proteina,
+          acompanhamentos: acompanhamentos,
+        };
+      } else {
+          data = {
+          data: new Date(date),
+          dataId: dateId,
+          estudante: estudante,
+          turma: `${turno}-${turma}`,
+          proteina: proteina,
+          acompanhamentos: acompanhamentos,
+        };
+      }
+        
       //Com o objeto definido, envia para o BD para fazer o registro das escolhas, lá vamos verificar se o dataID já existe.
       const result = await fetch(BASE_URL + INSEREALMOCO, {
         method: "post",

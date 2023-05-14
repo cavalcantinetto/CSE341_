@@ -111,6 +111,7 @@ const PedidosDoDia = () => {
       }
       if (escolhas.ok) {
         const res = await escolhas.json();
+        console.log(res)
         setEscolhasDoDia(res);
         return;
       }
