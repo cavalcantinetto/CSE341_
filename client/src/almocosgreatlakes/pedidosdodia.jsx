@@ -13,7 +13,8 @@ import {
 import SolicitaAlmoco from "./solicitaalmoco";
 import Login from "../login/login";
 import ReturnPedidos from "./pedidosCards";
-import MyDocument from "./printcreator";
+import CardsParaImpressao from "./printcreator";
+
 
 const PedidosDoDia = () => {
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ const PedidosDoDia = () => {
   const [dataIdState, setDataIdState] = useState();
   const [dataState, setDataState] = useState();
   const [refreshPage, setRefreshPage] = useState(false)
+  const [impressao, setImprime] = useState(false);
   const navigate = useNavigate();
   let userLevel;
   const proteinsCounter = [];
@@ -121,6 +123,20 @@ const PedidosDoDia = () => {
     }
   }
 
+  function setPrintCards() {
+    setImprime(oldValue => oldValue = !oldValue)
+  }
+  function printCards() {
+    const printArea = document.getElementById('printArea').innerHTML;
+    var originalContent = document.body.innerHTML;
+    document.body.innerHTML = printArea;
+    window.print();
+    document.body.innerHTML = originalContent
+    
+  }
+
+
+
   useEffect(() => {
     setLoading((oldValue) => oldValue = !oldValue);
     if (dataIdState) {
@@ -164,6 +180,25 @@ const PedidosDoDia = () => {
 
   {
     loading && <Loading />;
+  }
+
+  if(impressao) {
+    return (
+      <>
+       <div className="container align-self-center justify-content-center p-3 mb-2 bg-light text-center">
+              <button onClick={setPrintCards}>Retorna à página pedidos do dia</button>
+            </div>
+      <div>
+              <div className="d-flex flex-column" style={{maxWidth:'300px'}} id="printArea">
+              {escolhasDoDia.map((item) => {
+                return <CardsParaImpressao item={item} />
+              })}
+              </div>
+              
+              <button onClick={printCards}>Imprime os cards</button>
+        </div>
+      </>
+    )
   }
 
   if (cardapioNaBase) {
@@ -231,6 +266,7 @@ const PedidosDoDia = () => {
                 );
               })}
             </div>
+           
 
             <div>
               <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
@@ -240,6 +276,9 @@ const PedidosDoDia = () => {
 
               })}
               </div>
+            </div>
+            <div className="container align-self-center p-3 mb-2 bg-light text-center">
+              <button onClick={setPrintCards} >Imprime todos os cards</button>
             </div>
           </>
         ) : (
