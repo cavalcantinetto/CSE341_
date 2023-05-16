@@ -5,7 +5,7 @@ import Loading from "../components/loading";
 import ErrorFallback from "../components/handleerror";
 import { convertDate } from "../components/dataconverted";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, CARDAPIO_URL, ESCOLHAS_URL, INSEREALMOCO } from "../functions/urlbase";
+import { BASE_URL, CARDAPIO_URL, DELETE_URL_ESCOLHAS, ESCOLHAS_URL, INSEREALMOCO } from "../functions/urlbase";
 
 
 const SolicitaAlmoco = () => {
@@ -260,6 +260,38 @@ const SolicitaAlmoco = () => {
     }
     
   }
+
+  const confirmaDelete = async (data) => {
+    const confirmDeletion = window.confirm(
+      'Tem certeza que deseja apagar a escolha?'
+    );
+    if (confirmDeletion) {
+      setIsLoading(true);
+
+      try {
+        const result = await fetch(BASE_URL + DELETE_URL_ESCOLHAS + data, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer  ${cookies.accessToken}`,
+          },
+        });
+        if (result.ok) {
+          alert("Dia removido com sucesso!");
+          setIsLoading(false);
+          return window.location.reload();
+        } else {
+          alert(result.message);
+          setIsLoading(false);
+        }
+      } catch (err) {
+        setIsLoading(false);
+      }
+    } else {
+      return;
+    }
+  };
+
 
   useEffect(() => {
     try {
@@ -569,6 +601,7 @@ const SolicitaAlmoco = () => {
                 <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
                   {escolhasNaBase.map((item) => {
                     if (item.data >= today) {
+                      console.log(item._id);
                       return (
                         <>
                           <div key={item.id} className="card m-3 p-2" style={{maxWidth:"250px"}}>
@@ -594,7 +627,13 @@ const SolicitaAlmoco = () => {
                                 );
                               })}
                             </div>
+                            <div value={item._id} onClick={(e) => {
+                                confirmaDelete(e.target.value)
+                            }}>
+                            <button value={item._id} type="button" className="btn btn-outline-danger mt-2" title="Clique para apagar">Apagar
+                            </button>
                           </div>
+                      </div>
                         </>
                       );
                     }

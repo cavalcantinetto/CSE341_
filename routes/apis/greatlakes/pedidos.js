@@ -102,11 +102,11 @@ routes.patch('/alterastatus/:id', authorization, async(req, res) => {
     }
 })
 
-//delete cardapio
+//delete pedido
 routes.delete('/remove/:id', authorization, getPedidos, async(req, res) => {
     try {
         await res.cardapio.remove();
-        res.status(200).json({ message: "Cardápio Removido" })
+        res.status(200).json({ message: "Escolha removida com sucesso" })
 
     } catch (err) {
         res.status(500).json({ message: err.message })
