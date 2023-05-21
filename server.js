@@ -81,6 +81,10 @@ app.use('/healthz', healthRoutes);
 // const insereTurmas = require('./routes/apis/greatlakes/insertUsers');
 // app.use('/insereturmas', insereTurmas);
 
+const inserecobranca = require('./routes/apis/greatlakes/inserecobranca');
+app.use('/inserecobranca', inserecobranca);
+
+
 //rota para encaminhar emails via NodeJs
 const sendmailRoutes = require('./routes/apis/greatlakes/sendmail');
 app.use('/sendmail', sendmailRoutes);

@@ -32,25 +32,38 @@ Content-Type: application/json
 
 ###
 
-DELETE http://127.0.0.1:3000/services/remove/640a3de987fc10318c8499df
+DELETE http://127.0.0.1:3000/inserecobranca/remove
+Content-Type: application/json
 
+{
+    "data":  "2023-05-21",
+    "estudante": "Eduardo de tal"
+}
 
 ###
 
 
-GET http://127.0.0.1:3000/getturma/eduardo
+GET http://127.0.0.1:3000/inserecobranca/getdata
+Content-Type: application/json
+
+
+{
+    "dataInicial": "2023-05-21",
+    "dataFinal": "2023-05-21"
+}
 ###
 
-POST http://127.0.0.1:3000/login/login
+POST http://127.0.0.1:3000/inserecobranca/register
 Content-Type: application/json
 
 
 { 
-
-    "email": "prof@jenny2.com",
-    "password": "oiafjnsdoijfa"
-
-
+    "data": "2023-05-21",
+    "estudante": "Eduardo de tal",
+    "responsavel": "fulano de tal",
+    "turma": "Year 4",
+    "servico": "Almoço Great Lakes",
+    "pedidoId": "testeteste"
 }
 
 
