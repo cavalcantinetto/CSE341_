@@ -48,7 +48,7 @@ Content-Type: application/json
 
 
 {
-    "dataInicial": "2023-05-21",
+    "dataInicial": "2023-05-20",
     "dataFinal": "2023-05-21"
 }
 ###
