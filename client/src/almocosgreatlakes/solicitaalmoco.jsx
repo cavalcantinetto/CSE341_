@@ -548,6 +548,12 @@ const SolicitaAlmoco = () => {
                           >
                             {item}
                           </label>
+                          <span>
+                  <small>
+                    Instruções: O sistema sobrescreverá escolhas já realizadas,
+                    caso você escolha uma data já cadastrada.
+                  </small>
+                </span>
                         </>
                       );
                     })}
