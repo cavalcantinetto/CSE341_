@@ -224,11 +224,14 @@ const PedidosDoDia = () => {
             >
               <option key={"startPoint"}>Escolha uma data:</option>
               {cardapioNaBase.map((item) => {
-                return (
-                  <option value={item._id} key={item._id}>
-                    {convertDate(item.data)}
-                  </option>
-                );
+                if(item.data >= today) {
+                  return (
+                    <option value={item._id} key={item._id}>
+                      {convertDate(item.data)}
+                    </option>
+                  );
+                }
+                
               })}
             </select>
           </div>

@@ -548,18 +548,19 @@ const SolicitaAlmoco = () => {
                           >
                             {item}
                           </label>
-                          <span>
-                  <small>
-                    Instruções: O sistema sobrescreverá escolhas já realizadas,
-                    caso você escolha uma data já cadastrada.
-                  </small>
-                </span>
+                          
                         </>
                       );
                     })}
                   </div>
+                  
                 )}
                 <br />
+                <span>
+                  <small>
+                    Instruções: A salada é servida livremente, mesmo que você não opte pela salada no prato.
+                  </small>
+                </span>
               </div>
             </div>
           </div>
