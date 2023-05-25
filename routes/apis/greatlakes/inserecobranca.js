@@ -22,9 +22,7 @@ routes.get('/getdata', authorization, async(req, res) => {
 
 routes.post('/register', authorization,  async(req, res) => { 
     //TO-DO if tests for variables
-    try {
-        console.log(req.body)
-       
+    try {     
         if(req.body.data) {
             req.body.data = new Date(req.body.data)
         } else {
@@ -36,6 +34,7 @@ routes.post('/register', authorization,  async(req, res) => {
         }
 
         const novaCobranca = {
+            dataId: req.body.dataId,
             data: req.body.data,
             estudante: req.body.estudante, 
             responsavel: req.body.responsavel,
@@ -59,15 +58,17 @@ routes.post('/register', authorization,  async(req, res) => {
     }
 })
 
-delete cobrança
+//delete cobrança
 routes.delete('/remove', authorization, async(req, res) => {
     try {
         const filter = {
-            data: req.body.data,
+            dataId: req.body.dataId,
             estudante: req.body.estudante
+
         }
-        const result = await ServicosPrestados.findOneAndDelete(filter);
-        res.status(200).json(result)
+            console.log(filter)
+             const result = await ServicosPrestados.findOneAndDelete(filter);
+             res.status(200).json(result)
 
     } catch (err) {
         res.status(500).json({ message: err.message })
