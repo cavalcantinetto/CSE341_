@@ -5,7 +5,7 @@ import Loading from "../components/loading";
 import ErrorFallback from "../components/handleerror";
 import { convertDate } from "../components/dataconverted";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, CARDAPIO_URL, DELETE_URL_ESCOLHAS, ESCOLHAS_URL, INSEREALMOCO } from "../functions/urlbase";
+import { BASE_URL, CARDAPIO_URL, DELETA_COBRANCA, DELETE_URL_ESCOLHAS, ESCOLHAS_URL, INSEREALMOCO, REGISTRA_COBRANCA, SENDEMAIL, SUPORTE_EMAILS } from "../functions/urlbase";
 
 
 const SolicitaAlmoco = () => {
@@ -37,6 +37,9 @@ const SolicitaAlmoco = () => {
 
   //inicia o sistema lendo quais estudantes são dependentes do usuário principal - pai
   let estudantes;
+  let responsavel;
+
+  const SUPORTE = SUPORTE_EMAILS;
   
   if(cookies.userData) {
     if (cookies.userData.userLevel == 101) {
@@ -46,6 +49,7 @@ const SolicitaAlmoco = () => {
     else {
       if (cookies.userData.userKids) {
       estudantes = cookies.userData.userKids;
+      responsavel = cookies.userData.userName;
     }}
   } else {
     navigate ("/")
@@ -176,13 +180,9 @@ const SolicitaAlmoco = () => {
       if (result.ok) {
         const res = await result.json();
         if (res) {
-          let message = `Foram gravadas com sucesso as seguinte escolhas:\nData: ${date}\nProteína: ${proteinSelection}\nAcompanhamentos: ${[
-            acompanhamentos,
-          ]}\nPara: ${estudante}\nClique em "Atualizar Relatório" abaixo para visualizar as escolhas já realizadas.`;
           setAcompanhamentos((oldValue) => (oldValue = []));
           setIsLoading(false);
-          //
-          return message;
+          return res;
         } else {
           setIsLoading(false);
           setErrorMessage(
@@ -277,6 +277,25 @@ const SolicitaAlmoco = () => {
           },
         });
         if (result.ok) {
+          try {
+            const result = await fetch(BASE_URL + DELETA_COBRANCA, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer  ${cookies.accessToken}`,
+              }, body: JSON.stringify({
+                dataId: dataEscolhida,
+                estudante: estudante
+              })
+            });
+            if(!result.status) {
+              alert("É lamentável, mas encontramos um erro, tente novamente mais tarde")
+              setIsLoading(false);
+            } 
+          } catch (err) {
+            alert("É lamentável, mas encontramos um erro, tente novamente mais tarde")
+            setIsLoading(false);
+          }
           alert("Dia removido com sucesso!");
           setIsLoading(false);
           return window.location.reload();
@@ -291,6 +310,58 @@ const SolicitaAlmoco = () => {
       return;
     }
   };
+
+  const registraCobranca = async (data) => {
+    const dados = {
+      pedidoId: data._id,
+      data: data.data,
+      dataId: data.dataId,
+      estudante: data.estudante,
+      turma: data.turma,
+      responsavel: responsavel,
+      servico: "Almoço Great Lakes"
+    }
+    try {
+      const result = await fetch(BASE_URL + REGISTRA_COBRANCA, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer  ${cookies.accessToken}`,
+        }, body: JSON.stringify(dados)
+      });
+      if (!result.ok) {
+        try {
+          const data = {
+            'emailto': SUPORTE,
+            'message': `Houve um pedido de almoço, mas por erro do sistema A cobrança não foi registrada.\n
+            O pedido é o de numero: ${data.data._id}.\n
+            Dia: ${data.data},\n
+            Estudante: ${data.estudante},\n
+            Turma: ${data.turma},\n
+            Responsável: ${responsavel},\n
+            Serviço: Almoço Great Lakes,\n
+            A inserção dessa cobrança deverá acontecer de forma manual.\n
+            Guarde esse e-mail para referencia futura`
+        }
+
+          const response = await fetch(BASE_URL + SENDEMAIL, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          });
+          const result = await response.json();
+          if(result) {
+            alert("Houve um erro no registro da cobrança. Um email automático foi enviado para a Secretaria da escola. \n Avise à secretaria da escola sobre esse erro.")
+          }
+        } catch (err) {
+          console.log(err)
+        }
+  }
+} catch (err) { 
+    console.log(err)
+  }}
 
 
   useEffect(() => {
@@ -572,7 +643,12 @@ const SolicitaAlmoco = () => {
                 type="button"
                 className="btn btn-primary m-3"
                 onClick={() => {
-                  handleSubmit().then((data) => alert(data));
+                  handleSubmit().then((data) => {
+                    registraCobranca(data)}).then(()=> {
+                      let message = `Foram gravadas com sucesso as seguinte escolhas:\nData: ${date}\nProteína: ${proteinSelection}\nAcompanhamentos: ${[
+                      acompanhamentos,
+                    ]}\nPara: ${estudante}\nClique em "Atualizar Relatório" abaixo para visualizar as escolhas já realizadas.`;
+                    alert(message)});
                 }}
               >
                 Finalizar

@@ -104,8 +104,12 @@ routes.patch('/alterastatus/:id', authorization, async(req, res) => {
 
 //delete pedido
 routes.delete('/remove/:id', authorization, getPedidos, async(req, res) => {
+    console.log('vai remover')
     try {
-        await res.cardapio.remove();
+        const result = await res.cardapio.remove();
+        console.log('vai remover')
+        console.log(result)
+
         res.status(200).json({ message: "Escolha removida com sucesso" })
 
     } catch (err) {

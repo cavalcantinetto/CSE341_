@@ -80,15 +80,18 @@ GET http://127.0.0.1:3000/students/63e2c2aaa645227e5cb40cb2
 
 ###
 
-POST http://127.0.0.1:3000/users/register
+POST http://127.0.0.1:3000/inserecobranca/register
 Content-Type: application/json
 
 
 { 
-        "userName": "Fernandinho da Silva",
-        "userEmail": "prof@jenny2.com",
-        "userPass": "oiafjnsdoijfa",
-        "userKids": "Josezinho da Silva"
+       "dataId": "645c0611d6822782e0b853cb",
+        "data": "2023-05-25T00:00:00.000Z",
+        "estudante": "req.body.estudante", 
+        "responsavel": "req.body.responsavel",
+        "turma": "req.body.turma", 
+        "servico": "req.body.servico,",
+        "pedidoId": "req.body.pedidoId"
 }
 
 
