@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //defines a schema for the database.
 const contactSchema = new mongoose.Schema({
     "dataId": {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true
 
     },
