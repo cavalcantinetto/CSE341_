@@ -1,4 +1,4 @@
-//const BASE_URL = 'http://127.0.0.1:3000'
+const BASE_URL = 'http://127.0.0.1:3000'
 const BASE_URL = 'https://greatlakes.onrender.com'
 const LOGIN_URL = "/login/login";
 const ESCOLHASDODIA_URL = "/pedidos/getfortheday/";
