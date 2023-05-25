@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 //defines a schema for the database.
 const contactSchema = new mongoose.Schema({
+    "dataId": {
+        type: String,
+        required: true
+
+    },
     "data": {
         type: Date,
         required: true      
