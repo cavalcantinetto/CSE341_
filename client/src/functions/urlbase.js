@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:3000'
+//const BASE_URL = 'http://127.0.0.1:3000'
 const BASE_URL = 'https://greatlakes.onrender.com'
 const LOGIN_URL = "/login/login";
 const ESCOLHASDODIA_URL = "/pedidos/getfortheday/";
@@ -15,7 +15,9 @@ const GETTURMA = "/getturma/"
 const DELETE_URL = "/cardapios/remove/";
 const DELETE_URL_ESCOLHAS = "/pedidos/remove/";
 const REGISTRA_COBRANCA = "/inserecobranca/register"
+const CONSULTA_COBRANCA = "/inserecobranca/getdata"
 const DELETA_COBRANCA = "/inserecobranca/remove/"
+const STATUS_COBRANCA = "/inserecobranca/alterastatus"
 const SUPORTE_EMAILS = "administracao@maplebeartaubate.com.br, rmoreira@maplebeartaubate.com.br, ihauke@maplebeartaubate.com.br"
 
-module.exports = {BASE_URL, LOGIN_URL, ESCOLHASDODIA_URL, CARDAPIO_URL, INSEREALMOCO, ESCOLHAS_URL, REGISTER_URL, ACOMPANHAMENTOS_URL, REGISTRAACOMPANHAMENTOS_URL, ALTERASTATUS, RECUPERASENHA, SENDEMAIL, GETTURMA, DELETE_URL, DELETE_URL_ESCOLHAS, REGISTRA_COBRANCA, DELETA_COBRANCA, SUPORTE_EMAILS}
+module.exports = {BASE_URL, LOGIN_URL, ESCOLHASDODIA_URL, CARDAPIO_URL, INSEREALMOCO, ESCOLHAS_URL, REGISTER_URL, ACOMPANHAMENTOS_URL, REGISTRAACOMPANHAMENTOS_URL, ALTERASTATUS, RECUPERASENHA, SENDEMAIL, GETTURMA, DELETE_URL, DELETE_URL_ESCOLHAS, REGISTRA_COBRANCA, DELETA_COBRANCA, SUPORTE_EMAILS, CONSULTA_COBRANCA, STATUS_COBRANCA}

@@ -10,6 +10,8 @@ import InsereCardapio from "./almocosgreatlakes/inserecardapio";
 import SolicitaAlmoco from "./almocosgreatlakes/solicitaalmoco";
 import PedidosDoDia from "./almocosgreatlakes/pedidosdodia";
 import MyDocument from "./almocosgreatlakes/printcreator";
+import RelatorioCobranca from "./almocosgreatlakes/relatoriocobranca";
+
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -24,6 +26,7 @@ root.render(
           <Route exact path='glakes/pedidosdodia' element={ <PedidosDoDia/>}/> 
           <Route exact path='glakes/solicitaalmoco' element={ <SolicitaAlmoco/>}/>
           <Route exact path='glakes/printpedidos' element={ <MyDocument/>}/>
+          <Route exact path='glakes/relatoriocobranca' element={ <RelatorioCobranca/>}/>
         </Routes>
         <FooterElement year="2023" />
         </BrowserRouter>
