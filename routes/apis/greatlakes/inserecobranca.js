@@ -3,10 +3,11 @@ const routes = express.Router();
 const ServicosPrestados = require('../../../models/cobranca')
 const authorization = require('../../../functions/auth');
 
-routes.get('/getdata', authorization, async(req, res) => { 
+routes.post('/getdata', authorization, async(req, res) => { 
+    console.log(req.body)
     try {
         const filter = {
-            data: {$gte: req.body.dataInicial, $lte: req.body.dataFinal}
+            data: {$gte: req.body.dataIni, $lte: req.body.dataFim}
         }
         const cobrancas = await ServicosPrestados.find(filter).sort({estudante: 1});
         if (!cobrancas) {
@@ -57,6 +58,22 @@ routes.post('/register', authorization,  async(req, res) => {
         res.status(400).json({ message: err.message });
     }
 })
+routes.patch('/alterastatus',authorization , async (req, res) => {
+    try{
+        const filter = {
+            _id: req.body._id
+        }
+
+        const novostatus = {
+            cobrado: req.body.cobrado
+        };
+        console.log(filter, novostatus )
+        const novaCobrancaResult = await ServicosPrestados.findOneAndUpdate(filter, novostatus, {new: true, upsert: false});
+            res.status(201).json(novaCobrancaResult);
+    } catch (err) {
+        console.log(err)
+    }
+} )
 
 //delete cobrança
 routes.delete('/remove', authorization, async(req, res) => {
@@ -66,7 +83,6 @@ routes.delete('/remove', authorization, async(req, res) => {
             estudante: req.body.estudante
 
         }
-            console.log(filter)
              const result = await ServicosPrestados.findOneAndDelete(filter);
              res.status(200).json(result)
 
@@ -74,6 +90,10 @@ routes.delete('/remove', authorization, async(req, res) => {
         res.status(500).json({ message: err.message })
     }
 })
+
+//altera status da cobrança
+
+
 
 //this function will get an specific cardapio at database.
 // async function getCardapio(req, res, next) {

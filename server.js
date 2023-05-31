@@ -92,4 +92,4 @@ app.use('/sendmail', sendmailRoutes);
 app.use('/public/images', express.static(__dirname + '/public/images'));
 
 //defines the port to listen to:
-app.listen(port, () => console.log(`server listenning to ${port}`));
+app.listen(port, () => console.log(`server listenning to ${port}`)); 
