@@ -19,7 +19,7 @@ root.render(
   <AuthProvider>
     <CookiesProvider>
         <BrowserRouter>
-        <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia" />
+        <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia, Relatório de Cobrança" />
         <Routes>
           <Route exact path="/*" element={<Login />}/>
           <Route exact path='glakes/inserecardapio' element={ <InsereCardapio/> }/>

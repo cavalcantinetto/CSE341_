@@ -5,7 +5,6 @@ import Loading from "../components/loading";
 import { BASE_URL, CONSULTA_COBRANCA } from "../functions/urlbase";
 import { convertDate } from "../components/dataconverted";
 import TabelaCobrancas from "./tabelaCobrancas";
-import SolicitaAlmoco from "./solicitaalmoco";
 import { useNavigate } from "react-router-dom";
 
 const RelatorioCobranca = () => {
@@ -33,9 +32,8 @@ const RelatorioCobranca = () => {
   if (cookies.userData && cookies.userData.userLevel) {
     userLevel = cookies.userData.userLevel;
     };
-  
-  if (!cookies.userData || !cookies.accessToke || (userLevel > 130)) {
-    navigate("/");
+  if (!cookies.userData || !cookies.accessToken || userLevel < 130) {
+    navigate("/glakes/solicitaalmoco");
   }; 
 
 
@@ -46,7 +44,6 @@ const RelatorioCobranca = () => {
       dataIni: new Date(dataIni).toISOString(),
       dataFim: new Date(dataFim).toISOString(),
     };
-    console.log(dados);
 
     try {
       const result = await fetch(BASE_URL + CONSULTA_COBRANCA, {
@@ -125,7 +122,7 @@ const RelatorioCobranca = () => {
           <div>
             <button
               type="button"
-              class="btn btn-primary btn-lg btn-block"
+              className="btn btn-primary btn-lg btn-block"
               onClick={() => setGatilho((oldValue) => (oldValue = !oldValue))}
             >
               Filtrar
