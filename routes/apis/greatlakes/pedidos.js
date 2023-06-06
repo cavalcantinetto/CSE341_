@@ -38,6 +38,9 @@ routes.post('/register', authorization, async(req, res) => {
             dataId: req.body.dataId, 
             estudante: req.body.estudante
         };
+        if(!req.body.data || req.body.data == null) {
+            return res.status(404).json({message: "Data inválida, por favor refaça suas escolhas."})
+        }
         const newcardapio = {
             data: req.body.data,
             dataId: req.body.dataId,
@@ -56,7 +59,6 @@ routes.post('/register', authorization, async(req, res) => {
             }
             res.result = result;
             res.status(201).json(result);
-            console.log(res.result)
         } catch (err) {
             if (err instanceof mongoose.CastError) {
                 return res.status(400).json({ message: "Escolhas não existem" })
@@ -103,11 +105,13 @@ routes.patch('/alterastatus/:id', authorization, async(req, res) => {
     }
 })
 
-//delete cardapio
+//delete pedido
 routes.delete('/remove/:id', authorization, getPedidos, async(req, res) => {
     try {
-        await res.cardapio.remove();
-        res.status(200).json({ message: "Cardápio Removido" })
+        const result = await res.cardapio.remove();
+        console.log(result)
+
+        res.status(200).json({ message: "Escolha removida com sucesso" })
 
     } catch (err) {
         res.status(500).json({ message: err.message })
