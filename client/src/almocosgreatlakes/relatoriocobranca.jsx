@@ -23,11 +23,13 @@ const RelatorioCobranca = () => {
   const dataFinalRef = useRef();
   const [dataFinal, setDataFinal] = useState(convertDate(lastDay));
   const [errMsg, setErrMsg] = useState();
-  const [date, setDate] = useState();
+  const [contratoMensal, setContratoMensal] = useState(true);
   const [gatilho, setGatilho] = useState(false);
   const [dadosDeCobranca, setDadosDeCobranca] = useState();
+  const [verTipoDeContrato, setVerTipoDeContrato] = useState("Ver Mensais")
   const navigate = useNavigate();
   var userLevel;
+
 
   if (cookies.userData && cookies.userData.userLevel) {
     userLevel = cookies.userData.userLevel;
@@ -37,6 +39,15 @@ const RelatorioCobranca = () => {
   }; 
 
 
+  function verContrato() {
+    if(contratoMensal) {
+      setVerTipoDeContrato("Ver Diárias");
+    } else {
+      setVerTipoDeContrato("Ver Mensais")
+    }
+    
+    setContratoMensal((oldValue) => (oldValue = !oldValue))
+  }
   
   async function fetchDadosDeCobranca(dataIni, dataFim) {
     setIsLoading(true);
@@ -120,18 +131,26 @@ const RelatorioCobranca = () => {
             <label htmlFor="floatingDate">Data Final</label>
           </div>
           <div>
+          <div>
             <button
               type="button"
-              className="btn btn-primary btn-lg btn-block"
+              className="btn btn-primary btn-lg btn-block m-3"
               onClick={() => setGatilho((oldValue) => (oldValue = !oldValue))}
             >
               Filtrar
             </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-lg btn-block m-3"
+              onClick={verContrato}
+            >{verTipoDeContrato}
+            </button>
+          </div>
           </div>
         </div>
         <br />
         <div className="container text-center">
-          <TabelaCobrancas dados={dadosDeCobranca} />
+          <TabelaCobrancas dados={dadosDeCobranca} tipoDeContrato={contratoMensal} />
         </div>
       </>
     );

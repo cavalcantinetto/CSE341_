@@ -55,7 +55,7 @@ const LinhaTabelaCobranca = (props) => {
     return <><tr><td></td><td></td><td></td><td></td><td></td><td></td><td><Loading /></td></tr></>
   }
   let tipoDeContrato;
-  if(props.contrato > 15) {
+  if(props.contrato >= 15) {
     tipoDeContrato = "Mensal"
   } else {
     tipoDeContrato = "Diária"
