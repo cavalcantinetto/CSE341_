@@ -41,8 +41,10 @@ routes.post('/register', authorization,  async(req, res) => {
             responsavel: req.body.responsavel,
             turma: req.body.turma, 
             servico: req.body.servico,
-            pedidoId: req.body.pedidoId
+            pedidoId: req.body.pedidoId,
+            vencimento: req.body.vencimento
         }
+        console.log(novaCobranca)
 
         try {
             const novaCobrancaResult = await ServicosPrestados.findOneAndUpdate(filter, novaCobranca,  {new: true, upsert: true});

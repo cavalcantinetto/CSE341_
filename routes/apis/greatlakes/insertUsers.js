@@ -256,7 +256,7 @@ const data =
   {
     "userName": "Carolina Furlan do Amaral",
     "userEmail": "amaralfcarol@gmail.com",
-    "userPass": "113239207-x",
+    "userPass": " ",
     "userLevel": 100,
     "userKids": [{'nome': 'Manuela Milani', 'turma': 'Year 5'}, {'nome': 'Valentina Milani', 'turma': 'Toddler'}]
   },
@@ -270,7 +270,7 @@ const data =
   {
     "userName": "Carolina Romero",
     "userEmail": "carolina.romero@outlook.com",
-    "userPass": 234,
+    "userPass": "124436978-0",
     "userLevel": 100,
     "userKids": [{'nome': 'Martina Mora', 'turma': 'Toddler'}]
   },
@@ -3457,4 +3457,97 @@ const data =
 // const turmas = Turmas.insertMany(data).then((data)=>console.log(data)).catch((err) => {console.log(err)})
 
 
-   module.exports = routes;
+const dados = 
+[
+  {
+    "userPass": "122091868-4",
+    "userVencimento": 30
+  },
+  {
+    "userPass": "124245325-8",
+    "userVencimento": 12
+  },
+  {
+    "userPass": "128334455-6",
+    "userVencimento": 10
+  },
+  {
+    "userPass": "124245407-x",
+    "userVencimento": "05"
+  },
+  {
+    "userPass": "124275366-7",
+    "userVencimento": 15
+  },
+  {
+    "userPass": "120485971-1",
+    "userVencimento": 20
+  },
+  {
+    "userPass": "124275366-7",
+    "userVencimento": 15
+  },
+  {
+    "userPass": "124259868-6",
+    "userVencimento": "01"
+  },
+  {
+    "userPass": "122886668-5",
+    "userVencimento": 10
+  },
+  {
+    "userPass": "124330268-9",
+    "userVencimento": 25
+  },
+  {
+    "userPass": 234,
+    "userVencimento": 10
+  },
+  {
+    "userPass": "123091478-X",
+    "userVencimento": 10
+  },
+  {
+    "userPass": "122563878-1",
+    "userVencimento": 15
+  },
+  {
+    "userPass": "112235634-5",
+    "userVencimento": 30
+  },
+  {
+    "userPass": "113152963-7",
+    "userVencimento": 10
+  },
+  {
+    "userPass": "113239207-x",
+    "userVencimento": 30
+  },
+  {
+    "userPass": "122091868-4",
+    "userVencimento": 30
+  },
+  {
+    "userPass": "116514517-0",
+    "userVencimento": 10
+  },
+  {
+    "userPass": 123456754,
+    "userVencimento": "01"
+  }
+]
+
+
+// dados.forEach((e) => {
+//   const filter = {
+//     userPass: e.userPass
+//   };
+//   const update = {
+//     userVencimento: e.userVencimento
+//   }
+//   const users = Users.findOneAndUpdate(filter, update, {new: true}).then((data) => console.log(data)).catch((err) => console.log(err));
+// })
+
+
+
+module.exports = routes;

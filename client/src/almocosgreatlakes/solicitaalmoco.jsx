@@ -38,6 +38,9 @@ const SolicitaAlmoco = () => {
   //inicia o sistema lendo quais estudantes são dependentes do usuário principal - pai
   let estudantes;
   let responsavel;
+  let dataDeVencimento;
+
+
 
   const SUPORTE = SUPORTE_EMAILS;
   
@@ -45,11 +48,15 @@ const SolicitaAlmoco = () => {
     if (cookies.userData.userLevel === 101|| cookies.userData.userLevel === 130) {
       estudantes = [{'nome': 'Ailin Versiani Scott Rivadeneyra', 'turma': 'Year 1'}, {'nome': 'Alice Assis Cyrillo Galvão Nunes', 'turma': 'Year 3'}, {'nome': 'Alice Postal Farias Zandonadi', 'turma': 'Year 1'}, {'nome': 'Alice Taques Gomes Correa', 'turma': 'Year 4'}, {'nome': 'Alicia Damasceno Tolentino', 'turma': 'Year 6'}, {'nome': 'Ana Laura Belone Narazaki', 'turma': 'Year 6'}, {'nome': 'Ana Sofia Tan Viotti', 'turma': 'Year 2'}, {'nome': 'Angelina Borges Marção', 'turma': 'Year 6'}, {'nome': 'Arthur Mendes Botelho', 'turma': 'Year 6'}, {'nome': 'Arthur Teixeira Monteiro', 'turma': 'Year 5'}, {'nome': 'Artur Oliveira Antunes', 'turma': 'Year 5'}, {'nome': 'Augusto Hirokazu Yamada', 'turma': 'Year 1'}, {'nome': 'Aurora Pereira Amaro', 'turma': 'Year 4'}, {'nome': 'Ayla Martins de Oliveira', 'turma': 'Year 3'}, {'nome': 'Beatriz Damasceno Tolentino', 'turma': 'Year 3'}, {'nome': 'Benicio Flores de Souza Barichello', 'turma': 'Year 2'}, {'nome': 'Benjamin de Oliveira Godoy de Camargo', 'turma': 'Year 2'}, {'nome': 'Bento Beltrão Loducca', 'turma': 'Year 2'}, {'nome': 'Bernardo Nardy Alves', 'turma': 'Year 1'}, {'nome': 'Caio Mariano Simões', 'turma': 'Year 4'}, {'nome': 'Carolina Solera Camacho', 'turma': 'Year 4'}, {'nome': 'Catarina Manetti', 'turma': 'Year 4'}, {'nome': 'Clara Ogata Perrenoud', 'turma': 'Year 2'}, {'nome': 'Daniel March Garcia Castro', 'turma': 'Year 5'}, {'nome': 'Daniel Murao Gentil Leite', 'turma': 'Year 2'}, {'nome': 'Dante Davanzo de Alcântara Oliveira', 'turma': 'Year 5'}, {'nome': 'Davi de Castro Camargo', 'turma': 'Year 3'}, {'nome': 'Davi Gomes Ravagnani Vargas', 'turma': 'Year 7'}, {'nome': 'Davi Lucchiari Ribeiro', 'turma': 'Year 1'}, {'nome': 'Diego Alexandrino de Oliveira', 'turma': 'Year 5'}, {'nome': 'Eduardo Siqueira Cavalcanti', 'turma': 'Year 5'}, {'nome': 'Elena Yoko Cortez Shimoda', 'turma': 'Year 2'}, {'nome': 'Elisa Cavalcanti Girardi Vieira', 'turma': 'Year 4'}, {'nome': 'Emanuelah Cunha Fernandes', 'turma': 'Year 6'}, {'nome': 'Enzo de Almeida Pedroso Guirado', 'turma': 'Year 1'}, {'nome': 'Enzo Mariano Simões', 'turma': 'Year 5'}, {'nome': 'Estevan Benites', 'turma': 'Year 3'}, {'nome': 'Eva da Mata Sella', 'turma': 'Year 3'}, {'nome': 'Felipe Oliveira Miranda', 'turma': 'Year 2'}, {'nome': 'Felipe Rocha de Brito', 'turma': 'Year 6'}, {'nome': 'Felipe Waki de borba', 'turma': 'Year 3'}, {'nome': 'Fernando de Carvalho Coelho Junior', 'turma': 'Year 4'}, {'nome': 'Filipe Britta Veroneze', 'turma': 'Year 3'}, {'nome': 'Gabriel Bonifácio Borges', 'turma': 'Year 5'}, {'nome': 'Gabriel Mendes Simões Pereira', 'turma': 'Year 5'}, {'nome': 'Giovana Oliveira Peixoto', 'turma': 'Year 4'}, {'nome': 'Guilherme Cappeletti Reis', 'turma': 'Year 7'}, {'nome': 'Gustavo Gonçalves Guimarães Severo', 'turma': 'Year 3'}, {'nome': 'Helena Chamoun Marchon Dupas Ribeiro', 'turma': 'Year 2'}, {'nome': 'Helena Rodrigues dos Santos', 'turma': 'Year 4'}, {'nome': 'Heloísa Lopes Nogueira', 'turma': 'Year 1'}, {'nome': 'Henrique Hayao Furuno Resende', 'turma': 'Year 1'}, {'nome': 'Isabella Sayuri de Melo Haiachi', 'turma': 'Year 5'}, {'nome': 'Isadora do Val Pavan', 'turma': 'Year 5'}, {'nome': 'Jhonny Rocha da Silva Pereira', 'turma': 'Year 3'}, {'nome': 'João Alcantara da Paz', 'turma': 'Year 2'}, {'nome': 'João Felipe Quental Barbosa', 'turma': 'Year 3'}, {'nome': 'João Otávio Domingos Camargo Franco', 'turma': 'Year 1'}, {'nome': 'Joaquim Otto Soldi Taube', 'turma': 'Year 3'}, {'nome': 'Júlia Hidalgo Oliveira Melo', 'turma': 'Year 4'}, {'nome': 'Lara Lauria Mafetano', 'turma': 'Year 3'}, {'nome': 'Lara Rezende do Nascimento', 'turma': 'Year 2'}, {'nome': 'Larissa de Castro Soares Bernardo', 'turma': 'Year 6'}, {'nome': 'Larissa França Dias', 'turma': 'Year 2'}, {'nome': 'Laura Costa Marques', 'turma': 'Year 1'}, {'nome': 'Lauren Costa de Souza', 'turma': 'Year 1'}, {'nome': 'Lavínia Santos Vasconcellos Muniz', 'turma': 'Year 4'}, {'nome': 'Layla Guerreiro Mrad', 'turma': 'Year 1'}, {'nome': 'Leonardo Teixeira Monteiro', 'turma': 'Year 5'}, {'nome': 'Letícia Pereira Mendes', 'turma': 'Year 6'}, {'nome': 'Lis Emmerick Vieira', 'turma': 'Year 1'}, {'nome': 'Lis Ogata Perrenoud', 'turma': 'Year 5'}, {'nome': 'Lorena Canavezi Moura', 'turma': 'Year 1'}, {'nome': 'Lorenzo Destro Fernandes', 'turma': 'Year 3'}, {'nome': 'Lorenzo Dias Novelletto', 'turma': 'Year 2'}, {'nome': 'Luana Rodrigues Dias Belieny', 'turma': 'Year 6'}, {'nome': 'Luca Destre Redigolo', 'turma': 'Year 3'}, {'nome': 'Lucas Alves Cursino de Moura Dall\'ara', 'turma': 'Year 2'}, {'nome': 'Lucas Biaso Montenegro Félix ahmed', 'turma': 'Year 6'}, {'nome': 'Lucas Machado Antonino', 'turma': 'Year 2'}, {'nome': 'Lucas Pierri Silvestre', 'turma': 'Year 1'}, {'nome': 'Luisa Bueno Moreira', 'turma': 'Year 5'}, {'nome': 'Luísa Indiani Ferreira Pinto', 'turma': 'Year 2'}, {'nome': 'Luisa Moscardini Figueira', 'turma': 'Year 3'}, {'nome': 'Luiz Gustavo Cotrim Valério', 'turma': 'Year 5'}, {'nome': 'Luiz Gustavo Jenner da Silva', 'turma': 'Year 2'}, {'nome': 'Luiz Octavio Monteiro Pereira', 'turma': 'Year 4'}, {'nome': 'Luiza de Bona Gauch', 'turma': 'Year 2'}, {'nome': 'Luiza dos Santos Cruz', 'turma': 'Year 2'}, {'nome': 'Luiza Rocha de Brito', 'turma': 'Year 1'}, {'nome': 'Luma Hermans', 'turma': 'Year 3'}, {'nome': 'Maitê Destro Fernandes', 'turma': 'Year 1'}, {'nome': 'Maitê Heliotropio de Matos Guimarães', 'turma': 'Year 4'}, {'nome': 'Malu Ribeiro Penaranda', 'turma': 'Year 3'}, {'nome': 'Manuela dos Santos Fontes', 'turma': 'Year 3'}, {'nome': 'Manuela Ferreira Veltri Rodrigues', 'turma': 'Year 7'}, {'nome': 'Manuela Milani', 'turma': 'Year 5'}, {'nome': 'Manuela Pessoa Campos Rodrigues', 'turma': 'Year 2'}, {'nome': 'Marcela Campello Macedo', 'turma': 'Year 7'}, {'nome': 'Marcella Filippi', 'turma': 'Year 1'}, {'nome': 'Marcelo Pimenta Pioli', 'turma': 'Year 4'}, {'nome': 'Maria Alice Quizzeppi de Almeida Carneiro', 'turma': 'Year 6'}, {'nome': 'Maria Carolina Freitas Villaça', 'turma': 'Year 2'}, {'nome': 'Maria Clara Bortoleto Higuchi', 'turma': 'Year 3'}, {'nome': 'Maria Clara Polimeno Franco', 'turma': 'Year 2'}, {'nome': 'Maria Eduarda de Carvalho Coelho Junior', 'turma': 'Year 6'}, {'nome': 'Maria Eduarda Iwamura Marques', 'turma': 'Year 3'}, {'nome': 'Maria Flor Baptista da Cruz', 'turma': 'Year 2'}, {'nome': 'Maria Gabriela da Cruz Barros', 'turma': 'Year 1'}, {'nome': 'Maria Helena Rodrigues Mota', 'turma': 'Year 1'}, {'nome': 'Maria Julia Bortoleto Higuchi', 'turma': 'Year 6'}, {'nome': 'Maria Victoria Mastandrea Marques', 'turma': 'Year 4'}, {'nome': 'Mariah Peixoto Almeida', 'turma': 'Year 2'}, {'nome': 'Mariana Camargo Antonino', 'turma': 'Year 2'}, {'nome': 'Marina Chiste Silva', 'turma': 'Year 4'}, {'nome': 'Mateo Montes Santos', 'turma': 'Year 2'}, {'nome': 'Matheus Assis Araújo', 'turma': 'Year 7'}, {'nome': 'Matheus Machado Gonçalves', 'turma': 'Year 7'}, {'nome': 'Matheus Mendes Candido', 'turma': 'Year 3'}, {'nome': 'Matheus Terra Gonçalves', 'turma': 'Year 5'}, {'nome': 'Mauricio Manetti', 'turma': 'Year 6'}, {'nome': 'Mayara Malosti de Jesus', 'turma': 'Year 6'}, {'nome': 'Micaela Gomes Ravagnani Vargas', 'turma': 'Year 6'}, {'nome': 'Miguel Gomes Padilha', 'turma': 'Year 5'}, {'nome': 'Miguel Guido Machado Celete', 'turma': 'Year 2'}, {'nome': 'Miguel Monteiro de Miranda', 'turma': 'Year 6'}, {'nome': 'Miguel Senra Delamico', 'turma': 'Year 1'}, {'nome': 'Mohamad Smaidi', 'turma': 'Year 2'}, {'nome': 'Muhamad Taha Saifi', 'turma': 'Year 2'}, {'nome': 'Nicholas Dias Novelletto', 'turma': 'Year 3'}, {'nome': 'Nicolas Bomfá Doro', 'turma': 'Year 5'}, {'nome': 'Nicolas Coutinho Reno Cassia Cruz', 'turma': 'Year 1'}, {'nome': 'Nicolas Duarte Martin', 'turma': 'Year 1'}, {'nome': 'Nicole de Moura Santos Pinheiro', 'turma': 'Year 4'}, {'nome': 'Noha Gabriel Yendé Monthe', 'turma': 'Year 1'}, {'nome': 'Norberto Amaral Ramos', 'turma': 'Year 5'}, {'nome': 'Nycole Martins Nogarotto', 'turma': 'Year 4'}, {'nome': 'Paulo Brandão Zeraick da Costa', 'turma': 'Year 1'}, {'nome': 'Pedro Cavassana Germano', 'turma': 'Year 2'}, {'nome': 'Pedro Villalta Roman', 'turma': 'Year 2'}, {'nome': 'Rafael Gasch Mello', 'turma': 'Year 5'}, {'nome': 'Rafael Guerreiro Mrad', 'turma': 'Year 7'}, {'nome': 'Rafael Hiroshi Inaba Castilho', 'turma': 'Year 1'}, {'nome': 'Rafaela Oliveira Miranda', 'turma': 'Year 5'}, {'nome': 'Rafaela Welter Kratz', 'turma': 'Year 1'}, {'nome': 'Ramon Benites', 'turma': 'Year 1'}, {'nome': 'Raul de Morais Urias', 'turma': 'Year 2'}, {'nome': 'Rayhan Massaud Mrad Cabral', 'turma': 'Year 3'}, {'nome': 'Rebeca Santos Vasconcellos Muniz', 'turma': 'Year 2'}, {'nome': 'Rodrigo Barbosa de Campos Gomes', 'turma': 'Year 7'}, {'nome': 'Samuel da Mata Mesquita', 'turma': 'Year 1'}, {'nome': 'Samuel Moscardini Figueira', 'turma': 'Year 1'}, {'nome': 'Sara Giacomazzi', 'turma': 'Year 5'}, {'nome': 'Sofia Alves Ikeda', 'turma': 'Year 4'}, {'nome': 'Sofia Biaso Montenegro Félix Ahmed', 'turma': 'Year 3'}, {'nome': 'Sofia Lauria Mafetano', 'turma': 'Year 7'}, {'nome': 'Sofia Moreira França', 'turma': 'Year 1'}, {'nome': 'Sophia de Moura Santos Pinheiro', 'turma': 'Year 5'}, {'nome': 'Sophia de Paula Gomes', 'turma': 'Year 3'}, {'nome': 'Soraia Mohamad Smidi', 'turma': 'Year 2'}, {'nome': 'Soraia Saifi', 'turma': 'Year 5'}, {'nome': 'Thais Bueno Moreira', 'turma': 'Year 5'}, {'nome': 'Thais Rodrigues Dias de Melo', 'turma': 'Year 7'}, {'nome': 'Theo Amantéa Costa', 'turma': 'Year 2'}, {'nome': 'Theo Plachta', 'turma': 'Year 2'}, {'nome': 'Theodora Reis Da Paz', 'turma': 'Year 1'}, {'nome': 'Thomaz Canavezi Moura', 'turma': 'Year 4'}, {'nome': 'Tobias Colacioppo e Silva', 'turma': 'Year 4'}, {'nome': 'Tomás Furtado Nossaes', 'turma': 'Year 5'}, {'nome': 'Valentina Gaeta dos Reis Bispado', 'turma': 'Year 4'}, {'nome': 'Valentina Guadalajara Valeriani', 'turma': 'Year 2'}, {'nome': 'Valentina Negrini Biase', 'turma': 'Year 1'}, {'nome': 'Vicente Guimarães Bentiboglio', 'turma': 'Year 1'}, {'nome': 'Victor Augusto Tupinambá Aguiar', 'turma': 'Year 5'}, {'nome': 'Vito Ardito Filho', 'turma': 'Year 2'}, {'nome': 'Vitor Kazuo Kuwabara Fracchia da Costa', 'turma': 'Year 3'}, {'nome': 'Vivian Santos Luna', 'turma': 'Year 2'}, {'nome': 'Yasmin Guerreiro Mrad', 'turma': 'Year 4'}];
       responsavel = cookies.userData.userName;
+
     }
     else {
       if (cookies.userData.userKids) {
       estudantes = cookies.userData.userKids;
       responsavel = cookies.userData.userName;
+      if(cookies.userData.userVencimento) {
+        dataDeVencimento = cookies.userData.userVencimento;
+      }
     }}
   } else {
     navigate ("/")
@@ -311,6 +318,7 @@ const SolicitaAlmoco = () => {
   };
 
   const registraCobranca = async (data) => {
+
     const dados = {
       pedidoId: data._id,
       data: data.data,
@@ -318,7 +326,9 @@ const SolicitaAlmoco = () => {
       estudante: data.estudante,
       turma: data.turma,
       responsavel: responsavel,
-      servico: "Almoço Great Lakes"
+      servico: "Almoço Great Lakes",
+      vencimento: dataDeVencimento
+      
     }
     try {
       const result = await fetch(BASE_URL + REGISTRA_COBRANCA, {
@@ -643,7 +653,8 @@ const SolicitaAlmoco = () => {
                 className="btn btn-primary m-3"
                 onClick={() => {
                   handleSubmit().then((data) => {
-                    registraCobranca(data)}).then(()=> {
+                    registraCobranca(data)
+                  }).then(()=> {
                       let message = `Foram gravadas com sucesso as seguinte escolhas:\nData: ${date}\nProteína: ${proteinSelection}\nAcompanhamentos: ${[
                       acompanhamentos,
                     ]}\nPara: ${estudante}\nClique em "Atualizar Relatório" abaixo para visualizar as escolhas já realizadas.`;
@@ -683,7 +694,6 @@ const SolicitaAlmoco = () => {
                 <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
                   {escolhasNaBase.map((item) => {
                     if (item.data === today) {
-                      console.log(item._id);
                       return (
                         <>
                           <div key={item.id} className="card m-3 p-2" style={{maxWidth:"250px"}}>
@@ -714,7 +724,6 @@ const SolicitaAlmoco = () => {
                       );
                     }                    
                     if (item.data > today) {
-                      console.log(item._id);
                       return (
                         <>
                           <div key={item.id} className="card m-3 p-2" style={{maxWidth:"250px"}}>

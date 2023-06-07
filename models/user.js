@@ -21,6 +21,10 @@ const contactSchema = new mongoose.Schema({
     "userKids": { 
         type: Array,
         required: true,
+    },
+    "userVencimento": {
+        type: String,
+        required: false
     }
 })
 
