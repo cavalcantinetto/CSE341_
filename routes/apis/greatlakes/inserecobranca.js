@@ -3,7 +3,7 @@ const routes = express.Router();
 const ServicosPrestados = require('../../../models/cobranca')
 const authorization = require('../../../functions/auth');
 
-routes.post('/getdata', authorization, async(req, res) => { 
+routes.post('/getdata', async(req, res) => { 
     console.log(req.body)
     try {
         const filter = {
@@ -41,8 +41,10 @@ routes.post('/register', authorization,  async(req, res) => {
             responsavel: req.body.responsavel,
             turma: req.body.turma, 
             servico: req.body.servico,
-            pedidoId: req.body.pedidoId
+            pedidoId: req.body.pedidoId,
+            vencimento: req.body.vencimento
         }
+        console.log(novaCobranca)
 
         try {
             const novaCobrancaResult = await ServicosPrestados.findOneAndUpdate(filter, novaCobranca,  {new: true, upsert: true});
@@ -58,7 +60,7 @@ routes.post('/register', authorization,  async(req, res) => {
         res.status(400).json({ message: err.message });
     }
 })
-routes.patch('/alterastatus',authorization , async (req, res) => {
+routes.patch('/alterastatus', async (req, res) => {
     try{
         const filter = {
             _id: req.body._id
