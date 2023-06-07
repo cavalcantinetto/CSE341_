@@ -42,6 +42,10 @@ const contactSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    "vencimento": {
+        type: String,
+        required: false
     }
     })
 
