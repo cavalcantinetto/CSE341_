@@ -24,6 +24,7 @@ routes.post('/recuperasenha', async function(req, res, next) {
         if (userData.length == 0) {
             return res.status(404).json({ message: `Usuário não encontrado. Talvez seu e-mail (${userEmail}) não esteja correto ou não esteja cadastrado.\nConfirme seu e-mail e se ele estiver correto entre em contato com a secretaria.` });
         } else {
+            
             userData = userData[0];
 
             if(userData.userPass) {
@@ -52,6 +53,7 @@ routes.post('/login', async function(req, res, next) {
     if (!userData) {
         return res.status(404).json({ message: "Usuário não encontrado 1" });
     } else {
+        console.log(userData[0])
         userData = userData[0];
     //     if(userData.userKids.length) {
     //         counter = userData.userKids.length;
@@ -62,7 +64,7 @@ routes.post('/login', async function(req, res, next) {
     //             counter = counter - 1;
     //         }
     // }
-    }
+    } 
     if (userData == undefined) {
         console.log(userData)
         return res.status(404).json({ message: "Usuário não encontrado" });
@@ -98,6 +100,7 @@ routes.post('/login', async function(req, res, next) {
 routes.get('/logout', (req, res) => {
     req.cookies.accessToken = "";
     res.cookie('accessToken', "");
+    res.cookie('userData', "");
     res.status(200).json({ message: "Token removed" })
 })
 
