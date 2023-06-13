@@ -24,6 +24,7 @@ const TabelaCobrancas = (props) => {
                     <th scope="col">Turma</th>
                     <th scope="col">Serviço</th>
                     <th scope="col">Contrato</th>
+                    <th scope="col">Vencimento</th>
                     <th scope="col">Cobrado</th>
                     </tr>
                 </thead>
@@ -55,6 +56,7 @@ const TabelaCobrancas = (props) => {
                     <th scope="col">Turma</th>
                     <th scope="col">Serviço</th>
                     <th scope="col">Contrato</th>
+                    <th scope="col">Vencimento</th>
                     <th scope="col">Cobrado</th>
                     </tr>
                 </thead>
@@ -63,7 +65,7 @@ const TabelaCobrancas = (props) => {
                 {props.dados.map((item) => {
                     if(counts[item.estudante] >= 15) {
                         counter = counter + 1;
-                    return <LinhaTabelaCobranca _id={item._id} counter={counter}data={item.data} estudante={item.estudante} responsavel={item.responsavel} turma={item.turma} servico={item.servico} contrato={counts[item.estudante]} cobrado={item.cobrado}/>
+                    return <LinhaTabelaCobranca _id={item._id} counter={counter}data={item.data} estudante={item.estudante} responsavel={item.responsavel} turma={item.turma} servico={item.servico} contrato={counts[item.estudante]} cobrado={item.cobrado} vencimento={item.vencimento}/>
                     }
                     
                 })}

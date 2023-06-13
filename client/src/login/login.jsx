@@ -66,11 +66,16 @@ const Login = () => {
           removeCookie('userData');
 
           setAuth( {accessToken, userData} )
-          setCookie('accessToken', accessToken, { path: '/' });
-          setCookie('userData', userData, { path: '/' });
+          setCookie('accessToken', accessToken, { path: '/' , maxAge: 3600});
+          setCookie('userData', userData, { path: '/', maxAge: 3600});
           
           //if considerando o nível do usuário começando pelo 100 - usuário padrão
           
+          if (userData.userLevel == 130) {
+            setLoading(oldValue => oldValue = false);
+            return navigate('glakes/relatoriocobranca')
+           } 
+
          if (userData.userLevel > 110) {
           setLoading(oldValue => oldValue = false);
           return navigate('glakes/inserecardapio')

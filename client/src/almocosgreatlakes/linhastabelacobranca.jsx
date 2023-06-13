@@ -52,7 +52,7 @@ const LinhaTabelaCobranca = (props) => {
 
   if (isLoading) {
     
-    return <><tr><td></td><td></td><td></td><td></td><td></td><td></td><td><Loading /></td></tr></>
+    return <><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><Loading /></td></tr></>
   }
   let tipoDeContrato;
   if(props.contrato >= 15) {
@@ -71,6 +71,7 @@ const LinhaTabelaCobranca = (props) => {
         <td>{props.turma}</td>
         <td>{props.servico}</td>
         <td>{tipoDeContrato}</td>
+        <td>{`Dia: ${props.vencimento}`}</td>
         <td>
           <div onClick={alteraStatusCobranca}>
             <svg
@@ -97,6 +98,7 @@ const LinhaTabelaCobranca = (props) => {
         <td>{props.turma}</td>
         <td>{props.servico}</td>
         <td>{tipoDeContrato}</td>
+        <td>{`Dia: ${props.vencimento}`}</td>
         <td>
           <div onClick={alteraStatusCobranca}>
             <svg

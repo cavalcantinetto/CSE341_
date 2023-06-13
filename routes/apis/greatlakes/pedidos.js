@@ -41,6 +41,12 @@ routes.post('/register', authorization, async(req, res) => {
         if(!req.body.data) {
             return res.status(400).json({ message: "É necessário informar uma data válida" });
         } 
+        if(req.body.data == undefined) {
+            return res.status(400).json({ message: "É necessário informar uma data válida" });
+        } 
+        if(req.body.data == null) {
+            return res.status(400).json({ message: "É necessário informar uma data válida" });
+        } 
         const newcardapio = {
             data: req.body.data,
             dataId: req.body.dataId,
