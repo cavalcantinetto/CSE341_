@@ -3457,96 +3457,447 @@ const data =
 // const turmas = Turmas.insertMany(data).then((data)=>console.log(data)).catch((err) => {console.log(err)})
 
 
-const dados = 
-[
-  {
-    "userPass": "122091868-4",
-    "userVencimento": 30
-  },
-  {
-    "userPass": "124245325-8",
-    "userVencimento": 12
-  },
-  {
-    "userPass": "128334455-6",
-    "userVencimento": 10
-  },
-  {
-    "userPass": "124245407-x",
-    "userVencimento": "05"
-  },
-  {
-    "userPass": "124275366-7",
-    "userVencimento": 15
-  },
-  {
-    "userPass": "120485971-1",
-    "userVencimento": 20
-  },
-  {
-    "userPass": "124275366-7",
-    "userVencimento": 15
-  },
-  {
-    "userPass": "124259868-6",
-    "userVencimento": "01"
-  },
-  {
-    "userPass": "122886668-5",
-    "userVencimento": 10
-  },
-  {
-    "userPass": "124330268-9",
-    "userVencimento": 25
-  },
-  {
-    "userPass": 234,
-    "userVencimento": 10
-  },
-  {
-    "userPass": "123091478-X",
-    "userVencimento": 10
-  },
-  {
-    "userPass": "122563878-1",
-    "userVencimento": 15
-  },
-  {
-    "userPass": "112235634-5",
-    "userVencimento": 30
-  },
-  {
-    "userPass": "113152963-7",
-    "userVencimento": 10
-  },
-  {
-    "userPass": "113239207-x",
-    "userVencimento": 30
-  },
-  {
-    "userPass": "122091868-4",
-    "userVencimento": 30
-  },
-  {
-    "userPass": "116514517-0",
-    "userVencimento": 10
-  },
-  {
-    "userPass": 123456754,
-    "userVencimento": "01"
-  }
-]
-
-
-// dados.forEach((e) => {
-//   const filter = {
-//     userPass: e.userPass
-//   };
-//   const update = {
-//     userVencimento: e.userVencimento
+// const dados = 
+// [
+//   {
+//     "userPass": "122091868-4",
+//     "userVencimento": 30
+//   },
+//   {
+//     "userPass": "124245325-8",
+//     "userVencimento": 12
+//   },
+//   {
+//     "userPass": "128334455-6",
+//     "userVencimento": 10
+//   },
+//   {
+//     "userPass": "124245407-x",
+//     "userVencimento": "05"
+//   },
+//   {
+//     "userPass": "124275366-7",
+//     "userVencimento": 15
+//   },
+//   {
+//     "userPass": "120485971-1",
+//     "userVencimento": 20
+//   },
+//   {
+//     "userPass": "124275366-7",
+//     "userVencimento": 15
+//   },
+//   {
+//     "userPass": "124259868-6",
+//     "userVencimento": "01"
+//   },
+//   {
+//     "userPass": "122886668-5",
+//     "userVencimento": 10
+//   },
+//   {
+//     "userPass": "124330268-9",
+//     "userVencimento": 25
+//   },
+//   {
+//     "userPass": 234,
+//     "userVencimento": 10
+//   },
+//   {
+//     "userPass": "123091478-X",
+//     "userVencimento": 10
+//   },
+//   {
+//     "userPass": "122563878-1",
+//     "userVencimento": 15
+//   },
+//   {
+//     "userPass": "112235634-5",
+//     "userVencimento": 30
+//   },
+//   {
+//     "userPass": "113152963-7",
+//     "userVencimento": 10
+//   },
+//   {
+//     "userPass": "113239207-x",
+//     "userVencimento": 30
+//   },
+//   {
+//     "userPass": "122091868-4",
+//     "userVencimento": 30
+//   },
+//   {
+//     "userPass": "116514517-0",
+//     "userVencimento": 10
+//   },
+//   {
+//     "userPass": 123456754,
+//     "userVencimento": "01"
 //   }
-//   const users = Users.findOneAndUpdate(filter, update, {new: true}).then((data) => console.log(data)).catch((err) => console.log(err));
-// })
+// ]
+const dados = [
+  {
+    "UserPass": "121068945-5",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122745015-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120109131-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "113999844-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "115127302-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120577464-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "124330268-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123852863-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "111975208-5",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122559003-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121220222-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122654780-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "112296173-x",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122091044-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "113974866-x",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122559243-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122402197-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122935904-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116819136-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122559052-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120446394-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116446743-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122946614-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116819272-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122844535-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121197287-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "124245325-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122095156-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "113152963-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123563973-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122717140-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "113970292-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122094876-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "111971044-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122352642-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120429087-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121075800-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "115030195-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122881643-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "115668420-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123713492-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "114266558-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "112946112-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123944023-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122888695-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122835198-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121691742-5",
+    "mensalista": true
+  },
+  {
+    "UserPass": "124251554-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123423002-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121563395-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120248497-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122938534-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "113881509-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116823060-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120248907-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122719454-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123423378-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116770303-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "115859357-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122558980-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116514517-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122886668-5",
+    "mensalista": true
+  },
+  {
+    "UserPass": "114753424-x",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121587273-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "124275366-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122893041-7",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122559145-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116817084-9",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123702329-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123703146-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "114039715-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122887410-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116657348-5",
+    "mensalista": true
+  },
+  {
+    "UserPass": "112946034-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116819337-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "116593768-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123837604-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "111079420-4",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123423254-6",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122881304-8",
+    "mensalista": true
+  },
+  {
+    "UserPass": "123486751-5",
+    "mensalista": true
+  },
+  {
+    "UserPass": "122556169-3",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121596241-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "112870991-0",
+    "mensalista": true
+  },
+  {
+    "UserPass": "120346593-2",
+    "mensalista": true
+  },
+  {
+    "UserPass": "121587202-1",
+    "mensalista": true
+  },
+  {
+    "UserPass": "114087421-4",
+    "mensalista": true
+  }
+];
+let counter = 0;
+dados.forEach((e) => {
+  const filter = {
+    userPass: e.UserPass
+  };
+  const update = {
+    mensalista: e.mensalista
+  }
+  console.log(filter)
+  console.log(update)
+  const users = Users.findOneAndUpdate(filter, update, {new: true}).then((data) => {console.log(data)}).catch((err) => console.log(err));
+})
 
 
 

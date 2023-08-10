@@ -54,6 +54,7 @@ const SolicitaAlmoco = () => {
       if (cookies.userData.userKids) {
       estudantes = cookies.userData.userKids;
       responsavel = cookies.userData.userName;
+      console.log(cookies.userData.userVencimento);
       if(cookies.userData.userVencimento) {
         dataDeVencimento = cookies.userData.userVencimento;
       }

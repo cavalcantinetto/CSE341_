@@ -25,6 +25,10 @@ const contactSchema = new mongoose.Schema({
     "userVencimento": {
         type: String,
         required: false
+    },
+    "mensalista": {
+        type: Boolean,
+        required: false
     }
 })
 
