@@ -144,12 +144,22 @@ async function getPedidos(req, res, next) {
 
 async function getKidsChoices(req, res, next) {
     let cardapio;
+    let todayISO = new Date(new Date().setUTCHours(0,0,0,0)).toISOString();
     try {
-        cardapio = await Pedidos.find({estudante: req.params.estudante}).sort({data: 1});
+        cardapio = await Pedidos.find({
+            estudante: req.params.estudante,
+            'data': {
+                '$gte': todayISO
+              }
+            }).sort({data: 1});
         if (!cardapio) {
             return res.status(404).json({ message: "Não encontrou escolhas associados" })
         }
-        res.cardapio = cardapio;
+        res.cardapio = {
+            'cardapio': cardapio, 
+            'data': todayISO
+        }
+  
     } catch (err) {
         if (err instanceof mongoose.CastError) {
             return res.status(400).json({ message: "Escolhas não existem" })

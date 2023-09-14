@@ -67,6 +67,12 @@ app.use('/cardapios', cardapiosRoutes);
 const pedidosRoutes = require('./routes/apis/greatlakes/pedidos');
 app.use('/pedidos', pedidosRoutes);
 
+//creates a middleware to services
+const escolhasRoutes = require('./routes/apis/greatlakes/escolhas');
+console.log('chegou aqui')
+app.use('/escolhas', escolhasRoutes);
+
+
 //creates a middleware to acompanhamentos
 const acompanhamentosRoutes = require('./routes/apis/greatlakes/acompanhamentos');
 app.use('/acompanhamentos', acompanhamentosRoutes);
@@ -88,6 +94,14 @@ app.use('/inserecobranca', inserecobranca);
 //rota para encaminhar emails via NodeJs
 const sendmailRoutes = require('./routes/apis/greatlakes/sendmail');
 app.use('/sendmail', sendmailRoutes);
+
+//rota para lista de servicos
+const listadeservicos = require('./routes/apis/greatlakes/listadeservicos');
+app.use('/listadeservicos', listadeservicos);
+
+//rota para pedidos de almoco infantil
+const almocoInfantil = require('./routes/apis/greatlakes/almocoinfantil');
+app.use('/almocoinfantil', almocoInfantil);
 
 app.use('/public/images', express.static(__dirname + '/public/images'));
 

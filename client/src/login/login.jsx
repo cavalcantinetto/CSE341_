@@ -67,13 +67,14 @@ const Login = () => {
 
           setAuth( {accessToken, userData} )
           setCookie('accessToken', accessToken, { path: '/' , maxAge: 3600});
+          userData.userPass = null;
           setCookie('userData', userData, { path: '/', maxAge: 3600});
           
           //if considerando o nível do usuário começando pelo 100 - usuário padrão
           
           if (userData.userLevel == 130) {
             setLoading(oldValue => oldValue = false);
-            return navigate('glakes/relatoriocobranca')
+            return navigate('glakes/selecionaservicos')
            } 
 
          if (userData.userLevel > 110) {
@@ -86,14 +87,13 @@ const Login = () => {
          } 
 
          if (userData.userLevel == 101) {
-          console.log("entrei aqui com secretaria")
           setLoading(oldValue => oldValue = false);
-          return navigate('glakes/solicitaalmoco')
+          return navigate('glakes/selecionaservicos')
          }
 
          if (userData.userLevel < 101) {
           setLoading(oldValue => oldValue = false);
-          return navigate('glakes/solicitaalmoco')
+          return navigate('glakes/selecionaservicos')
          }
         } else {
           setErrMsg('Login Falhou');

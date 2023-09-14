@@ -3,24 +3,6 @@ import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import ReactPDF from '@react-pdf/renderer';
 
 
-
-// const CardsParaImpressao = (props) => {
-//   return (
-
-//   <div className="d-flex flex-column" style={{maxWidth:'300px'}}>
-//     <p>Turma: { props.item.turma}</p>
-//     <p><strong>{props.item.estudante}</strong></p>
-//     <p>--------------------------------</p>
-//     <h5>{props.item.pratos.proteina}</h5>
-//     <p>--------------------------------</p>
-//     {props.item.pratos.acompanhamentos.map((acomp) => {
-//       return <p>{acomp}</p>
-//     })}
-//     <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-//     </div>
-//   )
-// }
-
 const styles = StyleSheet.create({
     page: {
       flexDirection: 'row',

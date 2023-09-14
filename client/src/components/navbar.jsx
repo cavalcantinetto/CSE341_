@@ -48,12 +48,19 @@ export function NavBar(props) {
               <li key="navStudent" className="nav-item">
               <Link to={'glakes/pedidosdodia'} className="nav-link active">{menu[2]}</Link>
               </li>{" "}
-              <li key="navCobranca" className="nav-item">
+              <li key="navRelatorioFund" className="nav-item">
               <Link to={'glakes/relatoriocobranca'} className="nav-link active">{menu[3]}</Link>
+              </li>
+              <li key="navRelatorioInf" className="nav-item">
+              <Link to={'glakes/relatorioalmocoinfantil'} className="nav-link active">{menu[4]}</Link>
               </li>{" "}
+              <li key="navAlmocoDiarioInf" className="nav-item">
+              <Link to={'glakes/almocodiarioinfantil'} className="nav-link active">{menu[5]}</Link>
+              </li>{" "}
+
             </ul>{" "}
             </div>
-            <div className=''>
+            <div>
             <button
             className={cookies.accessToken ? "p-3 mb-2 bg-danger text-white rounded-pill float-right" : "d-none"} onClick={handleClick}>
             Sair do sistema

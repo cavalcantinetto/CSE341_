@@ -1,12 +1,12 @@
 import React from "react";
 
 const Loading = () => {
-    return (
-        <div className="container text-center">
-        <button className="btn btn-danger" type="button" disabled>
-        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...
-</button></div>
-    )
-}
+  return (
+    <div className="container text-center">
+      <div class="spinner-border text-danger" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+};
 export default Loading;

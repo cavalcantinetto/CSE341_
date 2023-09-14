@@ -2,13 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const routes = express.Router();
 const UserDb = require('../../models/user')
-const Turmas = require('../../models/turmas')
 const bp = require('body-parser');
+const jwt = require('jsonwebtoken');
+const authorization = require('../../functions/auth');
 routes.use(bp.json())
 routes.use(bp.urlencoded({ extended: true }))
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
+
 require('../../functions/passport-config');
 
 routes.post('/recuperasenha', async function(req, res, next) {
@@ -103,5 +102,31 @@ routes.get('/logout', (req, res) => {
     res.cookie('userData', "");
     res.status(200).json({ message: "Token removed" })
 })
+
+routes.get('/getallkids', authorization, async (req, res) => {
+    kidsData = await UserDb.find().sort({"userKids.nome": 1});
+    // {"userKids.turma": {$in:["Year 1", "Year 2", "Year 3", "Year 4", "Year 5", "Year 6", "Year 7"]}},{userKids: 1, _id: 0}
+    let result = [];
+    if(kidsData) {
+        //forma o array com o noome, turma e turno
+        kidsData.map(({userKids})=> userKids.map((item => result.push(item))));
+        //arruma o array por ordem alfabetica
+        result.sort(function (a, b) {
+            if (a.nome < b.nome) {
+              return -1;
+            }
+            if (a.nome > b.nome) {
+              return 1;
+            }
+            return 0;
+          });
+    }
+    if(result.length > 0) {
+
+        return res.status(200).json(result);
+        
+    } return res.status(400).json({message: "Falha ao solicitar dados dos usuários"})
+   
+        })
 
 module.exports = routes

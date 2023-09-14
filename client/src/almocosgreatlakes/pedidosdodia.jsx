@@ -268,8 +268,6 @@ const PedidosDoDia = () => {
                 );
               })}
             </div>
-           
-
             <div>
               <div className="d-flex align-content-stretch justify-content-center flex-wrap m-3 text-center">
               {escolhasDoDia.map((item) => {
