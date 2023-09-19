@@ -25,6 +25,7 @@ export default function LinhasDaTabela(props) {
             return alert("Deve ser selecionado um status para proteina, guarnição e salada.")
         } else {
             const statusToBeSent = {
+                "statussent"
                 "proteina": statusProteina.current,
                 "arrozefeijao": statusArrozEFeijao.current,
                 "salada": statusSalada.current,
