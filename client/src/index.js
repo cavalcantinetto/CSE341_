@@ -16,6 +16,7 @@ import SolicitaAlmocoInfantil from "./almocosgreatlakes/almocoinfantil/solicitaa
 import Erro from "./almocosgreatlakes/erro";
 import RelatorioDeCobrancaInfantil from "./almocosgreatlakes/relatorios/relatorioinfantil/relatoriodecobranca";
 import AlmocosInfantis from "./almocosgreatlakes/almocosinfantisdiarios/almocoinfantil";
+import EnviarRelatorios from "./almocosgreatlakes/almocosinfantisdiarios/enviarrelatorios";
 
 
 
@@ -26,7 +27,7 @@ try {
     <AuthProvider>
       <CookiesProvider>
           <BrowserRouter>
-          <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia, Cobrança Fundamental, Cobrança Infantil, Controle Almoço Infantil " />
+          {/* <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia, Cobrança Fundamental, Cobrança Infantil, Controle Almoço Infantil " /> */}
           <Routes>
             <Route exact path="/*" element={<Login />}/>
             <Route exact path='glakes/inserecardapio' element={ <InsereCardapio/> }/>
@@ -38,6 +39,7 @@ try {
             <Route exact path='glakes/solicitaalmocoinfantil' element={ <SolicitaAlmocoInfantil/>}/>
             <Route exact path='glakes/relatorioalmocoinfantil' element={ <RelatorioDeCobrancaInfantil/>}/>
             <Route exact path='glakes/almocodiarioinfantil' element={ <AlmocosInfantis />}/>
+            <Route exact path='glakes/enviarelatorioinfantil' element={ <EnviarRelatorios />}/>
           </Routes>
           <FooterElement month="August" year="2023" />
           </BrowserRouter>
