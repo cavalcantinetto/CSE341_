@@ -1,34 +1,29 @@
 import React, { useEffect } from "react";
-import Loading from "../components/loading";
-import BotoesOpcoes from "./botoesopcoes";
-import { BASE_URL, LISTADESERVICOS } from "../functions/urlbase";
+import BotoesOpcoes from "../botoesopcoes";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import useSWR from 'swr';
-import fetcher from "./lib/fetcher";
-import Erro from "./erro";
 
-export default function SelecionaServicos(props) {
+export default function MenuAdministrativo(props) {
     const [cookies, setCookies] = useCookies();
     const navigate = useNavigate();
     if(!cookies.userData) {
     navigate('/');
     }
+
     useEffect(() =>{
         if(cookies.userData.userLevel <= 100) {
             return navigate('/glakes/solicitaalmocofundamental');
         }
     },[])
-    const {data, error, isLoading } = useSWR(BASE_URL+LISTADESERVICOS, (url => fetcher(url, cookies)));
 
-    if(error) {
-        return <Erro />
-    }
+    const data = [{servico: "Insere Usuário", endereco: "/glakes/insereusuario", _id: "svc1"}, 
+    {servico: "Relatório de Cobrança Infantil", endereco: "/glakes/relatorioalmocoinfantil", _id: "svc02"},
+    {servico: "Relatório de Cobrança Fundamental - Glakes", endereco: "/glakes/relatoriocobranca", _id: "svc03"}, 
+    {servico: "Controle de Almoço Infantil", endereco: "/glakes/almocodiarioinfantil", _id: "svc04"}
+]
+    
 
-    if(isLoading) {
-        return <Loading/>
-    }
-    return (
+   return (
         <div className="d-flex justify-content-center flex-column  ">
             {data.map((svc) => {
                 return <BotoesOpcoes nome={svc.servico} keyname={svc._id} url={svc.endereco}/>

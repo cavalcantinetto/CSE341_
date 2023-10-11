@@ -17,8 +17,9 @@ import Erro from "./almocosgreatlakes/erro";
 import RelatorioDeCobrancaInfantil from "./almocosgreatlakes/relatorios/relatorioinfantil/relatoriodecobranca";
 import AlmocosInfantis from "./almocosgreatlakes/almocosinfantisdiarios/almocoinfantil";
 import EnviarRelatorios from "./almocosgreatlakes/almocosinfantisdiarios/enviarrelatorios";
-
-
+import MenuAdministrativo from "./almocosgreatlakes/administrativo/menuadministrativo";
+import InsereUsuario from "./almocosgreatlakes/administrativo/insereusuario";
+import Demonstracao from "./almocosgreatlakes/demonstracao/controledeativos";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -27,7 +28,7 @@ try {
     <AuthProvider>
       <CookiesProvider>
           <BrowserRouter>
-          {/* <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia, Cobrança Fundamental, Cobrança Infantil, Controle Almoço Infantil " /> */}
+          <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia, Administração do sistema " />
           <Routes>
             <Route exact path="/*" element={<Login />}/>
             <Route exact path='glakes/inserecardapio' element={ <InsereCardapio/> }/>
@@ -40,8 +41,11 @@ try {
             <Route exact path='glakes/relatorioalmocoinfantil' element={ <RelatorioDeCobrancaInfantil/>}/>
             <Route exact path='glakes/almocodiarioinfantil' element={ <AlmocosInfantis />}/>
             <Route exact path='glakes/enviarelatorioinfantil' element={ <EnviarRelatorios />}/>
+            <Route exact path='glakes/menuadministrativo' element={ <MenuAdministrativo />}/>
+            <Route exact path='glakes/insereusuario' element={ <InsereUsuario />}/>
+            
           </Routes>
-          <FooterElement month="August" year="2023" />
+          <FooterElement month="October" year="2023" />
           </BrowserRouter>
       </CookiesProvider>
     </AuthProvider>

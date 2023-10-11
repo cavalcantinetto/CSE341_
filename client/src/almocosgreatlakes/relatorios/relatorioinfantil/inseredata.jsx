@@ -1,11 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function InsereDatas(props) {
     const {errMsg, setErrMsg} = useState();
     const dataInicial = useRef();
     const dataFinal = useRef();
-    const [verTipoDeContrato, setVerTipoDeContrato] = useState("Ver Mensais")
-
+    const [verTipoDeContrato, setVerTipoDeContrato] = useState("Ver Mensais");
+    const [cookies, setCookies] = useCookies()
+    const navigate = useNavigate();
 
     function alteraNomeDoBotao() {
       if(verTipoDeContrato == "Ver Mensais") {
@@ -15,10 +18,12 @@ export default function InsereDatas(props) {
         setVerTipoDeContrato("Ver Mensais")
         props.handleTipoDeContrato("Diárias")
       }
-     
     }
 
-
+    if(cookies.userData.userLevel == 100) {
+      navigate('/glakes/solicitaalmocofundamental');
+      }
+        
     return (
         <>
         <div className="container text-center">

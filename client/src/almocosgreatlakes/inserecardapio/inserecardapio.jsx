@@ -236,7 +236,7 @@ export default function InsereCardapio() {
 
   try {
     return (
-      <div className="container text-center ">
+      <div className="container text-center mb-3">
         <h1>Insira o menu diário no cardápio</h1>
         <h4>
           Instruções: escolha a data, em seguida digite as proteínas que estarão

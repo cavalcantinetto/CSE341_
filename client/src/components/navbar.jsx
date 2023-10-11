@@ -48,14 +48,8 @@ export function NavBar(props) {
               <li key="navStudent" className="nav-item">
               <Link to={'glakes/pedidosdodia'} className="nav-link active">{menu[2]}</Link>
               </li>{" "}
-              <li key="navRelatorioFund" className="nav-item">
-              <Link to={'glakes/relatoriocobranca'} className="nav-link active">{menu[3]}</Link>
-              </li>
-              <li key="navRelatorioInf" className="nav-item">
-              <Link to={'glakes/relatorioalmocoinfantil'} className="nav-link active">{menu[4]}</Link>
-              </li>{" "}
               <li key="navAlmocoDiarioInf" className="nav-item">
-              <Link to={'glakes/almocodiarioinfantil'} className="nav-link active">{menu[5]}</Link>
+              <Link to={'glakes/menuadministrativo'} className="nav-link active">{menu[3]}</Link>
               </li>{" "}
 
             </ul>{" "}
