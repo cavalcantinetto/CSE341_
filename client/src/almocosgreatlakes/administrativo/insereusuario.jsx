@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useForm } from 'react-hook-form';
 import InsereCrianca from "./inserecrianca";
 
 export default function InsereUsuario(props) {
@@ -81,20 +80,28 @@ export default function InsereUsuario(props) {
 
     function handleNomeDOResp(value) {
         nomeDoResp.current = value;
+        console.log(nomeDoResp.current)
     }
 
     function handleEmailDoResp(value) {
         emailResp.current = value;
+        console.log(emailResp.current)
+    }
+
+    function handleRM(value) {
+        RM.current = value;
+        console.log(RM.current)
     }
 
     function handleDataVencimento(value) {
         dataVencimento.current = value;
+        console.log(dataVencimento.current)
     }
 
+    function handleSubmit() {
+        console.log(nomeDoResp.current ,nomeCrianca1.current ,dataVencimento.current ,nomeCrianca2.current ,nomeCrianca3.current ,nomeCrianca4.current ,emailResp.current ,RM.current ,turma1.current ,turma2.current ,turma3.current ,turma4.current ,turno1.current ,turno2.current ,turno3.current ,turno4.current)
+    }
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
-    console.log(errors);
         return (
 
             <div className="container">
@@ -111,24 +118,21 @@ export default function InsereUsuario(props) {
                     </select>
                     
                 </div> 
-            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
             <label htmlFor="respName">Nome do Responsável</label>
-            <input id="respName" className="form-control" type="text" placeholder="Bruce Wayne" {...register("Nome completo do responsável", {required: true})} aria-invalid={errors.firstName ? "true":"false"} />
-            {errors.firstName?.type === "required" && (<p role="alert">É necessário colocar o Nome</p>)}
+            <input id="respName" className="form-control" type="text" placeholder="Bruce Wayne"  onChange={(e)=> handleNomeDOResp(e.target.value)}/>
             </div>
             <div className="mb-3">
             <label>Email do Responsável</label>
-            <input className="form-control" type="text" placeholder="alert@batman.com" label="Email do Responsável" {...register("Email do responsável", {required: true})} aria-invalid={errors.mail ? "true":"false"} />
-            {errors.mail && <p role="alert">{errors.mail.message}</p>}
+            <input className="form-control" type="text" placeholder="alert@batman.com" label="Email do Responsável" onClick={(e)=> handleEmailDoResp(e.target.value)} />
             </div>
             <div className="mb-3">
                 <label>RM da criança 1:</label>
-            <input className="form-control" type="text" placeholder="123456-x - servirá como senha de acesso para o responsável." {...register("RM da criança 1", {required: true})} />
+            <input className="form-control" type="text" placeholder="123456-x - servirá como senha de acesso para o responsável." onClick={(e)=> handleRM(e.target.value)} />
             </div>
             <div className="row g-3 align-items-center mb-3">
             <label className="col-auto">Data do Vencimento: </label>
-            <select className="col-auto" {...register("Data de Vencimento do boleto", { required: true })}>
+            <select className="col-auto" onChange={(e)=> handleDataVencimento(e.target.value)}>
               <option value="0">Escolha uma data...</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -174,9 +178,8 @@ export default function InsereUsuario(props) {
             <InsereCrianca numero="3" handleCrianca={handleCrianca3} handleTurma={handleTurma3} handleTurno={handleTurno3}/>
             <InsereCrianca numero="4"handleCrianca={handleCrianca4} handleTurma={handleTurma4} handleTurno={handleTurno4}/></>}
             <div className="container text-center">
-            <input className="m-3" type="submit" value={"Registrar"} />
+            <input className="m-3" type="submit" value={"Registrar"}  onClick={handleSubmit}/>
             </div>
-          </form>
           </div>
         );
 
