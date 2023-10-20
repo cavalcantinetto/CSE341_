@@ -2,16 +2,26 @@ const express = require('express');
 const routes = express.Router();
 const Cardapios = require('../../../models/cardapio')
 const authorization = require('../../../functions/auth');
+const { now } = require('mongoose');
 
 //get cardapio
 routes.get('/getall', authorization, async(req, res) => {
     try {
-        const cardapio = await Cardapios.find().sort({data: 1});
+        let todayISO = new Date(new Date().setUTCHours(0,0,0,0)).toISOString();
+        const cardapio = await Cardapios.find({
+            'data': {
+              '$gte': todayISO
+            }
+          }).sort({data: 1});
         if (!cardapio) {
-            
+           
             return res.status(204).json({ message: "No data was found" })
         } else {
-            return res.status(200).json(cardapio);
+            data = {
+                "cardapio": cardapio,
+                "data": todayISO
+            }
+            return res.status(200).json(data);
         }
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -61,9 +71,7 @@ routes.delete('/remove/:data', authorization, async(req, res) => {
         const filter = {
             data: req.params.data
         }
-        console.log('vai tentar submeter')
         const result = await Cardapios.findOneAndDelete(filter);
-        console.log(result)
         res.status(200).json(result)
 
     } catch (err) {

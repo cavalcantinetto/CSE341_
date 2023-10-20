@@ -56,4 +56,20 @@ routes.post('/register', authorization, async(req, res) => {
      }
 })
 
+routes.delete('/deleta/:id', authorization, async(req, res) => {
+    try {
+        console.log(req.params.id)
+        const filter = {
+            _id: req.params.id
+        }
+        console.log(filter)
+        const result = await Acompanhamentos.findOneAndDelete(filter);
+        console.log(result)
+        res.status(200).json(result)
+
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 module.exports = routes
