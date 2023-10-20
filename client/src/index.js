@@ -23,11 +23,12 @@ import Demonstracao from "./almocosgreatlakes/demonstracao/controledeativos";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
+const basepath = "services/glakes/"
 try {
   root.render(
     <AuthProvider>
       <CookiesProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/services/">
           <NavBar menu="Solicitação de Almoço, Inserir Cardápio, Pedidos do Dia, Administração do sistema " />
           <Routes>
             <Route exact path="/*" element={<Login />}/>
