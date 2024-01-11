@@ -42,7 +42,7 @@ export default function DadosDaCrianca(props) {
               </option>
                   {data.map((item) => {
 
-                    if(item.turma === 'Year 1' || item.turma === 'Year 2' || item.turma === 'Year 3' || item.turma === 'Year 4' || item.turma === 'Year 5' || item.turma === 'Year 6' || item.turma === 'Year 7' || item.turma === 'Staff') {
+                    if(item.turma === 'Year 1' || item.turma === 'Year 2' || item.turma === 'Year 3' || item.turma === 'Year 4' || item.turma === 'Year 5' || item.turma === 'Year 6' || item.turma === 'Year 7' || item.turma === 'Year 8' || item.turma === 'Staff') {
                       return (
                         <option id={data.indexOf(item)} key={data.indexOf(item)} name={item.turno} value={item.nome}>
                           {item.nome}
@@ -76,7 +76,7 @@ export default function DadosDaCrianca(props) {
             Selecione o estudante ...
             </option>
                 {cookies.userData.userKids.map((item) => {
-                  if(item.turma === 'Year 1' || item.turma === 'Year 2' || item.turma === 'Year 3' || item.turma === 'Year 4' || item.turma === 'Year 5' || item.turma === 'Year 6' || item.turma === 'Year 7' || item.turma === 'Staff') {
+                  if(item.turma === 'Year 1' || item.turma === 'Year 2' || item.turma === 'Year 3' || item.turma === 'Year 4' || item.turma === 'Year 5' || item.turma === 'Year 6' || item.turma === 'Year 7' || item.turma === 'Year 8'|| item.turma === 'Staff') {
                     return (
                       <option id={cookies.userData.userKids.indexOf(item)} key={cookies.userData.userKids.indexOf(item)} name={item.turno} value={item.nome}>
                         {item.nome}
